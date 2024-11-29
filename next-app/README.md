@@ -1,36 +1,149 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Next-app
 
-## Getting Started
+This project aim to provided a high quality and optimized next.js project.
 
-First, run the development server:
+We will be very hard on code quality, performance and security compliance.
+
+## First launch
+
+### Install dependencies
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm i
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### DB migration
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+pnpm db:migrate
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Start
 
-## Learn More
+```bash
+pnpm dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+### Generate DB migration file
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+pnpm db:generate
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Add shadcn/ui components
 
-## Deploy on Vercel
+```bash
+pnpm ui:add
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Project structure
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### actions
+
+Will contain all the server actions.
+
+Each action will be a file.
+
+Each file will contain a function.
+
+The function must be an `async` function.
+
+a `'use server'` must be present on top of the file.
+
+### app
+
+The core view of the application.
+
+It will contain all local the components according to it's page and anything related to UI view.
+
+Must follow the `next.js` structure and rules.
+
+### components
+
+Contains all high order components used accrose multiple pages.
+
+Contains also all the shadcn/ui auto generated components.
+
+### hooks
+
+Contains all the hooks used accrose multiple pages.
+
+Contains also all the shadcn/ui auto generated hooks.
+
+### lib
+
+Utils functions.
+
+One file is related to one _module_.
+
+### locales
+
+Will contain all the translations.
+
+### models
+
+Will contain all the database models.
+
+Each model will be a folder.
+
+Each folder will contain a `index.ts` file and a `type.ts`.
+
+It can occasionally contains a transaction.ts file.
+
+A transaction.ts file must and only contain a function that does operations on the database at a transaction level.
+
+A file must and only contain a function that does operations on the database.
+
+Each file name must be prefixed with `$` to keep the model file on top of other files.
+
+FIle prefixed with `$` must have a `server only` modifier.
+
+### packages
+
+This folder will contain all the hand made packages used accrose multiple pages.
+
+This is not opened to regular update. If you need to touch it everytime, something may be off somewhere.
+
+### validator (experimental)
+
+A questionable folder for now.
+
+Want to get rid of it. Still trying to figure out how to do it.
+
+## Pre commit
+
+Better to execute them following this order.
+
+### Lint
+
+```bash
+pnpm lint
+```
+
+### Typecheck
+
+```bash
+pnpm typecheck
+```
+
+### Format
+
+```bash
+pnpm format:fix
+```
+
+## Rules
+
+Each folders may have it's own rules.
+
+If it's the case, a `README.md` file may be present.
+
+## Need help
+
+### Drizzle studio
+
+Help on drizzle studio compatibilty with Docker.
+
+### Permission
+
+Permissions over some file are blocking the `linter` feedback's correction.
