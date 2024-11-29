@@ -1,5 +1,5 @@
 {
-  "name": "we-know-how",
+  "name": "async-interview",
   "author": {
     "name": "Tchi",
     "email": "tchi.devica@gmail.com",
@@ -19,13 +19,20 @@
     "lint:fix": "next lint --fix",
     "typecheck": "tsc --pretty --noEmit",
     "format": "prettier --check --ignore-path .gitignore .",
-    "format:fix": "prettier --write --ignore-path .gitignore ."
+    "format:fix": "prettier --write --ignore-path .gitignore .",
+    "ui:add": "pnpm dlx shadcn@latest add"
   },
   "dependencies": {
     "@node-rs/argon2": "^2.0.0",
     "@oslojs/crypto": "^1.0.1",
     "@oslojs/encoding": "^1.1.0",
+    "@radix-ui/react-label": "^2.1.0",
+    "@radix-ui/react-slot": "^1.1.0",
+    "@radix-ui/react-toast": "^1.2.2",
     "@t3-oss/env-nextjs": "^0.11.1",
+    "@tanstack/react-form": "^0.39.0",
+    "@tanstack/react-query": "^5.61.5",
+    "@tanstack/zod-form-adapter": "^0.39.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "dotenv": "^16.4.5",
@@ -43,6 +50,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@tanstack/eslint-plugin-query": "^5.61.6",
     "@types/node": "^20",
     "@types/pg": "^8.11.10",
     "@types/react": "^18",

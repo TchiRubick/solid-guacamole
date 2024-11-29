@@ -2,31 +2,34 @@
 
 import { verifyPassword } from '@/lib/password';
 import { setSessionTokenCookie } from '@/lib/session-cookies';
+import { getScopedI18n } from '@/locales/server';
 import { createSession } from '@/models/session';
-import { userByIdentifier } from '@/models/user';
-import { z } from 'zod';
+import { userByEmail } from '@/models/user';
+import { signinValidator } from '@/validator/signin.validator';
+import type { z } from 'zod';
 
-export const signinSchema = z.object({
-  identifier: z
-    .string()
-    .min(3, 'Identifier must be at least 3 characters')
-    .max(255, 'Identifier must be less than 255 characters'),
-  password: z
-    .string()
-    .min(6, 'Password must be at least 6 characters')
-    .max(255, 'Password must be less than 255 characters'),
-});
+type SigninInput = z.infer<ReturnType<typeof signinValidator>>;
 
-export const signin = async (input: z.infer<typeof signinSchema>) => {
-  const validatedInput = signinSchema.parse(input);
+export const signin = async (input: SigninInput) => {
+  const tError = await getScopedI18n('server-error');
+  const tSignin = await getScopedI18n('signin-form');
 
-  const user = await userByIdentifier(validatedInput.identifier);
+  const validatedInput = signinValidator(tError).parse(input);
+
+  const user = await userByEmail(validatedInput.email);
 
   if (!user) {
-    throw 'Invalid credentials';
+    throw tSignin('email-not-found');
   }
 
-  await verifyPassword(user.password, validatedInput.password);
+  const isPasswordValid = await verifyPassword(
+    user.password,
+    validatedInput.password
+  );
+
+  if (!isPasswordValid) {
+    throw tSignin('invalid-credentials');
+  }
 
   const session = await createSession(user.id);
 

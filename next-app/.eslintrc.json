@@ -1,5 +1,6 @@
 {
   "extends": ["next/core-web-vitals", "next/typescript", "prettier"],
+  "plugins": ["@tanstack/query"],
   "rules": {
     "no-unused-vars": "off",
     "@typescript-eslint/no-unused-vars": [
@@ -17,6 +18,14 @@
     "consistent-return": "error",
     "indent": ["error", 2],
     "@typescript-eslint/consistent-type-imports": "error",
-    "@typescript-eslint/no-explicit-any": "error"
-  }
+    "@typescript-eslint/no-explicit-any": "error",
+    "react-hooks/exhaustive-deps": "off"
+  },
+  "overrides": [
+    {
+      "files": ["./src/components/ui/**/*", "./src/hooks/use-toast.ts"],
+      "rules": {}
+    }
+  ],
+  "ignorePatterns": ["src/components/ui/*", "src/hooks/use-toast.ts"]
 }

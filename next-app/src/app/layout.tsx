@@ -1,3 +1,5 @@
+import { Toaster } from '@/components/ui/toaster';
+import ReactQueryProvider from '@/packages/react-query/provider';
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import './globals.css';
@@ -20,7 +22,7 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({
   children,
-  params
+  params,
 }: Readonly<{
   children: React.ReactNode;
   params: Promise<{ locale: string }>;
@@ -30,9 +32,12 @@ export default async function RootLayout({
   return (
     <html lang={locale ?? 'en'}>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} bg-gradient antialiased`}
       >
-        {children}
+        <ReactQueryProvider>
+          {children}
+          <Toaster />
+        </ReactQueryProvider>
       </body>
     </html>
   );

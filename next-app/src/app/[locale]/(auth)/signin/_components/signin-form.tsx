@@ -1,0 +1,121 @@
+'use client';
+
+import Link from 'next/link';
+
+import { signin } from '@/actions/auth/signin';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { useToast } from '@/hooks/use-toast';
+import { useScopedI18n } from '@/locales/client';
+import { useForm } from '@tanstack/react-form';
+import { useMutation } from '@tanstack/react-query';
+import { zodValidator } from '@tanstack/zod-form-adapter';
+import { useRouter } from 'next/navigation';
+
+export const SignInForm = () => {
+  const tSignInForm = useScopedI18n('signin-form');
+  const { toast } = useToast();
+  const router = useRouter();
+
+  const { mutate } = useMutation({
+    mutationFn: signin,
+    onSuccess: () => {
+      toast({
+        title: 'success',
+        description: 'User signed in successfully',
+      });
+
+      router.push('/');
+    },
+    onError: (error: Error) => {
+      toast({
+        title: 'error',
+        description: error.message,
+        variant: 'destructive',
+      });
+    },
+  });
+
+  const { handleSubmit, Field } = useForm({
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+    validatorAdapter: zodValidator(),
+    onSubmit: (values) => {
+      mutate(values.value);
+    },
+  });
+
+  return (
+    <form
+      className='mx-auto grid w-[350px] gap-6'
+      onSubmit={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        handleSubmit();
+      }}
+    >
+      <div className='grid gap-2 text-center'>
+        <h1 className='text-3xl font-bold text-foreground'>
+          {tSignInForm('title')}
+        </h1>
+        <p className='text-balance text-muted-foreground'>
+          {tSignInForm('description')}
+        </p>
+      </div>
+      <div className='grid gap-4'>
+        <div className='grid gap-2'>
+          <Label htmlFor='email'>{tSignInForm('email-label')}</Label>
+          <Field name='email'>
+            {(field) => (
+              <Input
+                id={field.name}
+                name={field.name}
+                value={field.state.value}
+                onBlur={field.handleBlur}
+                type='email'
+                onChange={(e) => field.handleChange(e.target.value)}
+                placeholder={tSignInForm('email-placeholder')}
+              />
+            )}
+          </Field>
+        </div>
+        <div className='grid gap-2'>
+          <div className='flex items-center'>
+            <Label htmlFor='password'>{tSignInForm('password-label')}</Label>
+            <Link
+              href='/forgot-password'
+              className='ml-auto inline-block text-sm underline'
+            >
+              {tSignInForm('forgot-password-link')}
+            </Link>
+          </div>
+          <Field name='password'>
+            {(field) => (
+              <Input
+                id={field.name}
+                name={field.name}
+                value={field.state.value}
+                onBlur={field.handleBlur}
+                onChange={(e) => field.handleChange(e.target.value)}
+                placeholder='********'
+                type='password'
+              />
+            )}
+          </Field>
+        </div>
+        <Button type='submit' className='w-full'>
+          {tSignInForm('login-button')}
+        </Button>
+      </div>
+      <div className='mt-4 text-center text-sm'>
+        {tSignInForm('no-account')}{' '}
+        <Link href='signup' className='underline'>
+          {tSignInForm('sign-up-link')}
+        </Link>
+      </div>
+    </form>
+  );
+};
