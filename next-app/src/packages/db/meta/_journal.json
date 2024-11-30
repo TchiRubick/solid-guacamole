@@ -15,6 +15,13 @@
       "when": 1732953227923,
       "tag": "0001_powerful_jack_power",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1732990608535,
+      "tag": "0002_cloudy_richard_fisk",
+      "breakpoints": true
     }
   ]
 }
