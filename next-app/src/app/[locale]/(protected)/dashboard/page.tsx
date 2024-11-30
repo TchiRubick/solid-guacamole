@@ -1,5 +1,5 @@
-import { currentSession } from "@/actions/auth/current-session";
-import { NotAuthorized } from "@/components/not-authorized";
+import { currentSession } from '@/actions/auth/current-session';
+import { NotAuthorized } from '@/components/not-authorized';
 
 export const DashboardPage = async () => {
   const { session } = await currentSession();

@@ -1,5 +1,4 @@
-'use client'
-
+'use client';
 
 import {
   Sidebar,
@@ -12,48 +11,48 @@ import {
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
-} from "@/components/ui/sidebar"
-import { usePathname } from "next/navigation"
-import { SidebarUser } from "./sibar-user"
+} from '@/components/ui/sidebar';
+import { usePathname } from 'next/navigation';
+import { SidebarUser } from './sibar-user';
 
 const data = {
   navMain: [
     {
-      title: "Dashboard",
-      url: "#",
+      title: 'Dashboard',
+      url: '#',
       items: [
         {
-          title: "dashboard",
-          url: "/dashboard",
+          title: 'dashboard',
+          url: '/dashboard',
         },
       ],
     },
     {
-      title: "Interviews",
-      url: "#",
+      title: 'Interviews',
+      url: '#',
       items: [
         {
-          title: "Interviews",
-          url: "/interviews",
+          title: 'Interviews',
+          url: '/interviews',
         },
         {
-          title: "Questions",
-          url: "/questions",
+          title: 'Questions',
+          url: '/questions',
         },
       ],
     },
   ],
-}
+};
 
-export const AppSidebar = ({ ...props }: React.ComponentProps<typeof Sidebar>) => {
-  const pathname = usePathname()
+export const AppSidebar = ({
+  ...props
+}: React.ComponentProps<typeof Sidebar>) => {
+  const pathname = usePathname();
 
-  const isActive = (url: string) => {
-    return pathname === url
-  }
+  const isActive = (url: string) => pathname === url;
 
   return (
-    <Sidebar variant="floating" {...props}>
+    <Sidebar variant='floating' {...props}>
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
@@ -63,19 +62,22 @@ export const AppSidebar = ({ ...props }: React.ComponentProps<typeof Sidebar>) =
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarMenu className="gap-2">
+          <SidebarMenu className='gap-2'>
             {data.navMain.map((item) => (
               <SidebarMenuItem key={item.title}>
                 <SidebarMenuButton asChild>
-                  <a href={item.url} className="font-medium">
+                  <a href={item.url} className='font-medium'>
                     {item.title}
                   </a>
                 </SidebarMenuButton>
                 {item.items?.length ? (
-                  <SidebarMenuSub className="ml-0 border-l-0 px-1.5">
+                  <SidebarMenuSub className='ml-0 border-l-0 px-1.5'>
                     {item.items.map((item) => (
                       <SidebarMenuSubItem key={item.title}>
-                        <SidebarMenuSubButton asChild isActive={isActive(item.url)}>
+                        <SidebarMenuSubButton
+                          asChild
+                          isActive={isActive(item.url)}
+                        >
                           <a href={item.url}>{item.title}</a>
                         </SidebarMenuSubButton>
                       </SidebarMenuSubItem>
@@ -88,5 +90,5 @@ export const AppSidebar = ({ ...props }: React.ComponentProps<typeof Sidebar>) =
         </SidebarGroup>
       </SidebarContent>
     </Sidebar>
-  )
-}
+  );
+};

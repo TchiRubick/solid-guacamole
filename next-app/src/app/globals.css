@@ -13,7 +13,7 @@ body {
        URL: https://gradient.page */
 
     /* CSS: .bg-gradient { background: var(--gradient) } */
-    --gradient: linear-gradient(to top left,#215f00,#e4e4d9);
+    --gradient: linear-gradient(to top left, #215f00, #e4e4d9);
     --background: 105 100% 98.38%;
     --foreground: 105 10% 0.76%;
 
@@ -46,7 +46,6 @@ body {
     --radius: 0.5rem;
   }
 }
-
 
 @layer base {
   * {

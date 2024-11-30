@@ -1,6 +1,6 @@
 {
   "extends": ["next/core-web-vitals", "next/typescript", "prettier"],
-  "plugins": ["@tanstack/query"],
+  "plugins": ["@tanstack/query", "prefer-arrow"],
   "rules": {
     "no-unused-vars": "off",
     "@typescript-eslint/no-unused-vars": [
@@ -16,9 +16,16 @@
     "eqeqeq": ["error", "always"],
     "no-console": "warn",
     "consistent-return": "error",
-    "indent": ["error", 2],
     "@typescript-eslint/consistent-type-imports": "error",
     "@typescript-eslint/no-explicit-any": "error",
-    "react-hooks/exhaustive-deps": "off"
+    "react-hooks/exhaustive-deps": "off",
+    "prefer-arrow/prefer-arrow-functions": [
+      "warn",
+      {
+        "disallowPrototype": true,
+        "singleReturnOnly": false,
+        "classPropertiesAllowed": false
+      }
+    ]
   }
 }

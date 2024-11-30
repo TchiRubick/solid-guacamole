@@ -17,7 +17,10 @@ const HomePage = async () => {
         <p className='mb-8 text-xl text-gray-600'>{t('description')}</p>
         <div className='flex justify-center space-x-4'>
           <Link href='https://www.google.com/search?q=cheapest+wordpress+freelancer'>
-            <button disabled={!!session} className='rounded-lg bg-foreground px-6 py-3 text-white transition duration-300 hover:bg-foreground'>
+            <button
+              disabled={!!session}
+              className='rounded-lg bg-foreground px-6 py-3 text-white transition duration-300 hover:bg-foreground'
+            >
               {t('fit-button')}
             </button>
           </Link>

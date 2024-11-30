@@ -26,7 +26,6 @@ const SignInPage = async () => {
       </div>
     </div>
   );
-}
-
+};
 
 export default SignInPage;

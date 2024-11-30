@@ -16,7 +16,7 @@ export const currentSession = cache(
     }
 
     const result = await validateSessionToken(token);
-    console.log(result);
+
     return result;
   }
 );

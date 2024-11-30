@@ -26,6 +26,6 @@ const SignUpPage = async () => {
       </div>
     </div>
   );
-}
+};
 
 export default SignUpPage;
