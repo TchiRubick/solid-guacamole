@@ -47,3 +47,8 @@ export const SessionRelations = relations(SessionTable, ({ one }) => ({
     references: [UserTable.id],
   }),
 }));
+
+export const QuestionTable = pgTable('question', (t) => ({
+  id: t.serial('id').primaryKey(),
+  value: t.text('value').notNull(),
+}));
