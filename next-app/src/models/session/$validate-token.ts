@@ -2,27 +2,23 @@
 
 import { db } from '@/packages/db';
 import { SessionTable, UserTable } from '@/packages/db/schemas';
-import { sha256 } from '@oslojs/crypto/sha2';
-import { encodeHexLowerCase } from '@oslojs/encoding';
 import { eq } from 'drizzle-orm';
 import type { SessionValidationResult } from './type';
 
 export const validateSessionToken = async (
   token: string
 ): Promise<SessionValidationResult> => {
-  const sessionId = encodeHexLowerCase(sha256(new TextEncoder().encode(token)));
-
-  const result = await db
+  const [result] = await db
     .select({ user: UserTable, session: SessionTable })
     .from(SessionTable)
     .innerJoin(UserTable, eq(SessionTable.userId, UserTable.id))
-    .where(eq(SessionTable.id, sessionId));
+    .where(eq(SessionTable.id, token));
 
-  if (result.length < 1) {
+  if (!result) {
     return { session: null, user: null };
   }
 
-  const { user, session } = result[0];
+  const { user, session } = result;
 
   if (Date.now() >= session.expiresAt.getTime()) {
     await db.delete(SessionTable).where(eq(SessionTable.id, session.id));
