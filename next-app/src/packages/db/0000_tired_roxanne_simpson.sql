@@ -1,5 +1,5 @@
 CREATE TYPE "public"."interview_status" AS ENUM('sent', 'pending', 'done', 'viewed', 'canceled');--> statement-breakpoint
-CREATE TYPE "public"."org_user_role" AS ENUM('owner', 'member');--> statement-breakpoint
+CREATE TYPE "public"."user_role" AS ENUM('customer', 'admin');--> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "answer" (
 	"id" varchar PRIMARY KEY NOT NULL,
 	"value" varchar NOT NULL,
@@ -15,6 +15,12 @@ CREATE TABLE IF NOT EXISTS "candidate" (
 	"phone" varchar NOT NULL,
 	"image" varchar,
 	"observation" varchar
+);
+--> statement-breakpoint
+CREATE TABLE IF NOT EXISTS "image" (
+	"id" serial PRIMARY KEY NOT NULL,
+	"url" varchar NOT NULL,
+	"type" varchar
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "interview" (
@@ -42,19 +48,37 @@ CREATE TABLE IF NOT EXISTS "organization_user" (
 	"id" varchar PRIMARY KEY NOT NULL,
 	"user_id" varchar NOT NULL,
 	"organization_id" varchar NOT NULL,
-	"role" "org_user_role" DEFAULT 'member' NOT NULL,
 	"created_at" timestamp with time zone NOT NULL
 );
 --> statement-breakpoint
-ALTER TABLE "image" ALTER COLUMN "url" SET DATA TYPE varchar;--> statement-breakpoint
-ALTER TABLE "image" ALTER COLUMN "type" SET DATA TYPE varchar;--> statement-breakpoint
-ALTER TABLE "question" ALTER COLUMN "id" SET DATA TYPE varchar;--> statement-breakpoint
-ALTER TABLE "question" ALTER COLUMN "value" SET DATA TYPE varchar;--> statement-breakpoint
-ALTER TABLE "session" ALTER COLUMN "id" SET DATA TYPE varchar;--> statement-breakpoint
-ALTER TABLE "session" ALTER COLUMN "user_id" SET DATA TYPE varchar;--> statement-breakpoint
-ALTER TABLE "user" ALTER COLUMN "id" SET DATA TYPE varchar;--> statement-breakpoint
-ALTER TABLE "question" ADD COLUMN "organization_id" varchar NOT NULL;--> statement-breakpoint
-ALTER TABLE "question" ADD COLUMN "created_at" timestamp with time zone NOT NULL;--> statement-breakpoint
+CREATE TABLE IF NOT EXISTS "question" (
+	"id" varchar PRIMARY KEY NOT NULL,
+	"value" varchar NOT NULL,
+	"organization_id" varchar NOT NULL,
+	"created_at" timestamp with time zone NOT NULL
+);
+--> statement-breakpoint
+CREATE TABLE IF NOT EXISTS "session" (
+	"id" varchar PRIMARY KEY NOT NULL,
+	"user_id" varchar NOT NULL,
+	"expires_at" timestamp with time zone NOT NULL
+);
+--> statement-breakpoint
+CREATE TABLE IF NOT EXISTS "user" (
+	"id" varchar PRIMARY KEY NOT NULL,
+	"username" varchar(255) NOT NULL,
+	"password" varchar(255) NOT NULL,
+	"email" varchar(255) NOT NULL,
+	"address" varchar(255),
+	"phone" varchar(255),
+	"city" varchar(255),
+	"country" varchar(255),
+	"zipCode" varchar(255),
+	"emailVerified" timestamp with time zone,
+	"image" varchar(255),
+	"role" "user_role" DEFAULT 'customer'
+);
+--> statement-breakpoint
 DO $$ BEGIN
  ALTER TABLE "answer" ADD CONSTRAINT "answer_question_id_question_id_fk" FOREIGN KEY ("question_id") REFERENCES "public"."question"("id") ON DELETE no action ON UPDATE no action;
 EXCEPTION
@@ -99,6 +123,12 @@ END $$;
 --> statement-breakpoint
 DO $$ BEGIN
  ALTER TABLE "question" ADD CONSTRAINT "question_organization_id_organization_id_fk" FOREIGN KEY ("organization_id") REFERENCES "public"."organization"("id") ON DELETE no action ON UPDATE no action;
+EXCEPTION
+ WHEN duplicate_object THEN null;
+END $$;
+--> statement-breakpoint
+DO $$ BEGIN
+ ALTER TABLE "session" ADD CONSTRAINT "session_user_id_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."user"("id") ON DELETE no action ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;

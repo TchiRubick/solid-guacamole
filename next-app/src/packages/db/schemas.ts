@@ -3,7 +3,6 @@ import { pgEnum, pgTable } from 'drizzle-orm/pg-core';
 
 // Enums for roles and statuses
 export const UserRole = pgEnum('user_role', ['customer', 'admin']);
-export const OrgUserRole = pgEnum('org_user_role', ['owner', 'member']);
 export const InterviewStatus = pgEnum('interview_status', ['sent', 'pending', 'done', 'viewed', 'canceled']);
 
 // User Table Schema
@@ -36,7 +35,6 @@ export const OrganizationUserTable = pgTable('organization_user', (t) => ({
   id: t.varchar('id').primaryKey().$defaultFn(() => crypto.randomUUID()),
   userId: t.varchar('user_id').notNull().references(() => UserTable.id),
   organizationId: t.varchar('organization_id').notNull().references(() => OrganizationTable.id),
-  role: OrgUserRole('role').notNull().default('member'),
   createdAt: t.timestamp('created_at', { withTimezone: true }).notNull().$defaultFn(() => new Date()),
 }));
 
