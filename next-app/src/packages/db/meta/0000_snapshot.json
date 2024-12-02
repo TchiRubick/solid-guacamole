@@ -45,12 +45,8 @@
           "name": "answer_question_id_question_id_fk",
           "tableFrom": "answer",
           "tableTo": "question",
-          "columnsFrom": [
-            "question_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["question_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -58,12 +54,8 @@
           "name": "answer_interview_id_interview_id_fk",
           "tableFrom": "answer",
           "tableTo": "interview",
-          "columnsFrom": [
-            "interview_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["interview_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -227,12 +219,8 @@
           "name": "interview_candidate_id_candidate_id_fk",
           "tableFrom": "interview",
           "tableTo": "candidate",
-          "columnsFrom": [
-            "candidate_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["candidate_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -240,12 +228,8 @@
           "name": "interview_organization_id_organization_id_fk",
           "tableFrom": "interview",
           "tableTo": "organization",
-          "columnsFrom": [
-            "organization_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["organization_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -297,12 +281,8 @@
           "name": "organization_user_id_user_id_fk",
           "tableFrom": "organization",
           "tableTo": "user",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -348,12 +328,8 @@
           "name": "organization_user_user_id_user_id_fk",
           "tableFrom": "organization_user",
           "tableTo": "user",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -361,12 +337,8 @@
           "name": "organization_user_organization_id_organization_id_fk",
           "tableFrom": "organization_user",
           "tableTo": "organization",
-          "columnsFrom": [
-            "organization_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["organization_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -412,12 +384,8 @@
           "name": "question_organization_id_organization_id_fk",
           "tableFrom": "question",
           "tableTo": "organization",
-          "columnsFrom": [
-            "organization_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["organization_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -457,12 +425,8 @@
           "name": "session_user_id_user_id_fk",
           "tableFrom": "session",
           "tableTo": "user",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -565,21 +529,12 @@
     "public.interview_status": {
       "name": "interview_status",
       "schema": "public",
-      "values": [
-        "sent",
-        "pending",
-        "done",
-        "viewed",
-        "canceled"
-      ]
+      "values": ["sent", "pending", "done", "viewed", "canceled"]
     },
     "public.user_role": {
       "name": "user_role",
       "schema": "public",
-      "values": [
-        "customer",
-        "admin"
-      ]
+      "values": ["customer", "admin"]
     }
   },
   "schemas": {},

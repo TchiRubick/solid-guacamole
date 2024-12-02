@@ -10,22 +10,11 @@
         "varsIgnorePattern": "^_"
       }
     ],
-    "prefer-arrow-callback": "error",
-    "arrow-body-style": ["error", "as-needed"],
-    "func-style": ["error", "expression"],
     "eqeqeq": ["error", "always"],
     "no-console": "warn",
     "consistent-return": "error",
     "@typescript-eslint/consistent-type-imports": "error",
     "@typescript-eslint/no-explicit-any": "error",
-    "react-hooks/exhaustive-deps": "off",
-    "prefer-arrow/prefer-arrow-functions": [
-      "warn",
-      {
-        "disallowPrototype": true,
-        "singleReturnOnly": false,
-        "classPropertiesAllowed": false
-      }
-    ]
+    "react-hooks/exhaustive-deps": "off"
   }
 }

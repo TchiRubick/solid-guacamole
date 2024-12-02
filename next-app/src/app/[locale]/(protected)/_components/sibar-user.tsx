@@ -114,7 +114,8 @@ export const SidebarUser = () => {
         <DropdownMenuItem>
           <Button
             className='w-full cursor-pointer'
-            variant='destructive'
+            size='sm'
+            variant='link'
             onClick={() => {
               mutate();
             }}

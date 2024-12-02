@@ -3,6 +3,7 @@
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarHeader,
   SidebarMenu,
@@ -13,37 +14,43 @@ import {
   SidebarMenuSubItem,
 } from '@/components/ui/sidebar';
 import { usePathname } from 'next/navigation';
+import { OrganizationSwitcher } from './organization-switcher';
 import { SidebarUser } from './sibar-user';
 
 const data = {
   navMain: [
     {
-      title: 'Dashboard',
-      url: '#',
+      title: 'Organization',
+      url: '/organization',
       items: [
         {
-          title: 'dashboard',
-          url: '/dashboard',
+          title: 'Dashboard',
+          url: '/organization',
         },
         {
-          title: 'Organization',
-          url: '/organization',
+          title: 'Manage',
+          url: '/organization/manage',
         },
       ],
     },
     {
       title: 'Interviews',
-      url: '#',
+      url: '/interview',
       items: [
         {
-          title: 'Interviews',
-          url: '/interviews',
+          title: 'List',
+          url: '/interview',
         },
         {
-          title: 'Questions',
-          url: '/questions',
+          title: 'Templates',
+          url: '/interview/template',
         },
       ],
+    },
+    {
+      title: 'Candidate',
+      url: '/candidate',
+      items: [],
     },
   ],
 };
@@ -58,11 +65,14 @@ export const AppSidebar = ({
   return (
     <Sidebar variant='floating' {...props}>
       <SidebarHeader>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarUser />
-          </SidebarMenuItem>
-        </SidebarMenu>
+        <OrganizationSwitcher
+          organization={[
+            {
+              name: 'Organization 1',
+              id: '1',
+            },
+          ]}
+        />
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
@@ -93,6 +103,13 @@ export const AppSidebar = ({
           </SidebarMenu>
         </SidebarGroup>
       </SidebarContent>
+      <SidebarFooter>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarUser />
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarFooter>
     </Sidebar>
   );
 };

@@ -3,11 +3,20 @@ import { pgEnum, pgTable } from 'drizzle-orm/pg-core';
 
 // Enums for roles and statuses
 export const UserRole = pgEnum('user_role', ['customer', 'admin']);
-export const InterviewStatus = pgEnum('interview_status', ['sent', 'pending', 'done', 'viewed', 'canceled']);
+export const InterviewStatus = pgEnum('interview_status', [
+  'sent',
+  'pending',
+  'done',
+  'viewed',
+  'canceled',
+]);
 
 // User Table Schema
 export const UserTable = pgTable('user', (t) => ({
-  id: t.varchar('id').primaryKey().$defaultFn(() => crypto.randomUUID()),
+  id: t
+    .varchar('id')
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
   username: t.varchar({ length: 255 }).notNull(),
   password: t.varchar({ length: 255 }).notNull(),
   email: t.varchar({ length: 255 }).notNull(),
@@ -23,49 +32,81 @@ export const UserTable = pgTable('user', (t) => ({
 
 // Organization Table Schema
 export const OrganizationTable = pgTable('organization', (t) => ({
-  id: t.varchar('id').primaryKey().$defaultFn(() => crypto.randomUUID()),
+  id: t
+    .varchar('id')
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
   name: t.varchar('name').notNull(),
   description: t.varchar('description'),
-  ownerId: t.varchar('user_id').notNull().references(() => UserTable.id),
-  createdAt: t.timestamp('created_at', { withTimezone: true }).notNull().$defaultFn(() => new Date()),
+  ownerId: t
+    .varchar('user_id')
+    .notNull()
+    .references(() => UserTable.id),
+  createdAt: t
+    .timestamp('created_at', { withTimezone: true })
+    .notNull()
+    .$defaultFn(() => new Date()),
 }));
 
 // Organization User Table Schema
 export const OrganizationUserTable = pgTable('organization_user', (t) => ({
-  id: t.varchar('id').primaryKey().$defaultFn(() => crypto.randomUUID()),
-  userId: t.varchar('user_id').notNull().references(() => UserTable.id),
-  organizationId: t.varchar('organization_id').notNull().references(() => OrganizationTable.id),
-  createdAt: t.timestamp('created_at', { withTimezone: true }).notNull().$defaultFn(() => new Date()),
+  id: t
+    .varchar('id')
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  userId: t
+    .varchar('user_id')
+    .notNull()
+    .references(() => UserTable.id),
+  organizationId: t
+    .varchar('organization_id')
+    .notNull()
+    .references(() => OrganizationTable.id),
+  createdAt: t
+    .timestamp('created_at', { withTimezone: true })
+    .notNull()
+    .$defaultFn(() => new Date()),
 }));
 
 // Relations for Organization
-export const OrganizationRelations = relations(OrganizationTable, ({ one }) => ({
-  owner: one(UserTable, {
-    fields: [OrganizationTable.ownerId],
-    references: [UserTable.id],
-  }),
-}));
+export const OrganizationRelations = relations(
+  OrganizationTable,
+  ({ one }) => ({
+    owner: one(UserTable, {
+      fields: [OrganizationTable.ownerId],
+      references: [UserTable.id],
+    }),
+  })
+);
 
 // Relations for Organization User
-export const OrganizationUserRelations = relations(OrganizationUserTable, ({ one }) => ({
-  user: one(UserTable, {
-    fields: [OrganizationUserTable.userId],
-    references: [UserTable.id],
-  }),
-  organization: one(OrganizationTable, {
-    fields: [OrganizationUserTable.organizationId],
-    references: [OrganizationTable.id],
-  }),
-}));
+export const OrganizationUserRelations = relations(
+  OrganizationUserTable,
+  ({ one }) => ({
+    user: one(UserTable, {
+      fields: [OrganizationUserTable.userId],
+      references: [UserTable.id],
+    }),
+    organization: one(OrganizationTable, {
+      fields: [OrganizationUserTable.organizationId],
+      references: [OrganizationTable.id],
+    }),
+  })
+);
 
 // Session Table Schema
 export const SessionTable = pgTable('session', (t) => ({
   id: t.varchar('id').primaryKey(),
-  userId: t.varchar('user_id').notNull().references(() => UserTable.id),
-  expiresAt: t.timestamp('expires_at', {
-    withTimezone: true,
-    mode: 'date',
-  }).notNull(),
+  userId: t
+    .varchar('user_id')
+    .notNull()
+    .references(() => UserTable.id),
+  expiresAt: t
+    .timestamp('expires_at', {
+      withTimezone: true,
+      mode: 'date',
+    })
+    .notNull(),
 }));
 
 // Image Table Schema
@@ -85,19 +126,40 @@ export const SessionRelations = relations(SessionTable, ({ one }) => ({
 
 // Question Table Schema
 export const QuestionTable = pgTable('question', (t) => ({
-  id: t.varchar('id').primaryKey().$defaultFn(() => crypto.randomUUID()),
+  id: t
+    .varchar('id')
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
   value: t.varchar('value').notNull(),
-  organizationId: t.varchar('organization_id').notNull().references(() => OrganizationTable.id),
-  createdAt: t.timestamp('created_at', { withTimezone: true }).notNull().$defaultFn(() => new Date()),
+  organizationId: t
+    .varchar('organization_id')
+    .notNull()
+    .references(() => OrganizationTable.id),
+  createdAt: t
+    .timestamp('created_at', { withTimezone: true })
+    .notNull()
+    .$defaultFn(() => new Date()),
 }));
 
 // Answer Table Schema
 export const AnswerTable = pgTable('answer', (t) => ({
-  id: t.varchar('id').primaryKey().$defaultFn(() => crypto.randomUUID()),
+  id: t
+    .varchar('id')
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
   value: t.varchar('value').notNull(),
-  questionId: t.varchar('question_id').notNull().references(() => QuestionTable.id),
-  interviewId: t.serial('interview_id').notNull().references(() => InterviewTable.id),
-  createdAt: t.timestamp('created_at', { withTimezone: true }).notNull().$defaultFn(() => new Date()),
+  questionId: t
+    .varchar('question_id')
+    .notNull()
+    .references(() => QuestionTable.id),
+  interviewId: t
+    .serial('interview_id')
+    .notNull()
+    .references(() => InterviewTable.id),
+  createdAt: t
+    .timestamp('created_at', { withTimezone: true })
+    .notNull()
+    .$defaultFn(() => new Date()),
 }));
 
 // Candidate Table Schema
@@ -107,7 +169,7 @@ export const CandidateTable = pgTable('candidate', (t) => ({
   email: t.varchar('email').notNull(),
   phone: t.varchar('phone').notNull(),
   resume: t.varchar('image'),
-  observation: t.varchar('observation'),
+  observation: t.text('observation'),
 }));
 
 // Interview Table Schema
@@ -115,18 +177,28 @@ export const InterviewTable = pgTable('interview', (t) => ({
   id: t.serial('id').primaryKey(),
   name: t.varchar('name').notNull(),
   description: t.varchar('description'),
-  candidateId: t.serial('candidate_id').notNull().references(() => CandidateTable.id),
-  organizationId: t.varchar('organization_id').notNull().references(() => OrganizationTable.id),
+  candidateId: t
+    .serial('candidate_id')
+    .notNull()
+    .references(() => CandidateTable.id),
+  organizationId: t
+    .varchar('organization_id')
+    .notNull()
+    .references(() => OrganizationTable.id),
   password: t.varchar({ length: 255 }).notNull(),
   token: t.varchar({ length: 255 }).notNull(),
-  createdAt: t.timestamp('created_at', {
-    withTimezone: true,
-    mode: 'date',
-  }).notNull(),
-  expiresAt: t.timestamp('expires_at', {
-    withTimezone: true,
-    mode: 'date',
-  }).notNull(),
+  createdAt: t
+    .timestamp('created_at', {
+      withTimezone: true,
+      mode: 'date',
+    })
+    .notNull(),
+  expiresAt: t
+    .timestamp('expires_at', {
+      withTimezone: true,
+      mode: 'date',
+    })
+    .notNull(),
   status: InterviewStatus().default('sent').notNull(),
 }));
 

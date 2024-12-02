@@ -1,3 +1,1 @@
-export const InterviewPage = () => {
-
-};
+export const InterviewPage = () => {};

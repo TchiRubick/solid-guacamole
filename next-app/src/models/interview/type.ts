@@ -1,6 +1,6 @@
-import { InterviewTable } from "@/packages/db/schemas";
-import { createInsertSchema, createSelectSchema } from "drizzle-zod";
-import { z } from "zod";
+import { InterviewTable } from '@/packages/db/schemas';
+import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
+import type { z } from 'zod';
 
 export const zInterviewSelect = createSelectSchema(InterviewTable);
 export const zInterviewInsert = createInsertSchema(InterviewTable);

@@ -1,5 +1,6 @@
 'use client';
 
+import { currentSession } from '@/actions/auth/current-session';
 import { createOrganizationMutation } from '@/actions/organization/create';
 import { Button } from '@/components/ui/button';
 import {
@@ -13,12 +14,11 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
+import { useScopedI18n } from '@/locales/client';
 import { useForm } from '@tanstack/react-form';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { zodValidator } from '@tanstack/zod-form-adapter';
-import { currentSession } from '@/actions/auth/current-session';
 import { useRouter } from 'next/navigation';
-import { useScopedI18n } from '@/locales/client';
 
 export const CreateOrganizationForm = () => {
   const { toast } = useToast();
