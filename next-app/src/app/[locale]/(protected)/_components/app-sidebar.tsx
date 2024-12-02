@@ -25,6 +25,10 @@ const data = {
           title: 'dashboard',
           url: '/dashboard',
         },
+        {
+          title: 'Organization',
+          url: '/organization',
+        },
       ],
     },
     {
