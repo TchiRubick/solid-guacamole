@@ -1,6 +1,10 @@
 import { CandidateTable } from '@/packages/db/schemas';
-import { createSelectSchema } from 'drizzle-zod';
+import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
 import type { z } from 'zod';
 
 export const zCandidateSelect = createSelectSchema(CandidateTable);
+
+export const zCandidateCreate = createInsertSchema(CandidateTable);
+
 export type Candidate = z.infer<typeof zCandidateSelect>;
+export type CandidateInput = z.infer<typeof zCandidateCreate>;

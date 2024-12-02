@@ -168,6 +168,8 @@ export const CandidateTable = pgTable('candidate', (t) => ({
   name: t.varchar('name').notNull(),
   email: t.varchar('email').notNull(),
   phone: t.varchar('phone').notNull(),
+  address: t.varchar('address').notNull(),
+  title: t.varchar('title').notNull(),
   resume: t.varchar('image'),
   observation: t.text('observation'),
 }));

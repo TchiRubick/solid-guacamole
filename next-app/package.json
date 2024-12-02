@@ -14,6 +14,7 @@
     "db:migrate": "drizzle-kit migrate",
     "db:drop": "drizzle-kit drop",
     "db:check": "drizzle-kit check",
+    "db:push": "drizzle-kit push",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
