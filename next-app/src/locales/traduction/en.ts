@@ -44,6 +44,21 @@ export default {
     'user-already-exists': 'User already exists',
     'failed-to-create-user': 'Failed to create user',
   },
+  'create-organization-form': {
+    title: 'Create Organization',
+    description: 'Enter your details below to create your organization.',
+    'name-label': 'Name',
+    'name-placeholder': 'Name',
+    'description-label': 'Description',
+    'description-placeholder': 'Description',
+    'submit-button': 'Create',
+  },
+  'card-no-organization': {
+    title: 'No organization',
+    description: 'You don\'t have any organization yet. Create one to get started.',
+    'second-description': 'Or get invited by giving your mail address to the org owner.',
+    'create-button': 'Create organization +',
+  },
   'server-error': {
     'min-email-length': 'Email must be at least 3 characters',
     'max-email-length': 'Email must be less than 255 characters',

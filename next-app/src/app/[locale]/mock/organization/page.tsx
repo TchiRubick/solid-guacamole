@@ -1,9 +1,9 @@
-import { CreateOrganizationForm } from './_components/create-organization-form';
+import { CardNoOrganization } from './_components/card-no-organization';
 
 const OrganizationPage = () => {
   return (
-    <div>
-      <CreateOrganizationForm />
+    <div className='flex items-center justify-center'>
+      <CardNoOrganization />
     </div>
   );
 };
