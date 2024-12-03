@@ -10,9 +10,9 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { Building2, Delete, Eye, Users } from 'lucide-react';
-import { DialogCloseButton } from './_components/DialogCloseButton';
+import { DialogCloseButton } from './DialogCloseButton';
 
-const Dashboard = () => (
+export const Dashboard = () => (
   <div className='min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800'>
     <div className='mx-auto max-w-7xl p-6'>
       {/* Header Section */}
@@ -161,5 +161,3 @@ const Dashboard = () => (
     </div>
   </div>
 );
-
-export default Dashboard;

@@ -1,5 +1,5 @@
 'use server';
 
-import { CandidateInput } from "@/models/candidate/type";
+import type { CandidateInput } from '@/models/candidate/type';
 
-export const createCandidateMutation = async (candidate: CandidateInput) => { };
+export const createCandidateMutation = async (candidate: CandidateInput) => {};

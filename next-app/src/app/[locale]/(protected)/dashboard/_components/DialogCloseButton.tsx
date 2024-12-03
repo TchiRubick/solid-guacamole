@@ -28,11 +28,7 @@ export function DialogCloseButton() {
             <Label htmlFor='link' className='sr-only'>
               Link
             </Label>
-            <Input
-              id='link'
-              defaultValue='https://ui.shadcn.com/docs/installation'
-              readOnly
-            />
+            <Input id='link' placeholder='Enter the mail adress' />
           </div>
           <Button type='submit' size='sm' className='px-3'>
             Invite
