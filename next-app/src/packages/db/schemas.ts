@@ -101,6 +101,10 @@ export const SessionTable = pgTable('session', (t) => ({
     .varchar('user_id')
     .notNull()
     .references(() => UserTable.id),
+  organizationId: t
+    .varchar('organization_id')
+    .notNull()
+    .references(() => OrganizationTable.id),
   expiresAt: t
     .timestamp('expires_at', {
       withTimezone: true,
@@ -109,19 +113,23 @@ export const SessionTable = pgTable('session', (t) => ({
     .notNull(),
 }));
 
-// Image Table Schema
-export const ImageTable = pgTable('image', (t) => ({
-  id: t.serial('id').primaryKey(),
-  url: t.varchar('url').notNull(),
-  type: t.varchar('type'),
-}));
-
 // Relations for Session
 export const SessionRelations = relations(SessionTable, ({ one }) => ({
   user: one(UserTable, {
     fields: [SessionTable.userId],
     references: [UserTable.id],
   }),
+  organization: one(OrganizationTable, {
+    fields: [SessionTable.organizationId],
+    references: [OrganizationTable.id],
+  }),
+}));
+
+// Image Table Schema
+export const ImageTable = pgTable('image', (t) => ({
+  id: t.serial('id').primaryKey(),
+  url: t.varchar('url').notNull(),
+  type: t.varchar('type'),
 }));
 
 // Question Table Schema

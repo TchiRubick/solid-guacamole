@@ -1,13 +1,11 @@
-import List from "./_components/list"
-
+import List from './_components/list';
 
 const Listinterview = () => {
-    return (
-        <>
-        <List/>
-        </>
-    )
-    
-}
+  return (
+    <>
+      <List />
+    </>
+  );
+};
 
 export default Listinterview;

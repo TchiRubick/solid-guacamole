@@ -25,14 +25,10 @@ export const CreateOrganizationForm = () => {
   const router = useRouter();
   const tCreateOrganizationForm = useScopedI18n('create-organization-form');
 
-  const { data: user } = useQuery({
+  const { data: userData } = useQuery({
     queryKey: ['user'],
     queryFn: currentSession,
   });
-
-  if (!user?.user) {
-    return <div>OwnerID is not found</div>;
-  }
 
   const { mutate } = useMutation({
     mutationFn: createOrganizationMutation,
@@ -57,11 +53,13 @@ export const CreateOrganizationForm = () => {
     defaultValues: {
       name: '',
       description: '',
-      ownerId: user.user.id,
+      ownerId: userData?.user?.id ?? '',
     },
     validatorAdapter: zodValidator(),
     onSubmit: (values) => {
-      mutate(values.value);
+      if (userData?.user) {
+        mutate(values.value);
+      }
     },
   });
   return (

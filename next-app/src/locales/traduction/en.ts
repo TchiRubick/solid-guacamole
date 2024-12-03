@@ -55,8 +55,10 @@ export default {
   },
   'card-no-organization': {
     title: 'No organization',
-    description: 'You don\'t have any organization yet. Create one to get started.',
-    'second-description': 'Or get invited by giving your mail address to the org owner.',
+    description:
+      "You don't have any organization yet. Create one to get started.",
+    'second-description':
+      'Or get invited by giving your mail address to the org owner.',
     'create-button': 'Create organization +',
   },
   'server-error': {

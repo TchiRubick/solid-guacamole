@@ -59,20 +59,12 @@ export const AppSidebar = ({
   ...props
 }: React.ComponentProps<typeof Sidebar>) => {
   const pathname = usePathname();
-
   const isActive = (url: string) => pathname === url;
 
   return (
     <Sidebar variant='floating' {...props}>
       <SidebarHeader>
-        <OrganizationSwitcher
-          organization={[
-            {
-              name: 'Organization 1',
-              id: '1',
-            },
-          ]}
-        />
+        <OrganizationSwitcher />
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>

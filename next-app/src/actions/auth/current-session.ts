@@ -12,7 +12,7 @@ export const currentSession = cache(
     const token = cookieStore.get('session')?.value ?? null;
 
     if (token === null) {
-      return { session: null, user: null };
+      return { session: null, user: null, organization: null };
     }
 
     const result = await validateSessionToken(token);

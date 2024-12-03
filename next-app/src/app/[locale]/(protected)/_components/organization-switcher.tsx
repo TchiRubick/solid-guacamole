@@ -1,8 +1,6 @@
 'use client';
 
 import { ChevronsUpDown, Plus } from 'lucide-react';
-import * as React from 'react';
-
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,21 +16,56 @@ import {
   useSidebar,
 } from '@/components/ui/sidebar';
 import { cn } from '@/lib/utils';
+import { useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
+import { switchSessionOrganization } from '@/actions/auth/switch-session-organization';
+import { useToast } from '@/hooks/use-toast';
+import { currentSession } from '@/actions/auth/current-session';
+import { useQuery } from '@tanstack/react-query';
+import { getOrganizations } from '@/actions/organization/get-organizations';
+import { Skeleton } from '@/components/ui/skeleton';
 
-export const OrganizationSwitcher = ({
-  organization,
-}: {
-  organization: {
-    name: string;
-    id: string;
-  }[];
-}) => {
+export const OrganizationSwitcher = () => {
+  const { data: session } = useQuery({
+    queryKey: ['session'],
+    queryFn: currentSession,
+  });
+  const { data: organizations = [] } = useQuery({
+    queryKey: ['organizations'],
+    queryFn: () => getOrganizations(session?.user?.id ?? ''),
+  });
+
   const { isMobile } = useSidebar();
-  const [activeTeam, setActiveTeam] = React.useState(organization[0]);
+  const { toast } = useToast();
+  const [activeOrganization, setActiveOrganization] = useState(
+    organizations[0]
+  );
+
+  const { mutateAsync } = useMutation({
+    mutationFn: switchSessionOrganization,
+    onSuccess: () => {
+      window.location.reload();
+    },
+    onError: (error: Error) => {
+      toast({
+        title: 'error',
+        description: error.message,
+        variant: 'destructive',
+      });
+    },
+  });
+
+  const handleOrganizationClick = (organizationId: string) => {
+    const userId = session?.user?.id;
+
+    if (!userId) return;
+
+    mutateAsync({ userId, organizationId });
+  };
 
   const activeClassName = (id: string) =>
     cn('gap-2 p-2', {
-      'text-primary bg-primary/20': id === activeTeam.id,
+      'text-primary bg-primary/20': id === activeOrganization?.id,
     });
 
   return (
@@ -46,7 +79,9 @@ export const OrganizationSwitcher = ({
             >
               <div className='grid flex-1 text-left text-sm leading-tight'>
                 <span className='truncate font-semibold'>
-                  {activeTeam.name}
+                  {session?.organization?.name ?? (
+                    <Skeleton className='h-8 w-full' />
+                  )}
                 </span>
               </div>
               <ChevronsUpDown className='ml-auto' />
@@ -61,13 +96,16 @@ export const OrganizationSwitcher = ({
             <DropdownMenuLabel className='text-xs text-muted-foreground'>
               organization
             </DropdownMenuLabel>
-            {organization.map((team) => (
+            {organizations.map((organization) => (
               <DropdownMenuItem
-                key={team.id}
-                onClick={() => setActiveTeam(team)}
-                className={activeClassName(team.id)}
+                key={organization.id}
+                onClick={() => {
+                  setActiveOrganization(organization);
+                  handleOrganizationClick(organization.organizationId);
+                }}
+                className={`${activeClassName(organization.id)} cursor-pointer`}
               >
-                {team.name}
+                {organization.organization.name}
               </DropdownMenuItem>
             ))}
             <DropdownMenuSeparator />

@@ -32,6 +32,7 @@ export const CreateQuestionForm = () => {
   const { handleSubmit, Field } = useForm({
     defaultValues: {
       value: '',
+      organizationId: '',
     },
     validatorAdapter: zodValidator(),
     onSubmit: (values) => {

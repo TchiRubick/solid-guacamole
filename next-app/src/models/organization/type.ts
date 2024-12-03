@@ -1,5 +1,5 @@
 import { OrganizationTable } from '@/packages/db/schemas';
-import { createInsertSchema } from 'drizzle-zod';
+import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
 import { z } from 'zod';
 
 export const zOrganization = createInsertSchema(OrganizationTable, {
@@ -8,3 +8,5 @@ export const zOrganization = createInsertSchema(OrganizationTable, {
 });
 
 export type InsertOrganization = z.infer<typeof zOrganization>;
+export const zOrganizationSelect = createSelectSchema(OrganizationTable);
+export type Organization = z.infer<typeof zOrganizationSelect>;
