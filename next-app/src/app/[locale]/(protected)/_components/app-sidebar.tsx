@@ -16,6 +16,7 @@ import {
 import { usePathname } from 'next/navigation';
 import { OrganizationSwitcher } from './organization-switcher';
 import { SidebarUser } from './sibar-user';
+import Link from 'next/link';
 
 const data = {
   navMain: [
@@ -25,7 +26,7 @@ const data = {
       items: [
         {
           title: 'Dashboard',
-          url: '/organization',
+          url: '/organization/dashboard',
         },
         {
           title: 'Manage',
@@ -72,9 +73,9 @@ export const AppSidebar = ({
             {data.navMain.map((item) => (
               <SidebarMenuItem key={item.title}>
                 <SidebarMenuButton asChild>
-                  <a href={item.url} className='font-medium'>
+                  <Link href={item.url} prefetch className='font-medium'>
                     {item.title}
-                  </a>
+                  </Link>
                 </SidebarMenuButton>
                 {item.items?.length ? (
                   <SidebarMenuSub className='ml-0 border-l-0 px-1.5'>
@@ -84,7 +85,9 @@ export const AppSidebar = ({
                           asChild
                           isActive={isActive(item.url)}
                         >
-                          <a href={item.url}>{item.title}</a>
+                          <Link href={item.url} prefetch>
+                            {item.title}
+                          </Link>
                         </SidebarMenuSubButton>
                       </SidebarMenuSubItem>
                     ))}

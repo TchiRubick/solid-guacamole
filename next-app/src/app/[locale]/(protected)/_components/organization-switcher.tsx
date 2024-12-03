@@ -1,6 +1,7 @@
 'use client';
 
 import { ChevronsUpDown, Plus } from 'lucide-react';
+import Link from 'next/link';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -109,13 +110,19 @@ export const OrganizationSwitcher = () => {
               </DropdownMenuItem>
             ))}
             <DropdownMenuSeparator />
-            <DropdownMenuItem className='gap-2 p-2'>
-              <div className='flex size-6 items-center justify-center rounded-md border bg-background'>
-                <Plus className='size-4' />
-              </div>
-              <div className='font-medium text-muted-foreground'>
-                Create an organization
-              </div>
+            <DropdownMenuItem>
+              <Link
+                href='/organization/create'
+                prefetch
+                className='flex w-full items-center gap-2'
+              >
+                <div className='flex size-6 items-center justify-center rounded-md border bg-background'>
+                  <Plus className='size-4' />
+                </div>
+                <div className='font-medium text-muted-foreground'>
+                  Create an organization
+                </div>
+              </Link>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
