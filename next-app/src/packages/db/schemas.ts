@@ -68,6 +68,28 @@ export const OrganizationUserTable = pgTable('organization_user', (t) => ({
     .$defaultFn(() => new Date()),
 }));
 
+export const UserOrganizationInviteTable = pgTable(
+  'user_organization_invite',
+  (t) => ({
+    id: t
+      .varchar('id')
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    userId: t.varchar('user_id').references(() => UserTable.id),
+    organizationId: t
+      .varchar('organization_id')
+      .notNull()
+      .references(() => OrganizationTable.id),
+    expiresAt: t
+      .timestamp('expires_at', {
+        withTimezone: true,
+        mode: 'date',
+      })
+      .notNull()
+      .$defaultFn(() => new Date(new Date().setDate(new Date().getDate() + 3))),
+  })
+);
+
 // Relations for Organization
 export const OrganizationRelations = relations(
   OrganizationTable,
