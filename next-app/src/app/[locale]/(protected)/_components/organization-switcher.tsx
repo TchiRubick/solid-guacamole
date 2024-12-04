@@ -33,7 +33,6 @@ export const OrganizationSwitcher = () => {
     queryFn: async () => {
       if (!session?.user?.id) return [];
       const orgs = await getOrganizations(session?.user?.id);
-
       return orgs;
     },
     enabled: !!session?.user?.id,

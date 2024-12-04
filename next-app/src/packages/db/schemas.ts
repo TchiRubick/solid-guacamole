@@ -41,7 +41,7 @@ export const OrganizationTable = pgTable('organization', (t) => ({
   ownerId: t
     .varchar('user_id')
     .notNull()
-    .references(() => UserTable.id),
+    .references(() => UserTable.id, { onDelete: 'cascade' }),
   createdAt: t
     .timestamp('created_at', { withTimezone: true })
     .notNull()
@@ -61,7 +61,7 @@ export const OrganizationUserTable = pgTable('organization_user', (t) => ({
   organizationId: t
     .varchar('organization_id')
     .notNull()
-    .references(() => OrganizationTable.id),
+    .references(() => OrganizationTable.id, { onDelete: 'cascade' }),
   createdAt: t
     .timestamp('created_at', { withTimezone: true })
     .notNull()
