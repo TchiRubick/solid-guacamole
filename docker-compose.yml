@@ -56,6 +56,7 @@ services:
       - external-network
       - internal-network
     command: [ "/bin/zsh" ]
+    user: "${UID}:${GID}"
 
 volumes:
   postgres_data:
