@@ -31,6 +31,7 @@ export const OrganizationSwitcher = () => {
     queryKey: ['session'],
     queryFn: currentSession,
   });
+
   const { data: organizations = [] } = useQuery({
     queryKey: ['organizations'],
     queryFn: () => getOrganizations(session?.user?.id ?? ''),
