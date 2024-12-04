@@ -31,7 +31,7 @@ export const SidebarUser = () => {
 
   const { mutate } = useMutation({
     mutationFn: signout,
-    onMutate: () => {
+    onSuccess: () => {
       router.push('/');
     },
   });

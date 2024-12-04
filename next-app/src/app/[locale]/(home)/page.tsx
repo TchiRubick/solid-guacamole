@@ -7,6 +7,14 @@ const HomePage = async () => {
 
   const { session } = await currentSession();
 
+  const agreedLink = () => {
+    if (!session) {
+      return '/signin';
+    }
+
+    return '/organization';
+  };
+
   return (
     <div className='flex min-h-screen items-center justify-center bg-gray-100'>
       <div className='max-w-2xl px-4 text-center'>
@@ -24,7 +32,7 @@ const HomePage = async () => {
               {t('fit-button')}
             </button>
           </Link>
-          <Link href={!session ? '/signin' : '/dashboard'}>
+          <Link href={agreedLink()}>
             <button className='rounded-lg bg-gray-200 px-6 py-3 text-gray-800 transition duration-300 hover:bg-gray-300'>
               {t('disagree-button')}
             </button>

@@ -7,7 +7,6 @@ import { createSession } from '@/models/session';
 import { checkExisting, create } from '@/models/user';
 import { signupSchema } from '@/validator/signup.validator';
 import type { z } from 'zod';
-import { getOneOrganizationByUserId } from '@/models/organization/$getOne';
 
 type SigninInput = z.infer<ReturnType<typeof signupSchema>>;
 
@@ -36,13 +35,7 @@ export const signup = async (input: SigninInput) => {
     throw tSignup('failed-to-create-user');
   }
 
-  const organization = await getOneOrganizationByUserId(user.id);
-
-  if (!organization) {
-    throw new Error('Organization not found');
-  }
-
-  const session = await createSession(user.id, organization.organizationId);
+  const session = await createSession(user.id, null);
 
   await setSessionTokenCookie(session.id, session.expiresAt);
 };

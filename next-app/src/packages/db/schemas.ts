@@ -103,7 +103,6 @@ export const SessionTable = pgTable('session', (t) => ({
     .references(() => UserTable.id),
   organizationId: t
     .varchar('organization_id')
-    .notNull()
     .references(() => OrganizationTable.id),
   expiresAt: t
     .timestamp('expires_at', {

@@ -10,9 +10,11 @@ export const signout = async () => {
   const token = cookieStore.get('session')?.value ?? null;
 
   if (token === null) {
-    return;
+    return true;
   }
 
   await invalidateSession(token);
   await deleteSessionTokenCookie();
+
+  return true;
 };

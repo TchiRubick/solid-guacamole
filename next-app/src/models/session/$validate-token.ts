@@ -20,7 +20,7 @@ export const validateSessionToken = async (
     })
     .from(SessionTable)
     .innerJoin(UserTable, eq(SessionTable.userId, UserTable.id))
-    .innerJoin(
+    .leftJoin(
       OrganizationTable,
       eq(SessionTable.organizationId, OrganizationTable.id)
     )

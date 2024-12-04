@@ -3,11 +3,11 @@
 import { verifyPassword } from '@/lib/password';
 import { setSessionTokenCookie } from '@/lib/session-cookies';
 import { getScopedI18n } from '@/locales/server';
+import { getOneOrganizationByUserId } from '@/models/organization/$getOne';
 import { createSession } from '@/models/session';
 import { userByEmail } from '@/models/user';
 import { signinValidator } from '@/validator/signin.validator';
 import type { z } from 'zod';
-import { getOneOrganizationByUserId } from '@/models/organization/$getOne';
 
 type SigninInput = z.infer<ReturnType<typeof signinValidator>>;
 
@@ -25,10 +25,6 @@ export const signin = async (input: SigninInput) => {
 
   const organization = await getOneOrganizationByUserId(user.id);
 
-  if (!organization) {
-    throw new Error('Organization not found');
-  }
-
   const isPasswordValid = await verifyPassword(
     user.password,
     validatedInput.password
@@ -38,7 +34,9 @@ export const signin = async (input: SigninInput) => {
     throw tSignin('invalid-credentials');
   }
 
-  const session = await createSession(user.id, organization.organizationId);
+  const organizationId = organization?.id ?? null;
+
+  const session = await createSession(user.id, organizationId);
 
   await setSessionTokenCookie(session.id, session.expiresAt);
 };
