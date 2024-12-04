@@ -4,18 +4,31 @@ import { createCandidateMutation } from '@/actions/candidate/create-candidate';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { toast } from '@/hooks/use-toast';
 import { useForm } from '@tanstack/react-form';
 import { useMutation } from '@tanstack/react-query';
 import { zodValidator } from '@tanstack/zod-form-adapter';
+import { useRouter } from 'next/navigation';
 
 export const CreateCandidateForm = () => {
+  const router = useRouter();
+
   const { mutate } = useMutation({
     mutationFn: createCandidateMutation,
-    onSuccess: () => {
-      console.log('success');
+    onSuccess: (response) => {
+      toast({
+        title: 'Candidate created',
+        description: 'You can move forward with the next steps',
+      });
+
+      router.push(`/candidate/${response.id}`);
     },
     onError: (error: Error) => {
-      console.log('error', error);
+      toast({
+        title: 'Failed candidate creation',
+        description: error.message,
+        variant: 'destructive',
+      });
     },
   });
 

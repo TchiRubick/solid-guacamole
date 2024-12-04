@@ -179,6 +179,10 @@ export const CandidateTable = pgTable('candidate', (t) => ({
   title: t.varchar('title').notNull(),
   resume: t.varchar('image'),
   observation: t.text('observation'),
+  organizationId: t
+    .varchar('organization_id')
+    .notNull()
+    .references(() => OrganizationTable.id),
 }));
 
 // Interview Table Schema

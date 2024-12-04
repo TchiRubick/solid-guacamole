@@ -1,7 +1,8 @@
 'use client';
 
-import { ChevronsUpDown, Plus } from 'lucide-react';
-import Link from 'next/link';
+import { currentSession } from '@/actions/auth/current-session';
+import { switchSessionOrganization } from '@/actions/auth/switch-session-organization';
+import { getOrganizations } from '@/actions/organization/get-organizations';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,15 +17,11 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from '@/components/ui/sidebar';
-import { cn } from '@/lib/utils';
-import { useState } from 'react';
-import { useMutation } from '@tanstack/react-query';
-import { switchSessionOrganization } from '@/actions/auth/switch-session-organization';
-import { useToast } from '@/hooks/use-toast';
-import { currentSession } from '@/actions/auth/current-session';
-import { useQuery } from '@tanstack/react-query';
-import { getOrganizations } from '@/actions/organization/get-organizations';
 import { Skeleton } from '@/components/ui/skeleton';
+import { useToast } from '@/hooks/use-toast';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { ChevronsUpDown, Plus } from 'lucide-react';
+import Link from 'next/link';
 
 export const OrganizationSwitcher = () => {
   const { data: session } = useQuery({
@@ -34,17 +31,17 @@ export const OrganizationSwitcher = () => {
   const { data: organizations } = useQuery({
     queryKey: ['organizations'],
     queryFn: async () => {
-      if (!session?.user?.id) return []; 
-      const orgs = await getOrganizations(session?.user?.id)
-      console.log('Fetche organization :',orgs)
-      return orgs
+      if (!session?.user?.id) return [];
+      const orgs = await getOrganizations(session?.user?.id);
+      console.log('Fetche organization :', orgs);
+      return orgs;
     },
-    enabled: !!session?.user?.id, 
+    enabled: !!session?.user?.id,
   });
   const { isMobile } = useSidebar();
   const { toast } = useToast();
-  
-  const { mutateAsync,isPending } = useMutation({
+
+  const { mutateAsync, isPending } = useMutation({
     mutationFn: switchSessionOrganization,
     onSuccess: () => {
       window.location.reload();
@@ -64,7 +61,7 @@ export const OrganizationSwitcher = () => {
     if (!userId) return;
 
     mutateAsync({ userId, organizationId });
-  };  
+  };
   return (
     <SidebarMenu>
       <SidebarMenuItem>
@@ -93,21 +90,25 @@ export const OrganizationSwitcher = () => {
             <DropdownMenuLabel className='text-xs text-muted-foreground'>
               organization
             </DropdownMenuLabel>
-            {isPending ? (<div>
-              <Skeleton className='h-4 w-full'/>
-              <Skeleton className='h-4 w-full'/>
-              <Skeleton className='h-4 w-full'/>
-            </div>) : organizations?.map((organization) => (
-              <DropdownMenuItem
-                className='cursor-pointer'
-                key={organization.id}
-                onClick={() => {
-                  handleOrganizationClick(organization.organizationId);
-                }}
-              >
-                {organization.organization.name}
-              </DropdownMenuItem>
-            ))}
+            {isPending ? (
+              <div>
+                <Skeleton className='h-4 w-full' />
+                <Skeleton className='h-4 w-full' />
+                <Skeleton className='h-4 w-full' />
+              </div>
+            ) : (
+              organizations?.map((organization) => (
+                <DropdownMenuItem
+                  className='cursor-pointer'
+                  key={organization.id}
+                  onClick={() => {
+                    handleOrganizationClick(organization.organizationId);
+                  }}
+                >
+                  {organization.organization.name}
+                </DropdownMenuItem>
+              ))
+            )}
             <DropdownMenuSeparator />
             <DropdownMenuItem>
               <Link

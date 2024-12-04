@@ -20,6 +20,8 @@ import {
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table';
+import { Eye } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import { useMemo } from 'react';
 
 const columnsFn = (onClick: (id: number) => void): ColumnDef<Candidate>[] => [
@@ -38,22 +40,29 @@ const columnsFn = (onClick: (id: number) => void): ColumnDef<Candidate>[] => [
   {
     accessorKey: 'id',
     header: 'Action',
-    accessorFn: (candidate: Candidate) => (
-      <Button onClick={() => onClick(candidate.id)} className='text-primary'>
-        View
+    cell: ({ row }) => (
+      <Button
+        onClick={() => onClick(row.original.id)}
+        variant='ghost'
+        size='icon'
+        className='h-8 w-8'
+      >
+        <Eye className='h-4 w-4' />
       </Button>
     ),
   },
 ];
 
 export const CandidateTable = () => {
+  const router = useRouter();
+
   const { data, isFetching } = useQuery({
     queryKey: ['candidates'],
     queryFn: () => getAllCandidateAction(),
   });
 
   const handleOnRowEditClick = (id: number) => {
-    console.log(id);
+    router.push(`/candidate/${id}`);
   };
 
   const columns = useMemo(() => columnsFn(handleOnRowEditClick), []);
