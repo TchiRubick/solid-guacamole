@@ -99,6 +99,7 @@ export const OrganizationSwitcher = () => {
               <Skeleton className='h-4 w-full'/>
             </div>) : organizations?.map((organization) => (
               <DropdownMenuItem
+                className='cursor-pointer'
                 key={organization.id}
                 onClick={() => {
                   handleOrganizationClick(organization.organizationId);

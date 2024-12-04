@@ -17,12 +17,15 @@ import { usePathname } from 'next/navigation';
 import { OrganizationSwitcher } from './organization-switcher';
 import { SidebarUser } from './sibar-user';
 import Link from 'next/link';
+import { currentSession } from '@/actions/auth/current-session';
+import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 
 const data = {
   navMain: [
     {
       title: 'Organization',
-      url: '/organization',
+      url: '#',
       items: [
         {
           title: 'Dashboard',
@@ -56,12 +59,15 @@ const data = {
   ],
 };
 
-export const AppSidebar = ({
+export const AppSidebar =  ({
   ...props
 }: React.ComponentProps<typeof Sidebar>) => {
   const pathname = usePathname();
   const isActive = (url: string) => pathname === url;
-
+  const { data: session } = useQuery({
+    queryKey: ['session'],
+    queryFn: currentSession,
+  });
   return (
     <Sidebar variant='floating' {...props}>
       <SidebarHeader>
@@ -70,7 +76,7 @@ export const AppSidebar = ({
       <SidebarContent>
         <SidebarGroup>
           <SidebarMenu className='gap-2'>
-            {data.navMain.map((item) => (
+            {session?.organization && (data.navMain.map((item) => (
               <SidebarMenuItem key={item.title}>
                 <SidebarMenuButton asChild>
                   <Link href={item.url} prefetch className='font-medium'>
@@ -94,7 +100,7 @@ export const AppSidebar = ({
                   </SidebarMenuSub>
                 ) : null}
               </SidebarMenuItem>
-            ))}
+            )))}
           </SidebarMenu>
         </SidebarGroup>
       </SidebarContent>

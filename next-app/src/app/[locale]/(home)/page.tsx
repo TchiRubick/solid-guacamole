@@ -11,7 +11,6 @@ const HomePage = async () => {
     if (!session) {
       return '/signin';
     }
-
     return '/organization';
   };
 
