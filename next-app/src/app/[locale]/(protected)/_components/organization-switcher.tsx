@@ -22,8 +22,10 @@ import { useToast } from '@/hooks/use-toast';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { ChevronsUpDown, Plus } from 'lucide-react';
 import Link from 'next/link';
+import { useScopedI18n } from '@/locales/client';
 
 export const OrganizationSwitcher = () => {
+  const tOrganizationSwitcher = useScopedI18n('organization-switcher');
   const { data: session } = useQuery({
     queryKey: ['session'],
     queryFn: currentSession,
@@ -47,7 +49,7 @@ export const OrganizationSwitcher = () => {
     },
     onError: (error: Error) => {
       toast({
-        title: 'error',
+        title: `${tOrganizationSwitcher('toast-error-title')}`,
         description: error.message,
         variant: 'destructive',
       });
@@ -87,7 +89,7 @@ export const OrganizationSwitcher = () => {
             sideOffset={4}
           >
             <DropdownMenuLabel className='text-xs text-muted-foreground'>
-              organization
+              {tOrganizationSwitcher('organization-menu-label')}
             </DropdownMenuLabel>
             {isPending ? (
               <div>
@@ -98,7 +100,7 @@ export const OrganizationSwitcher = () => {
             ) : (
               organizations?.map((organization) => (
                 <DropdownMenuItem
-                  className='cursor-pointer'
+                  className={`cursor-pointer ${organization.organizationId === session?.organization?.id ? 'rounded-lg border-2 border-primary/20 bg-background' : ''}`}
                   key={organization.id}
                   onClick={() => {
                     handleOrganizationClick(organization.organizationId);
@@ -119,7 +121,7 @@ export const OrganizationSwitcher = () => {
                   <Plus className='size-4' />
                 </div>
                 <div className='font-medium text-muted-foreground'>
-                  Create an organization
+                  {tOrganizationSwitcher('create-organization')}
                 </div>
               </Link>
             </DropdownMenuItem>

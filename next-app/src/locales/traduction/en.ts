@@ -56,6 +56,11 @@ export default {
     'toast-success': 'Organization created successfully',
     'toast-error-title': 'Error',
   },
+  'organization-switcher': {
+    'organization-menu-label': 'Organization',
+    'create-organization': 'Create organization',
+    'toast-error-title': 'Error',
+  },
   'card-no-organization': {
     title: 'No organization',
     description:
