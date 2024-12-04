@@ -13,6 +13,10 @@ export const createCandidateMutation = async (
     throw new Error('Not authenticated');
   }
 
+  if (!session.organizationId) {
+    throw new Error('No organization');
+  }
+
   const insertCandidate = zCandidateCreate.parse({
     ...candidate,
     organizationId: session.organizationId,
