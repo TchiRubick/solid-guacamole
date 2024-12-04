@@ -18,11 +18,10 @@ import { useScopedI18n } from '@/locales/client';
 import { useForm } from '@tanstack/react-form';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { zodValidator } from '@tanstack/zod-form-adapter';
-import { useRouter } from 'next/navigation';
+import { Loader2 } from 'lucide-react';
 
 export const CreateOrganizationForm = () => {
   const { toast } = useToast();
-  const router = useRouter();
   const tCreateOrganizationForm = useScopedI18n('create-organization-form');
 
   const { data: userData } = useQuery({
@@ -30,19 +29,19 @@ export const CreateOrganizationForm = () => {
     queryFn: currentSession,
   });
 
-  const { mutate } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: createOrganizationMutation,
     onSuccess: () => {
       toast({
-        title: 'Success',
-        description: 'Organization created successfully',
+        title: `${tCreateOrganizationForm('toast-success-title')}`,
+        description: `${tCreateOrganizationForm('toast-success')}`,
       });
 
-      router.push('/organization');
+      window.location.href = '/organization/dashboard';
     },
     onError: (error: Error) => {
       toast({
-        title: 'Error',
+        title: `${tCreateOrganizationForm('toast-error-title')}`,
         description: error.message,
         variant: 'destructive',
       });
@@ -117,7 +116,11 @@ export const CreateOrganizationForm = () => {
               )}
             </Field>
             <Button type='submit' className='mt-4'>
-              {tCreateOrganizationForm('submit-button')}
+              {isPending ? (
+                <Loader2 className='animate-spin' />
+              ) : (
+                tCreateOrganizationForm('submit-button')
+              )}
             </Button>
           </form>
         </CardContent>

@@ -52,6 +52,9 @@ export default {
     'description-label': 'Description',
     'description-placeholder': 'Description',
     'submit-button': 'Create',
+    'toast-success-title': 'Success',
+    'toast-success': 'Organization created successfully',
+    'toast-error-title': 'Error',
   },
   'card-no-organization': {
     title: 'No organization',
