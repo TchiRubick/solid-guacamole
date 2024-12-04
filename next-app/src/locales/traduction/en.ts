@@ -61,6 +61,17 @@ export default {
       'Or get invited by giving your mail address to the org owner.',
     'create-button': 'Create organization +',
   },
+
+  'details-organization-form': {
+    'label-name': 'Name',
+    'name-placeholder': 'Organization name',
+    'label-description': 'Description',
+    'description-placeholder': 'Organization description',
+    'button-save': 'Save',
+    'toast-success-title': 'Success',
+    'toast-success': 'Organization updated successfully',
+    'toast-error-title': 'Error',
+  },
   'server-error': {
     'min-email-length': 'Email must be at least 3 characters',
     'max-email-length': 'Email must be less than 255 characters',

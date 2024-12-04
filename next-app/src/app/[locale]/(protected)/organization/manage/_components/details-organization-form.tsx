@@ -12,9 +12,11 @@ import { useMutation } from '@tanstack/react-query';
 import { updateOrganizationMutation } from '@/actions/organization/update';
 import { zodValidator } from '@tanstack/zod-form-adapter';
 import { useToast } from '@/hooks/use-toast';
+import { useScopedI18n } from '@/locales/client';
 
 export const DetailsOrganizationForm = () => {
   const { toast } = useToast();
+  const t = useScopedI18n('details-organization-form');
   const { data: session } = useQuery({
     queryKey: ['session'],
     queryFn: currentSession,
@@ -24,14 +26,14 @@ export const DetailsOrganizationForm = () => {
     mutationFn: updateOrganizationMutation,
     onSuccess: () => {
       toast({
-        title: 'Success',
-        description: 'Organization updated successfully',
+        title: `${t('toast-success-title')}`,
+        description: `${t('toast-success')}`,
       });
       window.location.reload();
     },
     onError: (error: Error) => {
       toast({
-        title: 'Error',
+        title: `${t('toast-error-title')}`,
         description: error.message,
         variant: 'destructive',
       });
@@ -63,7 +65,7 @@ export const DetailsOrganizationForm = () => {
         }}
       >
         <div>
-          <Label htmlFor='name'>Name</Label>
+          <Label htmlFor='name'>{t('label-name')}</Label>
           <Field name='name'>
             {(field) => (
               <Input
@@ -73,13 +75,13 @@ export const DetailsOrganizationForm = () => {
                 onBlur={field.handleBlur}
                 type='text'
                 onChange={(e) => field.handleChange(e.target.value)}
-                placeholder='Organization name'
+                placeholder={t('name-placeholder')}
               />
             )}
           </Field>
         </div>
         <div>
-          <Label htmlFor='description'>Description</Label>
+          <Label htmlFor='description'>{t('label-description')}</Label>
           <Field name='description'>
             {(field) => (
               <Textarea
@@ -88,7 +90,7 @@ export const DetailsOrganizationForm = () => {
                 value={field.state.value}
                 onBlur={field.handleBlur}
                 onChange={(e) => field.handleChange(e.target.value)}
-                placeholder='Organization description'
+                placeholder={t('description-placeholder')}
               />
             )}
           </Field>
@@ -98,7 +100,7 @@ export const DetailsOrganizationForm = () => {
           size='sm'
           className='mt-4 grid justify-self-end'
         >
-          Save
+          {t('button-save')}
         </Button>
       </form>
     </Card>
