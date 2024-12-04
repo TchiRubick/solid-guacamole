@@ -31,19 +31,20 @@ export const OrganizationSwitcher = () => {
     queryKey: ['session'],
     queryFn: currentSession,
   });
-
-  const { data: organizations = [] } = useQuery({
+  const { data: organizations } = useQuery({
     queryKey: ['organizations'],
-    queryFn: () => getOrganizations(session?.user?.id ?? ''),
+    queryFn: async () => {
+      if (!session?.user?.id) return []; 
+      const orgs = await getOrganizations(session?.user?.id)
+      console.log('Fetche organization :',orgs)
+      return orgs
+    },
+    enabled: !!session?.user?.id, 
   });
-
   const { isMobile } = useSidebar();
   const { toast } = useToast();
-  const [activeOrganization, setActiveOrganization] = useState(
-    organizations[0]
-  );
-
-  const { mutateAsync } = useMutation({
+  
+  const { mutateAsync,isPending } = useMutation({
     mutationFn: switchSessionOrganization,
     onSuccess: () => {
       window.location.reload();
@@ -63,13 +64,7 @@ export const OrganizationSwitcher = () => {
     if (!userId) return;
 
     mutateAsync({ userId, organizationId });
-  };
-
-  const activeClassName = (id: string) =>
-    cn('gap-2 p-2', {
-      'text-primary bg-primary/20': id === activeOrganization?.id,
-    });
-
+  };  
   return (
     <SidebarMenu>
       <SidebarMenuItem>
@@ -98,14 +93,16 @@ export const OrganizationSwitcher = () => {
             <DropdownMenuLabel className='text-xs text-muted-foreground'>
               organization
             </DropdownMenuLabel>
-            {organizations.map((organization) => (
+            {isPending ? (<div>
+              <Skeleton className='h-4 w-full'/>
+              <Skeleton className='h-4 w-full'/>
+              <Skeleton className='h-4 w-full'/>
+            </div>) : organizations?.map((organization) => (
               <DropdownMenuItem
                 key={organization.id}
                 onClick={() => {
-                  setActiveOrganization(organization);
                   handleOrganizationClick(organization.organizationId);
                 }}
-                className={`${activeClassName(organization.id)} cursor-pointer`}
               >
                 {organization.organization.name}
               </DropdownMenuItem>

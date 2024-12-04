@@ -34,7 +34,7 @@ export const signin = async (input: SigninInput) => {
     throw tSignin('invalid-credentials');
   }
 
-  const organizationId = organization?.id ?? null;
+  const organizationId = organization?.organizationId ?? null;
 
   const session = await createSession(user.id, organizationId);
 
