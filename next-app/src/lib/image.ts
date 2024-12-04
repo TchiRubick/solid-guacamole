@@ -1,4 +1,3 @@
-import { env } from '@/env';
 import { z } from 'zod';
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
@@ -30,6 +29,3 @@ export const filesImageValidator = z
   .refine(validateFileSize)
   .refine(validateFileTypes)
   .refine(validateFileNames);
-
-export const getImageUrlByName = (name: string) =>
-  `http${env.MINIO_SSL === 'true' ? 's' : ''}://${env.MINIO_DOMAIN}:${env.MINIO_PORT ?? 9000}/${env.MINIO_BUCKET_NAME}/${name}`;

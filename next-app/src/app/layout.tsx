@@ -1,7 +1,10 @@
+import { ReactPDFProvider } from '@/components/react-pdf-provider';
 import { Toaster } from '@/components/ui/toaster';
 import ReactQueryProvider from '@/packages/react-query/provider';
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
+import 'react-pdf/dist/Page/AnnotationLayer.css';
+import 'react-pdf/dist/Page/TextLayer.css';
 import './globals.css';
 
 const geistSans = localFont({
@@ -35,7 +38,7 @@ const RootLayout = async ({
         className={`${geistSans.variable} ${geistMono.variable} bg-gradient antialiased`}
       >
         <ReactQueryProvider>
-          {children}
+          <ReactPDFProvider>{children}</ReactPDFProvider>
           <Toaster />
         </ReactQueryProvider>
       </body>

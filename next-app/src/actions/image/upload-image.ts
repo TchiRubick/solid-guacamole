@@ -1,6 +1,7 @@
 'use server';
 
-import { filesImageValidator, getImageUrlByName } from '@/lib/image';
+import { getStorageUrlByName } from '@/lib/files';
+import { filesImageValidator } from '@/lib/image';
 import { insertImage } from '@/models/image/$insert-image';
 import {
   convertFileToBuffer,
@@ -18,7 +19,7 @@ export const uploadImage = async (files: File[]) => {
 
     await uploadToS3(safename, buffer);
 
-    const url = getImageUrlByName(safename);
+    const url = getStorageUrlByName(safename);
 
     names.push(url);
   }

@@ -1,5 +1,6 @@
 'use client';
 
+import { currentSession } from '@/actions/auth/current-session';
 import {
   Sidebar,
   SidebarContent,
@@ -13,13 +14,11 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
 } from '@/components/ui/sidebar';
+import { useQuery } from '@tanstack/react-query';
+import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { OrganizationSwitcher } from './organization-switcher';
 import { SidebarUser } from './sibar-user';
-import Link from 'next/link';
-import { currentSession } from '@/actions/auth/current-session';
-import { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
 
 const data = {
   navMain: [
@@ -59,7 +58,7 @@ const data = {
   ],
 };
 
-export const AppSidebar =  ({
+export const AppSidebar = ({
   ...props
 }: React.ComponentProps<typeof Sidebar>) => {
   const pathname = usePathname();
@@ -76,31 +75,32 @@ export const AppSidebar =  ({
       <SidebarContent>
         <SidebarGroup>
           <SidebarMenu className='gap-2'>
-            {session?.organization && (data.navMain.map((item) => (
-              <SidebarMenuItem key={item.title}>
-                <SidebarMenuButton asChild>
-                  <Link href={item.url} prefetch className='font-medium'>
-                    {item.title}
-                  </Link>
-                </SidebarMenuButton>
-                {item.items?.length ? (
-                  <SidebarMenuSub className='ml-0 border-l-0 px-1.5'>
-                    {item.items.map((item) => (
-                      <SidebarMenuSubItem key={item.title}>
-                        <SidebarMenuSubButton
-                          asChild
-                          isActive={isActive(item.url)}
-                        >
-                          <Link href={item.url} prefetch>
-                            {item.title}
-                          </Link>
-                        </SidebarMenuSubButton>
-                      </SidebarMenuSubItem>
-                    ))}
-                  </SidebarMenuSub>
-                ) : null}
-              </SidebarMenuItem>
-            )))}
+            {session?.organization &&
+              data.navMain.map((item) => (
+                <SidebarMenuItem key={item.title}>
+                  <SidebarMenuButton asChild>
+                    <Link href={item.url} prefetch className='font-medium'>
+                      {item.title}
+                    </Link>
+                  </SidebarMenuButton>
+                  {item.items?.length ? (
+                    <SidebarMenuSub className='ml-0 border-l-0 px-1.5'>
+                      {item.items.map((item) => (
+                        <SidebarMenuSubItem key={item.title}>
+                          <SidebarMenuSubButton
+                            asChild
+                            isActive={isActive(item.url)}
+                          >
+                            <Link href={item.url} prefetch>
+                              {item.title}
+                            </Link>
+                          </SidebarMenuSubButton>
+                        </SidebarMenuSubItem>
+                      ))}
+                    </SidebarMenuSub>
+                  ) : null}
+                </SidebarMenuItem>
+              ))}
           </SidebarMenu>
         </SidebarGroup>
       </SidebarContent>

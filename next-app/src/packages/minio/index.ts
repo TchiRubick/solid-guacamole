@@ -26,8 +26,18 @@ export const uploadToS3 = async (safename: string, buffer: Uint8Array) => {
   return result;
 };
 
-export const generateSafeName = (): string =>
-  `${Date.now()}_${crypto.randomUUID()}`;
+export const deleteFromS3 = async (safename: string) => {
+  const result = await s3.removeObject(
+    env.MINIO_BUCKET_NAME,
+    safename,
+    undefined
+  );
+
+  return result;
+};
+
+export const generateSafeName = (extension?: string): string =>
+  `${Date.now()}_${crypto.randomUUID()}${extension ?? ''}`;
 
 export const convertFileToBuffer = async (file: File): Promise<Uint8Array> => {
   const arrayBuffer = await file.arrayBuffer();

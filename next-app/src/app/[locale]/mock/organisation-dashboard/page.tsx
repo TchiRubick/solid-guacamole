@@ -1,7 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { DialogCloseButton } from './_components/DialogCloseButton';
-import { Delete, Eye, Users, Building2 } from 'lucide-react';
+// import { DialogCloseButton } from './_components/DialogCloseButton';
 import { Badge } from '@/components/ui/badge';
 import {
   Table,
@@ -11,6 +10,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { Building2, Delete, Eye, Users } from 'lucide-react';
 
 const Dashboard = () => {
   return (
@@ -90,7 +90,7 @@ const Dashboard = () => {
         <div className='rounded-xl bg-white p-6 shadow-sm dark:bg-gray-800/50'>
           <div className='mb-6 flex items-center justify-between'>
             <h2 className='text-xl font-semibold'>Organization Members</h2>
-            <DialogCloseButton />
+            {/* <DialogCloseButton /> */}
           </div>
           <div className='relative overflow-hidden rounded-lg border'>
             <Table>

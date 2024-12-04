@@ -15,6 +15,7 @@ export const env = createEnv({
     MINIO_BUCKET_NAME: z.string(),
     MINIO_REGION: z.string(),
     MINIO_DOMAIN: z.string(),
+    MINIO_EXTERNAL_DOMAIN: z.string().default('localhost'),
     MINIO_SSL: z.literal('true').nullable().optional(),
     MINIO_PORT: z.coerce.number().optional(),
   },
@@ -43,6 +44,7 @@ export const env = createEnv({
     MINIO_DOMAIN: process.env.MINIO_DOMAIN,
     MINIO_SSL: process.env.MINIO_SSL,
     MINIO_PORT: process.env.MINIO_PORT,
+    MINIO_EXTERNAL_DOMAIN: process.env.MINIO_EXTERNAL_DOMAIN,
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
   },
   /**

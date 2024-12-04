@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -18,7 +18,6 @@ import { useForm } from '@tanstack/react-form';
 import { zodValidator } from '@tanstack/zod-form-adapter';
 import { updateOrganizationMutation } from '@/actions/organization/update';
 import { toast } from '@/hooks/use-toast';
-
 
 export function Dashboard() {
   const { data: session } = useQuery({
@@ -54,7 +53,8 @@ export function Dashboard() {
         name: values.value.name,
         description: values.value.description,
       });
-    }})
+    },
+  });
 
   return (
     <div className='min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800'>
@@ -204,7 +204,5 @@ export function Dashboard() {
         </div>
       </div>
     </div>
-  )
+  );
 }
-
-

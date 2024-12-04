@@ -6,7 +6,13 @@ const ManageOrganizationPage = async () => {
   const { session } = await currentSession();
   return (
     <div>
-      {session?.organizationId === null ? <div className='flex items-center justify-center'><CardNoOrganization/></div> : <UserManagement />}
+      {session?.organizationId === null ? (
+        <div className='flex items-center justify-center'>
+          <CardNoOrganization />
+        </div>
+      ) : (
+        <UserManagement />
+      )}
     </div>
   );
 };

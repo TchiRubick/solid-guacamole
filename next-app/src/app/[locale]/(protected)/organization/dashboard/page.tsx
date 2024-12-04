@@ -17,7 +17,7 @@ export const DashboardPage = async () => {
 
   return (
     <div>
-      {session.organizationId === null ?  <CardNoOrganization /> : <Dashboard />  }
+      {session.organizationId === null ? <CardNoOrganization /> : <Dashboard />}
     </div>
   );
 };
