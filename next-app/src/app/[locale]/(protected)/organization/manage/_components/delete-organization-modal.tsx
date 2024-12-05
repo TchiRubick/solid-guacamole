@@ -1,3 +1,4 @@
+'use client';
 import {
   Dialog,
   DialogContent,
@@ -14,23 +15,30 @@ import { currentSession } from '@/actions/auth/current-session';
 import { useForm } from '@tanstack/react-form';
 import { zodValidator } from '@tanstack/zod-form-adapter';
 import { Button } from '@/components/ui/button';
+import { useScopedI18n } from '@/locales/client';
 
 import { useToast } from '@/hooks/use-toast';
+import { Loader } from 'lucide-react';
 
 export const DeleteOrganizationModal = () => {
   const { toast } = useToast();
+  const t = useScopedI18n('delete-organization-modal');
   const { data: session } = useQuery({
     queryKey: ['session'],
     queryFn: currentSession,
   });
-  const { mutateAsync } = useMutation({
+  const { mutateAsync, isPending } = useMutation({
     mutationFn: deleteOrganizationMutation,
     onSuccess: () => {
+      toast({
+        title: `${t('toast-success-title')}`,
+        description: `${t('toast-success')}`,
+      });
       window.location.reload();
     },
     onError: (error: Error) => {
       toast({
-        title: 'Error',
+        title: `${t('toast-error-title')}`,
         description: error.message,
         variant: 'destructive',
       });
@@ -51,14 +59,12 @@ export const DeleteOrganizationModal = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant='destructive'>Delete organization</Button>
+        <Button variant='destructive'>{t('title')}</Button>
       </DialogTrigger>
       <DialogContent className='sm:max-w-md'>
         <DialogHeader>
-          <DialogTitle>Delete organization</DialogTitle>
-          <DialogDescription>
-            Are you sure you want to delete this organization?
-          </DialogDescription>
+          <DialogTitle>{t('title')}</DialogTitle>
+          <DialogDescription>{t('description')}</DialogDescription>
         </DialogHeader>
         <form
           className='flex items-center space-x-2'
@@ -77,7 +83,7 @@ export const DeleteOrganizationModal = () => {
                   value={field.state.value}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
-                  placeholder='Enter your password to confirm'
+                  placeholder={t('input-password-placeholder')}
                 />
               )}
             </Field>
@@ -88,7 +94,11 @@ export const DeleteOrganizationModal = () => {
             className='px-3'
             variant='destructive'
           >
-            Confirm
+            {isPending ? (
+              <Loader className='animate-spin' />
+            ) : (
+              `${t('delete-button')}`
+            )}
           </Button>
         </form>
       </DialogContent>

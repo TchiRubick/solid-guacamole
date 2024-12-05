@@ -204,7 +204,7 @@ export const CandidateTable = pgTable('candidate', (t) => ({
   organizationId: t
     .varchar('organization_id')
     .notNull()
-    .references(() => OrganizationTable.id),
+    .references(() => OrganizationTable.id, { onDelete: 'cascade' }),
 }));
 
 // Interview Table Schema

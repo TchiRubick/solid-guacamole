@@ -1,7 +1,6 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
@@ -56,7 +55,7 @@ export const DetailsOrganizationForm = () => {
   });
 
   return (
-    <Card className='space-y-4 p-4'>
+    <div className='mb-12 space-y-4 rounded-xl bg-white p-6 shadow-sm dark:bg-gray-800/50'>
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -103,6 +102,6 @@ export const DetailsOrganizationForm = () => {
           {t('button-save')}
         </Button>
       </form>
-    </Card>
+    </div>
   );
 };

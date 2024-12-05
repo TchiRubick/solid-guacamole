@@ -69,13 +69,37 @@ export default {
       'Or get invited by giving your mail address to the org owner.',
     'create-button': 'Create organization +',
   },
-
   'details-organization-form': {
     'label-name': 'Name',
     'name-placeholder': 'Organization name',
     'label-description': 'Description',
     'description-placeholder': 'Organization description',
     'button-save': 'Save',
+    'toast-success-title': 'Success',
+    'toast-success': 'Organization updated successfully',
+    'toast-error-title': 'Error',
+  },
+  'delete-organization-modal': {
+    title: 'Delete organization',
+    description:
+      'Are you sure you want to delete this organization? This action cannot be undone.',
+    'input-password-placeholder': 'Enter your password to confirm',
+    'delete-button': 'confirm',
+    'toast-success-title': 'Success',
+    'toast-success': 'Organization deleted successfully',
+    'toast-error-title': 'Error',
+  },
+  'transfer-owner-form': {
+    'select-email-labe': 'Selected an email',
+    'select-trigger-placeholder': 'Select email',
+    description: 'Choose an email to transfer ownership',
+    title: 'Transfer Ownership',
+    'dialog-title': 'Transfer Ownership',
+    'dialog-description':
+      'Transfer ownership of the organization to another user',
+    'input-password-placeholder': 'Confirm Password',
+    'confitm-button': 'confirm',
+    'dialog-trigger-button': 'Transfer',
     'toast-success-title': 'Success',
     'toast-success': 'Organization updated successfully',
     'toast-error-title': 'Error',
