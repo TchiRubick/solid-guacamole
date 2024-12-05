@@ -2,6 +2,15 @@
 
 import { currentSession } from '@/actions/auth/current-session';
 import {
+  Building2,
+  Users,
+  LayoutDashboard,
+  Settings,
+  FileText,
+  List,
+  ChevronDown,
+} from 'lucide-react';
+import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
@@ -24,34 +33,41 @@ const data = {
   navMain: [
     {
       title: 'Organization',
+      icon: Building2,
       url: '#',
       items: [
         {
           title: 'Dashboard',
+          icon: LayoutDashboard,
           url: '/organization/dashboard',
         },
         {
           title: 'Manage',
+          icon: Settings,
           url: '/organization/manage',
         },
       ],
     },
     {
       title: 'Interviews',
+      icon: FileText,
       url: '/interview',
       items: [
         {
           title: 'List',
+          icon: List,
           url: '/interview',
         },
         {
           title: 'Templates',
+          icon: FileText,
           url: '/interview/template',
         },
       ],
     },
     {
       title: 'Candidate',
+      icon: Users,
       url: '/candidate',
       items: [],
     },
@@ -67,32 +83,46 @@ export const AppSidebar = ({
     queryKey: ['session'],
     queryFn: currentSession,
   });
+
   return (
-    <Sidebar variant='floating' {...props}>
-      <SidebarHeader>
+    <Sidebar
+      variant='floating'
+      className='border-r bg-sidebar/60 backdrop-blur-xl'
+      {...props}
+    >
+      <SidebarHeader className='border-b border-border/50 pb-2'>
         <OrganizationSwitcher />
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarMenu className='gap-2'>
+          <SidebarMenu className='gap-1.5 p-2'>
             {session?.organization &&
               data.navMain.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
+                  <SidebarMenuButton
+                    asChild
+                    className='group relative flex items-center gap-2 rounded-md px-3 py-2 hover:bg-accent/50 data-[active=true]:bg-accent/50'
+                  >
                     <Link href={item.url} prefetch className='font-medium'>
-                      {item.title}
+                      <item.icon className='h-4 w-4' />
+                      <span>{item.title}</span>
+                      {item.items?.length > 0 && (
+                        <ChevronDown className='ml-auto h-4 w-4 transition-transform group-data-[state=open]:rotate-180' />
+                      )}
                     </Link>
                   </SidebarMenuButton>
                   {item.items?.length ? (
-                    <SidebarMenuSub className='ml-0 border-l-0 px-1.5'>
-                      {item.items.map((item) => (
-                        <SidebarMenuSubItem key={item.title}>
+                    <SidebarMenuSub className='ml-4 border-l border-border/50 pl-2'>
+                      {item.items.map((subItem) => (
+                        <SidebarMenuSubItem key={subItem.title}>
                           <SidebarMenuSubButton
                             asChild
-                            isActive={isActive(item.url)}
+                            isActive={isActive(subItem.url)}
+                            className='group flex items-center gap-2 rounded-md px-3 py-2 text-sm text-muted-foreground hover:bg-accent/50 hover:text-accent-foreground data-[active=true]:bg-accent data-[active=true]:text-accent-foreground'
                           >
-                            <Link href={item.url} prefetch>
-                              {item.title}
+                            <Link href={subItem.url} prefetch>
+                              <subItem.icon className='h-4 w-4' />
+                              <span>{subItem.title}</span>
                             </Link>
                           </SidebarMenuSubButton>
                         </SidebarMenuSubItem>
@@ -104,7 +134,7 @@ export const AppSidebar = ({
           </SidebarMenu>
         </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter>
+      <SidebarFooter className='border-t border-border/50 p-2'>
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarUser />

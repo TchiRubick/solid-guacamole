@@ -13,47 +13,12 @@ import {
 import { Building2, Delete, Eye, Users } from 'lucide-react';
 import { DialogCloseButton } from './DialogCloseButton';
 import { currentSession } from '@/actions/auth/current-session';
-import { useMutation, useQuery } from '@tanstack/react-query';
-import { useForm } from '@tanstack/react-form';
-import { zodValidator } from '@tanstack/zod-form-adapter';
-import { updateOrganizationMutation } from '@/actions/organization/update';
-import { toast } from '@/hooks/use-toast';
+import { useQuery } from '@tanstack/react-query';
 
 export function Dashboard() {
   const { data: session } = useQuery({
     queryKey: ['session'],
     queryFn: currentSession,
-  });
-  const { mutateAsync } = useMutation({
-    mutationFn: updateOrganizationMutation,
-    onSuccess: () => {
-      toast({
-        title: 'Success',
-        description: 'Organization updated successfully',
-      });
-      window.location.reload();
-    },
-    onError: (error: Error) => {
-      toast({
-        title: 'Error',
-        description: error.message,
-        variant: 'destructive',
-      });
-    },
-  });
-  const { handleSubmit, Field } = useForm({
-    defaultValues: {
-      name: session?.organization?.name ?? '',
-      description: session?.organization?.description ?? '',
-    },
-    validatorAdapter: zodValidator(),
-    onSubmit: async (values) => {
-      await mutateAsync({
-        id: session?.organization?.id ?? '',
-        name: values.value.name,
-        description: values.value.description,
-      });
-    },
   });
 
   return (
