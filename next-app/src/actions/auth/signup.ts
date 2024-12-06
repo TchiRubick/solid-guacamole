@@ -3,6 +3,7 @@
 import { hashPassword } from '@/lib/password';
 import { setSessionTokenCookie } from '@/lib/session-cookies';
 import { getScopedI18n } from '@/locales/server';
+import { createMassOrganizationUser } from '@/models/organization-user/$create-masse';
 import { createSession } from '@/models/session';
 import { checkExisting, create } from '@/models/user';
 import { existEmailInvitation } from '@/models/user-organization-invite/$exist-email-invitation';
@@ -38,7 +39,12 @@ export const signup = async (input: SigninInput) => {
 
   const existsInvitations = await existEmailInvitation(validatedInput.email);
 
-
+  await createMassOrganizationUser(
+    existsInvitations.map((invitation) => ({
+      userId: user.id,
+      organizationId: invitation.organizationId,
+    }))
+  );
 
   const session = await createSession(user.id, null);
 
