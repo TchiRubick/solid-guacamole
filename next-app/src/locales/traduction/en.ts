@@ -104,6 +104,20 @@ export default {
     'toast-success': 'Organization updated successfully',
     'toast-error-title': 'Error',
   },
+  'membres-scope': {
+    title: 'Organization information',
+    'lable-description': 'Description',
+    'lable-name': 'Name',
+    'toast-success-title': 'Success',
+    'toast-success': 'Organization updated successfully',
+    'toast-error-title': 'Error',
+    'leave-organization-button': 'Leave Organization',
+    'leave-organization-dialog-title': 'Leave Organization',
+    'leave-organization-dialog-description':
+      'Are you sure you want to leave this organization?',
+    'leave-organization-dialog-confirm-button': 'Confirm',
+    'password-placeholder': 'Confirm Password',
+  },
   'server-error': {
     'min-email-length': 'Email must be at least 3 characters',
     'max-email-length': 'Email must be less than 255 characters',
