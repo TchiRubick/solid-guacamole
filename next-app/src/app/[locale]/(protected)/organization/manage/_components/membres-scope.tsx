@@ -2,6 +2,7 @@
 
 import { currentSession } from '@/actions/auth/current-session';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
@@ -36,6 +37,13 @@ export const MembresScope = () => {
                 value={session?.organization?.description ?? ''}
                 readOnly
               />
+            </div>
+          </div>
+          <div className='mb-12 space-y-4 rounded-xl bg-white p-6 shadow-sm dark:bg-gray-800/50'>
+            <div className='flex items-center justify-between'>
+              <Button variant='destructive' className=''>
+                Leave Organization
+              </Button>
             </div>
           </div>
         </div>

@@ -3,7 +3,7 @@
 import { verifyPassword } from '@/lib/password';
 import { setSessionTokenCookie } from '@/lib/session-cookies';
 import { getScopedI18n } from '@/locales/server';
-import { getOneOrganizationByUserId } from '@/models/organization/$getOne';
+import { getOneOrganizationByUserId } from '@/models/organization/$get-one-by-user-id';
 import { createSession } from '@/models/session';
 import { userByEmail } from '@/models/user';
 import { signinValidator } from '@/validator/signin.validator';
