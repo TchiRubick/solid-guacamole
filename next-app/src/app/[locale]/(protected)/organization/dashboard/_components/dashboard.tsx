@@ -1,5 +1,5 @@
 'use client';
-import { currentSession } from '@/actions/auth/current-session';
+import { getFullInformations } from '@/actions/organization/get-full-informations';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useQuery } from '@tanstack/react-query';
@@ -8,9 +8,9 @@ import { DialogCloseButton } from './DialogCloseButton';
 import { MemberTable } from './member-table';
 
 export function Dashboard() {
-  const { data: session } = useQuery({
-    queryKey: ['session'],
-    queryFn: currentSession,
+  const { data: organization } = useQuery({
+    queryKey: ['organization'],
+    queryFn: () => getFullInformations(),
   });
 
   return (
@@ -21,7 +21,7 @@ export function Dashboard() {
           <div className='flex flex-col justify-between gap-4 md:flex-row md:items-center'>
             <div>
               <h1 className='text-2xl font-bold tracking-tight'>
-                {session?.organization?.name}
+                {organization?.name}
               </h1>
               <p className='mt-1 text-sm text-muted-foreground'>
                 Manage your organization settings and members
@@ -34,12 +34,14 @@ export function Dashboard() {
           <div className='mt-6 grid gap-1'>
             <div className='flex items-center gap-2'>
               <Users className='h-4 w-4 text-muted-foreground' />
-              <span className='text-sm'>Owner: {session?.user?.username}</span>
+              <span className='text-sm'>
+                Owner: {organization?.owner.username}
+              </span>
             </div>
             <div className='flex items-center gap-2'>
               <Building2 className='h-4 w-4 text-muted-foreground' />
               <span className='text-sm'>
-                Organization description: {session?.organization?.description}
+                Organization description: {organization?.description}
               </span>
             </div>
           </div>
