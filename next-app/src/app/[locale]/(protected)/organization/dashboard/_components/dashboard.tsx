@@ -1,19 +1,11 @@
 'use client';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table';
-import { Building2, Delete, Eye, Users } from 'lucide-react';
-import { DialogCloseButton } from './DialogCloseButton';
 import { currentSession } from '@/actions/auth/current-session';
+import { Badge } from '@/components/ui/badge';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useQuery } from '@tanstack/react-query';
+import { Building2, Users } from 'lucide-react';
+import { DialogCloseButton } from './DialogCloseButton';
+import { MemberTable } from './member-table';
 
 export function Dashboard() {
   const { data: session } = useQuery({
@@ -100,71 +92,8 @@ export function Dashboard() {
             <h2 className='text-xl font-semibold'>Organization Members</h2>
             <DialogCloseButton />
           </div>
-          <div className='relative overflow-hidden rounded-lg border'>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Email</TableHead>
-                  <TableHead>UserName</TableHead>
-                  <TableHead>Address</TableHead>
-                  <TableHead>Phone</TableHead>
-                  <TableHead>City</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead className='text-right'>Actions</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {[
-                  {
-                    email: 'John Doe',
-                    username: '24/05/1995',
-                    address: 'Web Developer',
-                    phone: '$120,000',
-                    city: 'Antananarivo',
-                    status: 'Ok',
-                  },
-                  {
-                    email: 'Jane Doe',
-                    username: '04/11/1980',
-                    address: 'Web Designer',
-                    phone: '$100,000',
-                    city: 'Antananarivo',
-                    status: 'Ok',
-                  },
-                  {
-                    email: 'Gary Barlow',
-                    username: '24/05/1995',
-                    address: 'Singer',
-                    phone: '$20,000',
-                    city: 'Antananarivo',
-                    status: 'Ok',
-                  },
-                ].map((item) => (
-                  <TableRow key={item.email}>
-                    <TableCell className='font-medium'>{item.email}</TableCell>
-                    <TableCell>{item.username}</TableCell>
-                    <TableCell>{item.address}</TableCell>
-                    <TableCell>{item.phone}</TableCell>
-                    <TableCell>{item.city}</TableCell>
-                    <TableCell>
-                      <Badge variant='secondary'>{item.status}</Badge>
-                    </TableCell>
-                    <TableCell className='text-right'>
-                      <Button variant='ghost' size='icon' className='h-8 w-8'>
-                        <Eye className='h-4 w-4' />
-                      </Button>
-                      <Button
-                        variant='ghost'
-                        size='icon'
-                        className='h-8 w-8 text-destructive'
-                      >
-                        <Delete className='h-4 w-4' />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+          <div className='relative overflow-hidden'>
+            <MemberTable />
           </div>
         </div>
       </div>

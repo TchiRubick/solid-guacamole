@@ -1,15 +1,10 @@
 'use client';
 
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import { currentSession } from '@/actions/auth/current-session';
+import { membersQuery } from '@/actions/organization/get-members';
+import { transferOwnerMutation } from '@/actions/organization/transfer-owner';
+import { InputPassword } from '@/components/input-password';
 import { Button } from '@/components/ui/button';
-import { Label } from '@/components/ui/label';
-import { Dialog } from '@radix-ui/react-dialog';
 import {
   DialogContent,
   DialogDescription,
@@ -17,20 +12,26 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { InputPassword } from '@/components/input-password';
-import { useForm } from '@tanstack/react-form';
-import { zodValidator } from '@tanstack/zod-form-adapter';
-import { useQuery } from '@tanstack/react-query';
-import { membersQuery } from '@/actions/organization/get-members';
-import { currentSession } from '@/actions/auth/current-session';
-import { useMutation } from '@tanstack/react-query';
-import { transferOwnerMutation } from '@/actions/organization/transfer-owner';
+import { Label } from '@/components/ui/label';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
 import { useScopedI18n } from '@/locales/client';
+import { Dialog } from '@radix-ui/react-dialog';
+import { useForm } from '@tanstack/react-form';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { zodValidator } from '@tanstack/zod-form-adapter';
 
 export const TranferOwnerForm = () => {
   const { toast } = useToast();
+
   const t = useScopedI18n('transfer-owner-form');
+
   const { data: session } = useQuery({
     queryKey: ['sessiondsds'],
     queryFn: currentSession,
@@ -40,7 +41,7 @@ export const TranferOwnerForm = () => {
     queryKey: ['members'],
     queryFn: () => {
       if (!session?.organization?.id) return [];
-      const members = membersQuery(session?.organization?.id);
+      const members = membersQuery();
       return members;
     },
     enabled: !!session?.organization?.id,

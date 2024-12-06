@@ -1,6 +1,6 @@
 'use client';
 
-import { getAllCandidateAction } from '@/actions/candidate/get-all-candidate';
+import { membersQuery } from '@/actions/organization/get-members';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import {
@@ -12,7 +12,6 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import type { Candidate } from '@/models/candidate/type';
 import { useQuery } from '@tanstack/react-query';
 import type { ColumnDef } from '@tanstack/react-table';
 import {
@@ -23,24 +22,26 @@ import {
 import { Eye } from 'lucide-react';
 import Link from 'next/link';
 
-const columns: ColumnDef<Candidate>[] = [
+type Row = Awaited<ReturnType<typeof membersQuery>>[number];
+
+const columns: ColumnDef<Row>[] = [
   {
-    accessorKey: 'name',
+    accessorKey: 'user.username',
     header: 'Name',
   },
   {
-    accessorKey: 'email',
+    accessorKey: 'user.email',
     header: 'Email',
   },
   {
-    accessorKey: 'phone',
+    accessorKey: 'user.phone',
     header: 'Phone',
   },
   {
     accessorKey: 'id',
     header: 'Action',
     cell: ({ row }) => (
-      <Link href={`/candidate/${row.original.id}`}>
+      <Link href={`/user/${row.original.userId}`}>
         <Button variant='ghost' size='icon' className='h-8 w-8'>
           <Eye className='h-4 w-4' />
         </Button>
@@ -49,10 +50,10 @@ const columns: ColumnDef<Candidate>[] = [
   },
 ];
 
-export const CandidateTable = () => {
+export const MemberTable = () => {
   const { data, isFetching } = useQuery({
-    queryKey: ['candidates'],
-    queryFn: () => getAllCandidateAction(),
+    queryKey: ['members'],
+    queryFn: () => membersQuery(),
   });
 
   const table = useReactTable({
@@ -65,7 +66,7 @@ export const CandidateTable = () => {
 
   return (
     <Table>
-      <TableCaption>A list of your candidates.</TableCaption>
+      <TableCaption>Members list</TableCaption>
       <TableHeader>
         {table.getHeaderGroups().map((headerGroup) => (
           <TableRow key={headerGroup.id}>
