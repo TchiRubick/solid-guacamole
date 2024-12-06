@@ -88,7 +88,7 @@ export const TranferOwnerForm = () => {
           </Label>
         </div>
         <Field name='newOwner'>
-          {(field) => (
+          {() => (
             <Select>
               <SelectTrigger>
                 <SelectValue placeholder={t('select-trigger-placeholder')} />

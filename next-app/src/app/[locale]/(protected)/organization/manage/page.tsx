@@ -1,6 +1,7 @@
 import { currentSession } from '@/actions/auth/current-session';
-import { UserManagement } from './_components/user-management';
+import { OwnerScope } from './_components/owner-scope';
 import { CardNoOrganization } from '../_components/card-no-organization';
+import { MembresScope } from './_components/membres-scope';
 
 const ManageOrganizationPage = async () => {
   const { session } = await currentSession();
@@ -11,7 +12,10 @@ const ManageOrganizationPage = async () => {
           <CardNoOrganization />
         </div>
       ) : (
-        <UserManagement />
+        <div>
+          <OwnerScope />
+          <MembresScope />
+        </div>
       )}
     </div>
   );
