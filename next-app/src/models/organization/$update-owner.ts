@@ -11,5 +11,5 @@ export const updateOrganizationOwner = async (
   await db
     .update(OrganizationTable)
     .set({ ownerId: newOwnerId })
-    .where(eq(OrganizationTable.ownerId, organizationId))
+    .where(eq(OrganizationTable.id, organizationId))
     .returning();

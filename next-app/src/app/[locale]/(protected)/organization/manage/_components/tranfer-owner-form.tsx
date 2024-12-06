@@ -26,6 +26,7 @@ import { Dialog } from '@radix-ui/react-dialog';
 import { useForm } from '@tanstack/react-form';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { zodValidator } from '@tanstack/zod-form-adapter';
+import { Loader } from 'lucide-react';
 
 export const TranferOwnerForm = () => {
   const { toast } = useToast();
@@ -47,7 +48,7 @@ export const TranferOwnerForm = () => {
     enabled: !!session?.organization?.id,
   });
 
-  const { mutateAsync } = useMutation({
+  const { mutateAsync, isPending } = useMutation({
     mutationFn: transferOwnerMutation,
     onSuccess: () => {
       toast({
@@ -68,9 +69,7 @@ export const TranferOwnerForm = () => {
   const { handleSubmit, Field } = useForm({
     defaultValues: {
       confirmPassword: '',
-      newOwner: members?.map((m) => m.user.email).join(', ') ?? '',
-      organizationId: session?.organization?.id ?? '',
-      ownerEmail: session?.user?.email ?? '',
+      newOwner: '',
     },
     validatorAdapter: zodValidator(),
     onSubmit: (values) => {
@@ -89,16 +88,16 @@ export const TranferOwnerForm = () => {
           </Label>
         </div>
         <Field name='newOwner'>
-          {() => (
-            <Select>
+          {(field) => (
+            <Select onValueChange={field.handleChange}>
               <SelectTrigger>
                 <SelectValue placeholder={t('select-trigger-placeholder')} />
               </SelectTrigger>
               <SelectContent position='item-aligned'>
                 {members?.map((m) => (
                   <SelectItem
-                    key={m.user.email}
-                    value={m.user.email}
+                    key={m.user.id}
+                    value={m.user.id}
                     className='cursor-pointer'
                   >
                     {m.user.email}
@@ -146,7 +145,11 @@ export const TranferOwnerForm = () => {
                 handleSubmit();
               }}
             >
-              {t('confitm-button')}
+              {isPending ? (
+                <Loader className='animate-spin' />
+              ) : (
+                t('confitm-button')
+              )}
             </Button>
           </div>
         </DialogContent>
