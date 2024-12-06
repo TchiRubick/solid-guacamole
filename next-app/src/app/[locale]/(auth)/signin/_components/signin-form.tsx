@@ -12,6 +12,7 @@ import { useForm } from '@tanstack/react-form';
 import { useMutation } from '@tanstack/react-query';
 import { zodValidator } from '@tanstack/zod-form-adapter';
 import { useRouter } from 'next/navigation';
+import { InputPassword } from '@/components/input-password';
 
 export const SignInForm = () => {
   const tSignInForm = useScopedI18n('signin-form');
@@ -39,7 +40,7 @@ export const SignInForm = () => {
 
   const { handleSubmit, Field } = useForm({
     defaultValues: {
-      email: '',
+      emailOrUsername: '',
       password: '',
     },
     validatorAdapter: zodValidator(),
@@ -67,15 +68,17 @@ export const SignInForm = () => {
       </div>
       <div className='grid gap-4'>
         <div className='grid gap-2'>
-          <Label htmlFor='email'>{tSignInForm('email-label')}</Label>
-          <Field name='email'>
+          <Label htmlFor='email'>
+            {tSignInForm('email-or-username-label')}
+          </Label>
+          <Field name='emailOrUsername'>
             {(field) => (
               <Input
                 id={field.name}
                 name={field.name}
                 value={field.state.value}
+                type='text'
                 onBlur={field.handleBlur}
-                type='email'
                 onChange={(e) => field.handleChange(e.target.value)}
                 placeholder={tSignInForm('email-placeholder')}
               />
@@ -94,14 +97,13 @@ export const SignInForm = () => {
           </div>
           <Field name='password'>
             {(field) => (
-              <Input
+              <InputPassword
                 id={field.name}
                 name={field.name}
                 value={field.state.value}
                 onBlur={field.handleBlur}
                 onChange={(e) => field.handleChange(e.target.value)}
                 placeholder='********'
-                type='password'
               />
             )}
           </Field>

@@ -11,6 +11,7 @@ import { signup } from '@/actions/auth/signup';
 import { useScopedI18n } from '@/locales/client';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { InputPassword } from '@/components/input-password';
 
 export const SignUpForm = () => {
   const { toast } = useToast();
@@ -107,12 +108,11 @@ export const SignUpForm = () => {
           <Label htmlFor='password'>{tSignUpForm('password-label')}</Label>
           <Field name='password'>
             {(field) => (
-              <Input
+              <InputPassword
                 id={field.name}
                 name={field.name}
                 value={field.state.value}
                 onBlur={field.handleBlur}
-                type='password'
                 onChange={(e) => field.handleChange(e.target.value)}
                 placeholder={tSignUpForm('password-placeholder')}
               />

@@ -2,7 +2,7 @@
 
 import { updateOrganizationOwner } from '@/models/organization/$update-owner';
 import { verifyPassword } from '@/lib/password';
-import { userByEmail } from '@/models/user';
+import { userByEmailOrByUsername } from '@/models/user';
 import { currentSession } from '../auth/current-session';
 import { cookies } from 'next/headers';
 import {
@@ -26,7 +26,7 @@ export const transferOwnerMutation = async ({
     throw new Error('Not authenticated');
   }
 
-  const userConnected = await userByEmail(user?.email);
+  const userConnected = await userByEmailOrByUsername(user?.email);
 
   if (!userConnected) {
     throw new Error('Invalid email');

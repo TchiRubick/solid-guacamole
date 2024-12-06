@@ -3,7 +3,10 @@ import { z } from 'zod';
 
 export const signinValidator = (t: TError) =>
   z.object({
-    email: z.string().min(1, t('min-email-length')).email(),
+    emailOrUsername: z
+      .string()
+      .min(1, t('min-email-or-username-length'))
+      .max(255, t('max-email-or-username-length')),
     password: z
       .string()
       .min(6, t('min-password-length'))

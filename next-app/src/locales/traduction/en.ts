@@ -9,7 +9,7 @@ export default {
   'signin-form': {
     title: 'Login',
     description: 'Enter your email below to login to your account',
-    'email-label': 'Email',
+    'email-or-username-label': 'Email or username',
     'email-placeholder': 'm@example.com',
     'password-label': 'Password',
     'login-button': 'Login',
@@ -122,6 +122,10 @@ export default {
     'min-email-length': 'Email must be at least 3 characters',
     'max-email-length': 'Email must be less than 255 characters',
     'min-password-length': 'Password must be at least 6 characters',
+    'min-email-or-username-length':
+      'Email or username must be at least 3 characters',
+    'max-email-or-username-length':
+      'Email or username must be less than 255 characters',
     'max-password-length': 'Password must be less than 255 characters',
     'username-min-characters': 'Username must be at least 3 characters',
     'username-max-characters': 'Username must be less than 31 characters',

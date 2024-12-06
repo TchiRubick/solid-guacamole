@@ -8,7 +8,7 @@ import {
 import { getOneOrganizationByUserId } from '@/models/organization';
 import { userLeaveOrganization } from '@/models/organization-user/user-leave';
 import { createSession, invalidateSession } from '@/models/session';
-import { userByEmail } from '@/models/user';
+import { userByEmailOrByUsername } from '@/models/user';
 import { cookies } from 'next/headers';
 import { currentSession } from '@/actions/auth/current-session';
 
@@ -19,7 +19,7 @@ export const memberLeaveOrzationMutation = async (confirmPassword: string) => {
     throw new Error('Not authenticated');
   }
 
-  const userConnected = await userByEmail(user?.email);
+  const userConnected = await userByEmailOrByUsername(user?.email);
 
   if (!userConnected) {
     throw new Error('Invalid email');

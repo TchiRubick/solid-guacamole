@@ -2,7 +2,8 @@
 
 import { db } from '@/packages/db';
 
-export const userByEmail = (email: string) =>
+export const userByEmailOrByUsername = (emailOrUsername: string) =>
   db.query.UserTable.findFirst({
-    where: (q, { eq, or }) => or(eq(q.email, email)),
+    where: (q, { eq, or }) =>
+      or(eq(q.email, emailOrUsername), eq(q.username, emailOrUsername)),
   });

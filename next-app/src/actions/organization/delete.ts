@@ -4,7 +4,7 @@ import {
   deleteOrganization,
   getOneOrganizationByUserId,
 } from '@/models/organization';
-import { userByEmail } from '@/models/user';
+import { userByEmailOrByUsername } from '@/models/user';
 import { verifyPassword } from '@/lib/password';
 import { createSession, invalidateSession } from '@/models/session';
 import {
@@ -22,7 +22,7 @@ export const deleteOrganizationMutation = async ({
   ownerEmail: string;
   confirmPassword: string;
 }) => {
-  const user = await userByEmail(ownerEmail);
+  const user = await userByEmailOrByUsername(ownerEmail);
 
   if (!user) {
     throw new Error('Invalid email');

@@ -5,7 +5,7 @@ import { setSessionTokenCookie } from '@/lib/session-cookies';
 import { getScopedI18n } from '@/locales/server';
 import { getOneOrganizationByUserId } from '@/models/organization/$get-one-by-user-id';
 import { createSession } from '@/models/session';
-import { userByEmail } from '@/models/user';
+import { userByEmailOrByUsername } from '@/models/user';
 import { signinValidator } from '@/validator/signin.validator';
 import type { z } from 'zod';
 
@@ -17,7 +17,7 @@ export const signin = async (input: SigninInput) => {
 
   const validatedInput = signinValidator(tError).parse(input);
 
-  const user = await userByEmail(validatedInput.email);
+  const user = await userByEmailOrByUsername(validatedInput.emailOrUsername);
 
   if (!user) {
     throw tSignin('email-not-found');
