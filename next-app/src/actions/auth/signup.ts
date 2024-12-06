@@ -7,6 +7,7 @@ import { createMassOrganizationUser } from '@/models/organization-user/$create-m
 import { createSession } from '@/models/session';
 import { checkExisting, create } from '@/models/user';
 import { existEmailInvitation } from '@/models/user-organization-invite/$exist-email-invitation';
+import { removeInvitationByIds } from '@/models/user-organization-invite/$remove-invitation-by-ids';
 import { signupSchema } from '@/validator/signup.validator';
 import type { z } from 'zod';
 
@@ -39,12 +40,18 @@ export const signup = async (input: SigninInput) => {
 
   const existsInvitations = await existEmailInvitation(validatedInput.email);
 
-  await createMassOrganizationUser(
-    existsInvitations.map((invitation) => ({
-      userId: user.id,
-      organizationId: invitation.organizationId,
-    }))
-  );
+  if (existsInvitations.length > 0) {
+    await createMassOrganizationUser(
+      existsInvitations.map((invitation) => ({
+        userId: user.id,
+        organizationId: invitation.organizationId,
+      }))
+    );
+
+    await removeInvitationByIds(
+      existsInvitations.map((invitation) => invitation.id)
+    );
+  }
 
   const session = await createSession(user.id, null);
 
