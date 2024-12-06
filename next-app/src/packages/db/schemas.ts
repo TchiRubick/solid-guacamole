@@ -75,7 +75,7 @@ export const UserOrganizationInviteTable = pgTable(
       .varchar('id')
       .primaryKey()
       .$defaultFn(() => crypto.randomUUID()),
-    userId: t.varchar('user_id').references(() => UserTable.id),
+    email: t.varchar('email').notNull(),
     organizationId: t
       .varchar('organization_id')
       .notNull()

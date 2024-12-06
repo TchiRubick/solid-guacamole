@@ -5,6 +5,7 @@ import { setSessionTokenCookie } from '@/lib/session-cookies';
 import { getScopedI18n } from '@/locales/server';
 import { createSession } from '@/models/session';
 import { checkExisting, create } from '@/models/user';
+import { existEmailInvitation } from '@/models/user-organization-invite/$exist-email-invitation';
 import { signupSchema } from '@/validator/signup.validator';
 import type { z } from 'zod';
 
@@ -34,6 +35,10 @@ export const signup = async (input: SigninInput) => {
   if (!user) {
     throw tSignup('failed-to-create-user');
   }
+
+  const existsInvitations = await existEmailInvitation(validatedInput.email);
+
+
 
   const session = await createSession(user.id, null);
 

@@ -15,6 +15,7 @@
     "db:drop": "drizzle-kit drop",
     "db:check": "drizzle-kit check",
     "db:push": "drizzle-kit push",
+    "db:studio": "drizzle-kit studio",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
