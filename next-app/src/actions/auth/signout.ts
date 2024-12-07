@@ -1,13 +1,13 @@
 'use server';
 
-import { deleteSessionTokenCookie } from '@/lib/session-cookies';
+import {
+  deleteSessionTokenCookie,
+  getSessionTokenCookie,
+} from '@/lib/session-cookies';
 import { invalidateSession } from '@/models/session';
-import { cookies } from 'next/headers';
 
 export const signout = async () => {
-  const cookieStore = await cookies();
-
-  const token = cookieStore.get('session')?.value ?? null;
+  const token = await getSessionTokenCookie();
 
   if (token === null) {
     return true;

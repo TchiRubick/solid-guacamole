@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { useScopedI18n } from '@/locales/client';
+import { useScopedI18n } from '@/packages/locales/client';
 
 export const CardNoOrganization = () => {
   const tCardNoOrganization = useScopedI18n('card-no-organization');

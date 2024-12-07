@@ -1,6 +1,7 @@
 'use client';
 
-import { currentSession } from '@/actions/auth/current-session';
+import { memberLeaveOrzationMutation } from '@/actions/organization/member-leave';
+import { InputPassword } from '@/components/input-password';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
@@ -14,20 +15,15 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { useQuery } from '@tanstack/react-query';
-import { useForm } from '@tanstack/react-form';
-import { zodValidator } from '@tanstack/zod-form-adapter';
-import { InputPassword } from '@/components/input-password';
-import { memberLeaveOrzationMutation } from '@/actions/organization/member-leave';
+import { useSession } from '@/hooks/use-session';
 import { useToast } from '@/hooks/use-toast';
-import { useScopedI18n } from '@/locales/client';
+import { useScopedI18n } from '@/packages/locales/client';
+import { useForm } from '@tanstack/react-form';
 import { useMutation } from '@tanstack/react-query';
+import { zodValidator } from '@tanstack/zod-form-adapter';
 
 export const MembresScope = () => {
-  const { data: session } = useQuery({
-    queryKey: ['session'],
-    queryFn: currentSession,
-  });
+  const { data: session } = useSession();
 
   const { toast } = useToast();
   const t = useScopedI18n('membres-scope');

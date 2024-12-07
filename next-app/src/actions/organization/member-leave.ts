@@ -3,17 +3,17 @@
 import { verifyPassword } from '@/lib/password';
 import {
   deleteSessionTokenCookie,
+  getSessionTokenCookie,
   setSessionTokenCookie,
 } from '@/lib/session-cookies';
 import { getOneOrganizationByUserId } from '@/models/organization';
 import { userLeaveOrganization } from '@/models/organization-user/user-leave';
 import { createSession, invalidateSession } from '@/models/session';
 import { userByEmailOrByUsername } from '@/models/user';
-import { cookies } from 'next/headers';
-import { currentSession } from '@/actions/auth/current-session';
+import { getSession } from '@/server-functions/session';
 
 export const memberLeaveOrzationMutation = async (confirmPassword: string) => {
-  const { user } = await currentSession();
+  const { user, organization } = await getSession();
 
   if (!user) {
     throw new Error('Not authenticated');
@@ -34,9 +34,7 @@ export const memberLeaveOrzationMutation = async (confirmPassword: string) => {
     throw new Error('Invalid password');
   }
 
-  const cookieStore = await cookies();
-
-  const token = cookieStore.get('session')?.value ?? null;
+  const token = await getSessionTokenCookie();
 
   if (token === null) {
     return;
@@ -44,9 +42,14 @@ export const memberLeaveOrzationMutation = async (confirmPassword: string) => {
 
   await invalidateSession(token);
   await deleteSessionTokenCookie();
-  await userLeaveOrganization(user.id);
-  const organization = await getOneOrganizationByUserId(user.id);
-  const newOrganizationId = organization?.organizationId ?? null;
+
+  await userLeaveOrganization(user.id, organization?.id ?? '');
+
+  const newOrg = await getOneOrganizationByUserId(user.id);
+
+  const newOrganizationId = newOrg?.organizationId ?? null;
+
   const session = await createSession(user.id, newOrganizationId);
+
   await setSessionTokenCookie(session.id, session.expiresAt);
 };

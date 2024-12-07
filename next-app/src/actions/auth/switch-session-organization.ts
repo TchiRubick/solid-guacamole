@@ -1,11 +1,11 @@
 'use server';
 
-import { cookies } from 'next/headers';
-import { createSession, invalidateSession } from '@/models/session';
 import {
   deleteSessionTokenCookie,
+  getSessionTokenCookie,
   setSessionTokenCookie,
 } from '@/lib/session-cookies';
+import { createSession, invalidateSession } from '@/models/session';
 
 export const switchSessionOrganization = async ({
   userId,
@@ -14,16 +14,17 @@ export const switchSessionOrganization = async ({
   userId: string;
   organizationId: string;
 }) => {
-  const cookieStore = await cookies();
-
-  const token = cookieStore.get('session')?.value ?? null;
+  const token = await getSessionTokenCookie();
 
   if (token === null) {
     return;
   }
 
   await invalidateSession(token);
+
   await deleteSessionTokenCookie();
+
   const session = await createSession(userId, organizationId);
+
   await setSessionTokenCookie(session.id, session.expiresAt);
 };

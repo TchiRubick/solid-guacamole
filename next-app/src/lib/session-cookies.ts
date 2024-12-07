@@ -26,3 +26,9 @@ export const deleteSessionTokenCookie = async (): Promise<void> => {
     path: '/',
   });
 };
+
+export const getSessionTokenCookie = async (): Promise<string | null> => {
+  const cookieStore = await cookies();
+
+  return cookieStore.get('session')?.value ?? null;
+};

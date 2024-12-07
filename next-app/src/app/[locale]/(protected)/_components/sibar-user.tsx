@@ -23,7 +23,7 @@ import { BadgeCheck, ChevronsUpDown, CreditCard, Sparkles } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 export const SidebarUser = () => {
-  const session = useSession();
+  const { data: session } = useSession();
 
   const { isMobile } = useSidebar();
 

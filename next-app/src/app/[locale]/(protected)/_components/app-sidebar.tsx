@@ -1,15 +1,5 @@
 'use client';
 
-import { currentSession } from '@/actions/auth/current-session';
-import {
-  Building2,
-  Users,
-  LayoutDashboard,
-  Settings,
-  FileText,
-  List,
-  ChevronDown,
-} from 'lucide-react';
 import {
   Sidebar,
   SidebarContent,
@@ -23,7 +13,16 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
 } from '@/components/ui/sidebar';
-import { useQuery } from '@tanstack/react-query';
+import { useSession } from '@/hooks/use-session';
+import {
+  Building2,
+  ChevronDown,
+  FileText,
+  LayoutDashboard,
+  List,
+  Settings,
+  Users,
+} from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { OrganizationSwitcher } from './organization-switcher';
@@ -79,10 +78,8 @@ export const AppSidebar = ({
 }: React.ComponentProps<typeof Sidebar>) => {
   const pathname = usePathname();
   const isActive = (url: string) => pathname === url;
-  const { data: session } = useQuery({
-    queryKey: ['session'],
-    queryFn: currentSession,
-  });
+
+  const { data: session } = useSession();
 
   return (
     <Sidebar

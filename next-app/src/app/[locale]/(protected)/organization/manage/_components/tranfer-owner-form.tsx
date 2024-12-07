@@ -1,6 +1,5 @@
 'use client';
 
-import { currentSession } from '@/actions/auth/current-session';
 import { membersQuery } from '@/actions/organization/get-members';
 import { transferOwnerMutation } from '@/actions/organization/transfer-owner';
 import { InputPassword } from '@/components/input-password';
@@ -20,8 +19,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { useSession } from '@/hooks/use-session';
 import { useToast } from '@/hooks/use-toast';
-import { useScopedI18n } from '@/locales/client';
+import { useScopedI18n } from '@/packages/locales/client';
 import { Dialog } from '@radix-ui/react-dialog';
 import { useForm } from '@tanstack/react-form';
 import { useMutation, useQuery } from '@tanstack/react-query';
@@ -33,18 +33,11 @@ export const TranferOwnerForm = () => {
 
   const t = useScopedI18n('transfer-owner-form');
 
-  const { data: session } = useQuery({
-    queryKey: ['sessiondsds'],
-    queryFn: currentSession,
-  });
+  const { data: session } = useSession();
 
   const { data: members } = useQuery({
     queryKey: ['members'],
-    queryFn: () => {
-      if (!session?.organization?.id) return [];
-      const members = membersQuery();
-      return members;
-    },
+    queryFn: () => membersQuery(),
     enabled: !!session?.organization?.id,
   });
 
@@ -76,6 +69,7 @@ export const TranferOwnerForm = () => {
       mutateAsync(values.value);
     },
   });
+
   return (
     <div className='flex w-full items-end justify-between gap-4'>
       <div className='flex w-full flex-col gap-4'>

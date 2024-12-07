@@ -1,12 +1,9 @@
-import { currentSession } from '@/actions/auth/current-session';
+import { getSession } from '@/server-functions/session';
 
 import { useQuery } from '@tanstack/react-query';
 
-export const useSession = () => {
-  const { data: session } = useQuery({
+export const useSession = () =>
+  useQuery({
     queryKey: ['session'],
-    queryFn: () => currentSession(),
+    queryFn: () => getSession(),
   });
-
-  return session;
-};

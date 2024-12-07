@@ -1,12 +1,12 @@
 'use server';
 
 import { createOrganization } from '@/models/organization';
-import type { InsertOrganization } from '@/models/organization/type';
-import { currentSession } from '../auth/current-session';
 import { createOrganizationUser } from '@/models/organization-user';
+import type { InsertOrganization } from '@/models/organization/type';
+import { getSession } from '@/server-functions/session';
 
 export const createOrganizationMutation = async (data: InsertOrganization) => {
-  const { user } = await currentSession();
+  const { user } = await getSession();
 
   if (!user) {
     return [];

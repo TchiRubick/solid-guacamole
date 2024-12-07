@@ -1,6 +1,5 @@
 'use client';
 
-import { currentSession } from '@/actions/auth/current-session';
 import { switchSessionOrganization } from '@/actions/auth/switch-session-organization';
 import { getOrganizations } from '@/actions/organization/get-organizations';
 import {
@@ -18,18 +17,16 @@ import {
   useSidebar,
 } from '@/components/ui/sidebar';
 import { Skeleton } from '@/components/ui/skeleton';
+import { useSession } from '@/hooks/use-session';
 import { useToast } from '@/hooks/use-toast';
+import { useScopedI18n } from '@/packages/locales/client';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { ChevronsUpDown, Plus } from 'lucide-react';
 import Link from 'next/link';
-import { useScopedI18n } from '@/locales/client';
 
 export const OrganizationSwitcher = () => {
   const tOrganizationSwitcher = useScopedI18n('organization-switcher');
-  const { data: session } = useQuery({
-    queryKey: ['session'],
-    queryFn: currentSession,
-  });
+  const { data: session } = useSession();
   const { data: organizations } = useQuery({
     queryKey: ['organizations'],
     queryFn: async () => {

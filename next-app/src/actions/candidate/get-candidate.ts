@@ -1,18 +1,12 @@
 'use server';
 
 import { getCandidateById } from '@/models/candidate/$get-candidate-by-id';
-import { currentSession } from '../auth/current-session';
+import { actionOrgSessionGuard } from '@/server-functions/session';
 
 export const getCandidate = async (id: number) => {
-  const session = await currentSession();
+  const session = await actionOrgSessionGuard();
 
-  if (!session) {
-    throw new Error('Not authenticated');
-  }
-
-  if (!session.organization?.id) throw new Error('No organizastion');
-
-  const candidate = await getCandidateById(id, session.organization.id);
+  const candidate = await getCandidateById(id, session.organizationId);
 
   if (!candidate) {
     throw 'Candidate does not exist';

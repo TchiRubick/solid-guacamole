@@ -1,18 +1,14 @@
 'use server';
 
 import { getAll } from '@/models/candidate/$get-all';
-import { currentSession } from '../auth/current-session';
+import { actionSessionGuard } from '@/server-functions/session';
 
 export const getAllCandidateAction = async () => {
-  const session = await currentSession();
+  const session = await actionSessionGuard();
 
-  if (!session) {
-    throw new Error('Not authenticated');
-  }
+  if (!session.organizationId) return [];
 
-  if (!session.organization?.id) return [];
-
-  const candidates = await getAll(session.organization.id);
+  const candidates = await getAll(session.organizationId);
 
   return candidates;
 };

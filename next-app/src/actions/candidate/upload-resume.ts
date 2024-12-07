@@ -8,8 +8,8 @@ import {
   generateSafeName,
   uploadToS3,
 } from '@/packages/minio';
+import { actionSessionGuard } from '@/server-functions/session';
 import { z } from 'zod';
-import { currentSession } from '../auth/current-session';
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 const ACCEPTED_PDF_TYPE = 'application/pdf';
@@ -39,11 +39,7 @@ export const uploadResume = async ({
   candidateId: number;
   file: File;
 }) => {
-  const { session } = await currentSession();
-
-  if (!session) {
-    throw new Error('Not authenticated');
-  }
+  await actionSessionGuard();
 
   const validatedFile = filePDFValidator.parse(file);
 

@@ -1,25 +1,21 @@
 'use client';
 
+import { updateOrganizationMutation } from '@/actions/organization/update';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { useQuery } from '@tanstack/react-query';
-import { currentSession } from '@/actions/auth/current-session';
+import { useSession } from '@/hooks/use-session';
+import { useToast } from '@/hooks/use-toast';
+import { useScopedI18n } from '@/packages/locales/client';
 import { useForm } from '@tanstack/react-form';
 import { useMutation } from '@tanstack/react-query';
-import { updateOrganizationMutation } from '@/actions/organization/update';
 import { zodValidator } from '@tanstack/zod-form-adapter';
-import { useToast } from '@/hooks/use-toast';
-import { useScopedI18n } from '@/locales/client';
 
 export const DetailsOrganizationForm = () => {
   const { toast } = useToast();
   const t = useScopedI18n('details-organization-form');
-  const { data: session } = useQuery({
-    queryKey: ['session'],
-    queryFn: currentSession,
-  });
+  const { data: session } = useSession();
 
   const { mutateAsync } = useMutation({
     mutationFn: updateOrganizationMutation,

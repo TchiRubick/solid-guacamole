@@ -1,16 +1,14 @@
 'use server';
 
-import { updateOrganizationOwner } from '@/models/organization/$update-owner';
 import { verifyPassword } from '@/lib/password';
-import { userByEmailOrByUsername } from '@/models/user';
-import { currentSession } from '../auth/current-session';
-import { cookies } from 'next/headers';
 import {
   deleteSessionTokenCookie,
-  setSessionTokenCookie,
+  getSessionTokenCookie,
 } from '@/lib/session-cookies';
-import { createSession, invalidateSession } from '@/models/session';
-import { getOneOrganizationByUserId } from '@/models/organization';
+import { updateOrganizationOwner } from '@/models/organization/$update-owner';
+import { invalidateSession } from '@/models/session';
+import { userByEmailOrByUsername } from '@/models/user';
+import { getSession } from '@/server-functions/session';
 
 export const transferOwnerMutation = async ({
   newOwner,
@@ -19,8 +17,7 @@ export const transferOwnerMutation = async ({
   newOwner: string;
   confirmPassword: string;
 }) => {
-  const { session, user, organization } = await currentSession();
-  const cookieStore = await cookies();
+  const { session, user, organization } = await getSession();
 
   if (!session) {
     throw new Error('Not authenticated');
@@ -41,7 +38,7 @@ export const transferOwnerMutation = async ({
     throw new Error('Invalid password');
   }
 
-  const token = cookieStore.get('session')?.value ?? null;
+  const token = await getSessionTokenCookie();
 
   if (token === null) {
     return;
@@ -54,8 +51,4 @@ export const transferOwnerMutation = async ({
   await invalidateSession(token);
   await deleteSessionTokenCookie();
   await updateOrganizationOwner(organization?.id, newOwner);
-  const getorganization = await getOneOrganizationByUserId(user.id);
-  const newOrganizationId = getorganization?.organizationId ?? null;
-  const newSession = await createSession(user.id, newOrganizationId);
-  await setSessionTokenCookie(newSession.id, newSession.expiresAt);
 };

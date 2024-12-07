@@ -5,18 +5,10 @@ import { existInvitation } from '@/models/user-organization-invite/$exist-invita
 import { inviteUser } from '@/models/user-organization-invite/$invite-user';
 import { updateExpirationDateInvitation } from '@/models/user-organization-invite/$update-expiration-date-invitation';
 import { checkExisting } from '@/models/user/$check-existing';
-import { currentSession } from '../auth/current-session';
+import { actionOrgSessionGuard } from '@/server-functions/session';
 
 export const inviteUserAction = async ({ email }: { email: string }) => {
-  const { session } = await currentSession();
-
-  if (!session) {
-    throw new Error('Not authorized');
-  }
-
-  if (!session?.organizationId) {
-    throw new Error('Organization not found');
-  }
+  const session = await actionOrgSessionGuard();
 
   const existingUser = await checkExisting(email, email);
 

@@ -1,6 +1,5 @@
 'use client';
 
-import { currentSession } from '@/actions/auth/current-session';
 import { createOrganizationMutation } from '@/actions/organization/create';
 import { Button } from '@/components/ui/button';
 import {
@@ -13,10 +12,11 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
+import { useSession } from '@/hooks/use-session';
 import { useToast } from '@/hooks/use-toast';
-import { useScopedI18n } from '@/locales/client';
+import { useScopedI18n } from '@/packages/locales/client';
 import { useForm } from '@tanstack/react-form';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { zodValidator } from '@tanstack/zod-form-adapter';
 import { Loader2 } from 'lucide-react';
 
@@ -24,10 +24,7 @@ export const CreateOrganizationForm = () => {
   const { toast } = useToast();
   const tCreateOrganizationForm = useScopedI18n('create-organization-form');
 
-  const { data: userData } = useQuery({
-    queryKey: ['user'],
-    queryFn: currentSession,
-  });
+  const { data: session } = useSession();
 
   const { mutate, isPending } = useMutation({
     mutationFn: createOrganizationMutation,
@@ -52,11 +49,11 @@ export const CreateOrganizationForm = () => {
     defaultValues: {
       name: '',
       description: '',
-      ownerId: userData?.user?.id ?? '',
+      ownerId: session?.user?.id ?? '',
     },
     validatorAdapter: zodValidator(),
     onSubmit: (values) => {
-      if (userData?.user) {
+      if (session?.user) {
         mutate(values.value);
       }
     },

@@ -1,4 +1,7 @@
 'use client';
+import { deleteOrganizationMutation } from '@/actions/organization/delete';
+import { InputPassword } from '@/components/input-password';
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
@@ -7,26 +10,19 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { InputPassword } from '@/components/input-password';
-import { useMutation } from '@tanstack/react-query';
-import { deleteOrganizationMutation } from '@/actions/organization/delete';
-import { useQuery } from '@tanstack/react-query';
-import { currentSession } from '@/actions/auth/current-session';
+import { useScopedI18n } from '@/packages/locales/client';
 import { useForm } from '@tanstack/react-form';
+import { useMutation } from '@tanstack/react-query';
 import { zodValidator } from '@tanstack/zod-form-adapter';
-import { Button } from '@/components/ui/button';
-import { useScopedI18n } from '@/locales/client';
 
+import { useSession } from '@/hooks/use-session';
 import { useToast } from '@/hooks/use-toast';
 import { Loader } from 'lucide-react';
 
 export const DeleteOrganizationModal = () => {
   const { toast } = useToast();
   const t = useScopedI18n('delete-organization-modal');
-  const { data: session } = useQuery({
-    queryKey: ['session'],
-    queryFn: currentSession,
-  });
+  const { data: session } = useSession();
   const { mutateAsync, isPending } = useMutation({
     mutationFn: deleteOrganizationMutation,
     onSuccess: () => {

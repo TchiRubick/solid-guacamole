@@ -1,4 +1,4 @@
-import type { TError } from '@/locales/server';
+import type { TError } from '@/packages/locales/server';
 import { z } from 'zod';
 
 export const signinValidator = (t: TError) =>

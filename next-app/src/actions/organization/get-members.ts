@@ -1,22 +1,12 @@
 'use server';
 
 import { getUserByOrganizationId } from '@/models/organization-user/$getUserByOrganizationId';
-import { currentSession } from '../auth/current-session';
+import { actionOrgSessionGuard } from '@/server-functions/session';
 
 export const membersQuery = async () => {
-  const session = await currentSession();
+  const session = await actionOrgSessionGuard();
 
-  if (!session) {
-    throw new Error('Not authenticated');
-  }
-
-  if (!session.organization) {
-    throw new Error('No organization found');
-  }
-
-  const { id } = session.organization;
-
-  const result = await getUserByOrganizationId(id);
+  const result = await getUserByOrganizationId(session.organizationId);
 
   return result;
 };

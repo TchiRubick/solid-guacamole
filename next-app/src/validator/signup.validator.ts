@@ -1,5 +1,5 @@
+import type { TError } from '@/packages/locales/server';
 import { z } from 'zod';
-import type { TError } from '@/locales/server';
 
 export const signupSchema = (t: TError) =>
   z.object({

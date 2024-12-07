@@ -2,12 +2,12 @@
 
 import { hashPassword } from '@/lib/password';
 import { setSessionTokenCookie } from '@/lib/session-cookies';
-import { getScopedI18n } from '@/locales/server';
 import { createMassOrganizationUser } from '@/models/organization-user/$create-masse';
 import { createSession } from '@/models/session';
 import { checkExisting, create } from '@/models/user';
 import { existEmailInvitation } from '@/models/user-organization-invite/$exist-email-invitation';
 import { removeInvitationByIds } from '@/models/user-organization-invite/$remove-invitation-by-ids';
+import { getScopedI18n } from '@/packages/locales/server';
 import { signupSchema } from '@/validator/signup.validator';
 import type { z } from 'zod';
 

@@ -3,16 +3,16 @@
 import Link from 'next/link';
 
 import { signin } from '@/actions/auth/signin';
+import { InputPassword } from '@/components/input-password';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
-import { useScopedI18n } from '@/locales/client';
+import { useScopedI18n } from '@/packages/locales/client';
 import { useForm } from '@tanstack/react-form';
 import { useMutation } from '@tanstack/react-query';
 import { zodValidator } from '@tanstack/zod-form-adapter';
 import { useRouter } from 'next/navigation';
-import { InputPassword } from '@/components/input-password';
 
 export const SignInForm = () => {
   const tSignInForm = useScopedI18n('signin-form');

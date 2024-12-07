@@ -2,11 +2,19 @@
 
 import { db } from '@/packages/db';
 import { OrganizationUserTable } from '@/packages/db/schemas';
-import { eq } from 'drizzle-orm';
+import { and, eq } from 'drizzle-orm';
 
-export const userLeaveOrganization = async (userId: string) => {
+export const userLeaveOrganization = async (
+  userId: string,
+  organizationId: string
+) => {
   await db
     .delete(OrganizationUserTable)
-    .where(eq(OrganizationUserTable.userId, userId))
+    .where(
+      and(
+        eq(OrganizationUserTable.userId, userId),
+        eq(OrganizationUserTable.organizationId, organizationId)
+      )
+    )
     .returning();
 };

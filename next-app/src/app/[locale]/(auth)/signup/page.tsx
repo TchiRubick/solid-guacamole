@@ -1,10 +1,10 @@
-import { currentSession } from '@/actions/auth/current-session';
+import { getSession } from '@/server-functions/session';
 import Image from 'next/image';
 import { redirect } from 'next/navigation';
 import { SignUpForm } from './_components/signup-form';
 
 const SignUpPage = async () => {
-  const { session } = await currentSession();
+  const { session } = await getSession();
 
   if (!!session) {
     redirect('/dashboard');

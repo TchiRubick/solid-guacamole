@@ -2,20 +2,12 @@
 
 import { createCandidate } from '@/models/candidate/$create-candidate';
 import { zCandidateCreate, type CandidateInput } from '@/models/candidate/type';
-import { currentSession } from '../auth/current-session';
+import { actionOrgSessionGuard } from '@/server-functions/session';
 
 export const createCandidateMutation = async (
   candidate: Omit<CandidateInput, 'organizationId'>
 ) => {
-  const { session } = await currentSession();
-
-  if (!session) {
-    throw new Error('Not authenticated');
-  }
-
-  if (!session.organizationId) {
-    throw new Error('No organization');
-  }
+  const session = await actionOrgSessionGuard();
 
   const insertCandidate = zCandidateCreate.parse({
     ...candidate,

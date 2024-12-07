@@ -1,5 +1,5 @@
 import type { ReactElement } from 'react';
-import { I18nProviderClient } from '../../locales/client';
+import { I18nProviderClient } from '../../packages/locales/client';
 
 const SubLayout = async ({
   params,

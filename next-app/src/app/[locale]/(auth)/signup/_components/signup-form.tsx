@@ -1,17 +1,17 @@
 'use client';
 
+import { signup } from '@/actions/auth/signup';
+import { InputPassword } from '@/components/input-password';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
+import { useScopedI18n } from '@/packages/locales/client';
 import { useForm } from '@tanstack/react-form';
 import { useMutation } from '@tanstack/react-query';
 import { zodValidator } from '@tanstack/zod-form-adapter';
-import { signup } from '@/actions/auth/signup';
-import { useScopedI18n } from '@/locales/client';
-import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { InputPassword } from '@/components/input-password';
+import { useRouter } from 'next/navigation';
 
 export const SignUpForm = () => {
   const { toast } = useToast();

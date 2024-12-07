@@ -1,11 +1,12 @@
-import { currentSession } from '@/actions/auth/current-session';
-import { OwnerScope } from './_components/owner-scope';
+import { getOneOrganizationQuery } from '@/actions/organization/get-one-organization';
+import { getSession } from '@/server-functions/session';
 import { CardNoOrganization } from '../_components/card-no-organization';
 import { MembresScope } from './_components/membres-scope';
-import { getOneOrganizationQuery } from '@/actions/organization/get-one-organization';
+import { OwnerScope } from './_components/owner-scope';
 
 const ManageOrganizationPage = async () => {
-  const { session, organization } = await currentSession();
+  const { session, organization } = await getSession();
+
   const organizationId = organization?.id;
 
   if (!organizationId) {

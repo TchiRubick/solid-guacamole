@@ -2,10 +2,10 @@
 
 import { verifyPassword } from '@/lib/password';
 import { setSessionTokenCookie } from '@/lib/session-cookies';
-import { getScopedI18n } from '@/locales/server';
 import { getOneOrganizationByUserId } from '@/models/organization/$get-one-by-user-id';
 import { createSession } from '@/models/session';
 import { userByEmailOrByUsername } from '@/models/user';
+import { getScopedI18n } from '@/packages/locales/server';
 import { signinValidator } from '@/validator/signin.validator';
 import type { z } from 'zod';
 

@@ -1,11 +1,11 @@
-import { currentSession } from '@/actions/auth/current-session';
-import { getScopedI18n } from '@/locales/server';
+import { getScopedI18n } from '@/packages/locales/server';
+import { getSession } from '@/server-functions/session';
 import Link from 'next/link';
 
 const HomePage = async () => {
   const t = await getScopedI18n('hero');
 
-  const { session } = await currentSession();
+  const { session } = await getSession();
 
   const agreedLink = () => {
     if (!session) {
