@@ -7,10 +7,10 @@ export interface dataInterview {
   expiresAt: Date;
 }
 import { actionOrgSessionGuard } from '@/server-functions/session';
-import {nanoid} from 'nanoid'
+import {v4 as uuidV4} from 'uuid'
 export const createInterviewMutation = async (data: dataInterview) => {
-  const token = nanoid()
-  const password = nanoid()
+  const token = uuidV4()
+  const password = uuidV4()
   const session = await actionOrgSessionGuard();
   const organizationId = session.organizationId;
   const dataInterviewMutation = {
