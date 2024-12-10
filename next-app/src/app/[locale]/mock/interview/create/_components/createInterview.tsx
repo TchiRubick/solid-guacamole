@@ -48,7 +48,6 @@ export default function CreateInterview() {
         { id: '1', text: '' },
     ]);
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [candidateId, setcandidateId] = useState<string>('');
     const addQuestion = () => {
         setQuestions([...questions, { id: crypto.randomUUID(), text: '' }]);
     };
