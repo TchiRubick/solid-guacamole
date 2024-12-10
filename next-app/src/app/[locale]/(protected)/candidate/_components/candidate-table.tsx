@@ -64,7 +64,7 @@ export const CandidateTable = () => {
   if (isFetching) return <Skeleton className='h-1/2 w-full' />;
 
   return (
-    <Table>
+    <Table className='bg-card'>
       <TableCaption>A list of your candidates.</TableCaption>
       <TableHeader>
         {table.getHeaderGroups().map((headerGroup) => (

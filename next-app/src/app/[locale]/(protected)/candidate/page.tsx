@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { CandidateTable } from './_components/candidate-table';
 
 const CandidatePage = () => (
-  <main className='min-h-screen bg-gradient-to-b from-gray-50 to-white p-8 dark:from-gray-900 dark:to-gray-800'>
+  <main className='min-h-screen bg-background'>
     <h1 className='text-4xl font-bold'>Candidates</h1>
     <div className='flex w-full justify-end'>
       <Link href='/candidate/create'>

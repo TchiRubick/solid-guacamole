@@ -65,7 +65,7 @@ export const MemberTable = () => {
   if (isFetching) return <Skeleton className='h-1/2 w-full' />;
 
   return (
-    <Table>
+    <Table className='bg-card'>
       <TableCaption>Members list</TableCaption>
       <TableHeader>
         {table.getHeaderGroups().map((headerGroup) => (

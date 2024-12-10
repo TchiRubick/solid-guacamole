@@ -82,11 +82,7 @@ export const AppSidebar = ({
   const { data: session } = useSession();
 
   return (
-    <Sidebar
-      variant='floating'
-      className='border-r bg-sidebar/60 backdrop-blur-xl'
-      {...props}
-    >
+    <Sidebar variant='floating' className='bg-card backdrop-blur-xl' {...props}>
       <SidebarHeader className='border-b border-border/50 pb-2'>
         <OrganizationSwitcher />
       </SidebarHeader>

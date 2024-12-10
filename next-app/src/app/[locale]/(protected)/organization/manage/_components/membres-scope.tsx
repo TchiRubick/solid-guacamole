@@ -56,11 +56,11 @@ export const MembresScope = () => {
     },
   });
   return (
-    <div className='min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800'>
+    <div className='min-h-screen bg-background'>
       <div className='mx-auto max-w-7xl p-6'>
-        <div className='mb-12 rounded-xl bg-white p-6 shadow-sm dark:bg-gray-800/50'>
+        <div className='mb-12 rounded-xl bg-card p-6 shadow-sm dark:bg-gray-800/50'>
           <Label className='mb-2 text-2xl font-medium'>{t('title')}</Label>
-          <div className='mb-12 space-y-4 rounded-xl bg-white p-6 shadow-sm dark:bg-gray-800/50'>
+          <div className='mb-12 space-y-4 rounded-xl bg-card p-6 shadow-sm dark:bg-gray-800/50'>
             <div className='flex flex-col justify-between gap-4 md:flex-row md:items-center'>
               <div>
                 <Label htmlFor='name'>{t('lable-name')}</Label>
@@ -79,7 +79,7 @@ export const MembresScope = () => {
               />
             </div>
           </div>
-          <div className='mb-12 space-y-4 rounded-xl bg-white p-6 shadow-sm dark:bg-gray-800/50'>
+          <div className='mb-12 space-y-4 rounded-xl bg-card p-6 shadow-sm dark:bg-gray-800/50'>
             <div className='flex items-center justify-between'>
               <Dialog>
                 <DialogTrigger asChild>

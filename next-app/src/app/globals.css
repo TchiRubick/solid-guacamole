@@ -2,50 +2,88 @@
 @tailwind components;
 @tailwind utilities;
 
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: var(--lightestgrey);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
 @layer base {
   :root {
-    /* Name: custom color palette
-       Author: Ilias Ism
-       URL: https://gradient.page */
-
-    /* CSS: .bg-gradient { background: var(--gradient) } */
-    --gradient: #000c40;
-    --background: 243 100% 98.26%;
-    --foreground: 243 10% 0.52%;
-
-    --muted: 243 10% 91.3%;
-    --muted-foreground: 243 5% 41.3%;
-
-    --popover: 243 10% 91.3%;
-    --popover-foreground: 243 10% 0.65%;
-
-    --card: 243 10% 91.3%;
-    --card-foreground: 243 10% 0.65%;
-
-    --border: 243 15% 89.52%;
-    --input: 243 15% 89.52%;
-
-    --primary: 243 100% 13%;
-    --primary-foreground: 243 2% 91.3%;
-
-    --secondary: 243 5% 95.65%;
-    --secondary-foreground: 243 7% 11.3%;
-
-    --accent: 243 5% 95.65%;
-    --accent-foreground: 243 7% 11.3%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-
-    --ring: 243 100% 13%;
-
+    --background: 220 13% 18%;
+    --foreground: 219 14% 71%;
+    --muted: 220 12% 22%;
+    --muted-foreground: 220 12% 72%;
+    --popover: 220 13% 15%;
+    --popover-foreground: 219 14% 81%;
+    --card: 220 13% 16%;
+    --card-foreground: 219 14% 76%;
+    --border: 220 3% 23%;
+    --input: 220 3% 26%;
+    --primary: 220 13% 86%;
+    --primary-foreground: 220 13% 26%;
+    --secondary: 220 3% 25%;
+    --secondary-foreground: 220 3% 85%;
+    --accent: 220 13% 33%;
+    --accent-foreground: 220 13% 93%;
+    --destructive: 3 89% 50%;
+    --destructive-foreground: 0 0% 100%;
+    --ring: 220 13% 86%;
+    --chart-1: 220 13% 86%;
+    --chart-2: 220 3% 25%;
+    --chart-3: 220 13% 33%;
+    --chart-4: 220 3% 28%;
+    --chart-5: 220 16% 86%;
     --radius: 0.5rem;
   }
+
+  .dark {
+    --background: 220 13% 18%;
+    --foreground: 219 14% 71%;
+    --muted: 220 12% 22%;
+    --muted-foreground: 220 12% 72%;
+    --popover: 220 13% 15%;
+    --popover-foreground: 219 14% 81%;
+    --card: 220 13% 16%;
+    --card-foreground: 219 14% 76%;
+    --border: 220 3% 23%;
+    --input: 220 3% 26%;
+    --primary: 220 13% 86%;
+    --primary-foreground: 220 13% 26%;
+    --secondary: 220 3% 25%;
+    --secondary-foreground: 220 3% 85%;
+    --accent: 220 13% 33%;
+    --accent-foreground: 220 13% 93%;
+    --destructive: 3 89% 50%;
+    --destructive-foreground: 0 0% 100%;
+    --ring: 220 13% 86%;
+    --chart-1: 220 13% 86%;
+    --chart-2: 220 3% 25%;
+    --chart-3: 220 13% 33%;
+    --chart-4: 220 3% 28%;
+    --chart-5: 220 16% 86%;
+  }
 }
+
 
 @layer base {
   * {
