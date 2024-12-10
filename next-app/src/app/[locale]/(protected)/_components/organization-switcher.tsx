@@ -80,7 +80,7 @@ export const OrganizationSwitcher = () => {
             </SidebarMenuButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent
-            className='w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg bg-gradient-to-b from-gray-50 to-white'
+            className='w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg bg-card'
             align='start'
             side={isMobile ? 'bottom' : 'right'}
             sideOffset={4}
@@ -97,7 +97,7 @@ export const OrganizationSwitcher = () => {
             ) : (
               organizations?.map((organization) => (
                 <DropdownMenuItem
-                  className={`cursor-pointer ${organization.organizationId === session?.organization?.id ? 'rounded-lg border-2 border-primary/20 bg-background' : ''}`}
+                  className={`cursor-pointer ${organization.organizationId === session?.organization?.id ? 'bg-accent/50' : ''}`}
                   key={organization.id}
                   onClick={() => {
                     handleOrganizationClick(organization.organizationId);

@@ -6,7 +6,6 @@ import { LogOut } from 'lucide-react';
 
 import { signout } from '@/actions/auth/signout';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -19,7 +18,7 @@ import {
 import { SidebarMenuButton, useSidebar } from '@/components/ui/sidebar';
 import { useSession } from '@/hooks/use-session';
 import { useMutation } from '@tanstack/react-query';
-import { BadgeCheck, ChevronsUpDown, CreditCard, Sparkles } from 'lucide-react';
+import { ChevronsUpDown, Sparkles } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 export const SidebarUser = () => {
@@ -63,7 +62,7 @@ export const SidebarUser = () => {
         </SidebarMenuButton>
       </DropdownMenuTrigger>
       <DropdownMenuContent
-        className='w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg bg-gradient-to-b from-gray-50 to-white'
+        className='w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg bg-card'
         side={isMobile ? 'bottom' : 'right'}
         align='end'
         sideOffset={4}
@@ -90,39 +89,25 @@ export const SidebarUser = () => {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem>
+          <DropdownMenuItem className='cursor-pointer'>
             <Sparkles />
-            Upgrade to Pro
+            Buy credits
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem>
-            <BadgeCheck />
-            Account
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <CreditCard />
-            Billing
-          </DropdownMenuItem>
-          <DropdownMenuItem>
+          <DropdownMenuItem className='cursor-pointer'>
             <Bell />
             Notifications
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          <Button
-            className='w-full cursor-pointer'
-            size='sm'
-            variant='link'
-            onClick={() => {
-              mutate();
-            }}
-          >
-            <LogOut />
-            Log out
-          </Button>
+        <DropdownMenuItem
+          className='cursor-pointer text-red-400'
+          onClick={() => mutate()}
+        >
+          <LogOut />
+          Log out
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

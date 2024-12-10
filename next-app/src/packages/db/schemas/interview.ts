@@ -34,7 +34,8 @@ export const InterviewTable = pgTable('interview', (t) => ({
   token: t.varchar('token', { length: 255 }).notNull(),
   createdAt: t
     .timestamp('created_at', { withTimezone: true, mode: 'date' })
-    .notNull(),
+    .notNull()
+    .$defaultFn(() => new Date()),
   expiresAt: t
     .timestamp('expires_at', { withTimezone: true, mode: 'date' })
     .notNull(),

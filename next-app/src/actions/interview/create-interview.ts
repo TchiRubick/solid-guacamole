@@ -1,27 +1,36 @@
 'use server';
 import { createInterview } from '@/models/interview';
-export interface dataInterview {
+import { zInterviewInsert } from '@/models/interview/type';
+import { actionOrgSessionGuard } from '@/server-functions/session';
+
+export interface CreateInterviewPayload {
   name: string;
-  description?: string | null | undefined;
-  candidate_id: number;
+  description: string;
+  candidateId: number;
   expiresAt: Date;
 }
-import { actionOrgSessionGuard } from '@/server-functions/session';
-import {v4 as uuidV4} from 'uuid'
-export const createInterviewMutation = async (data: dataInterview) => {
-  const token = uuidV4()
-  const password = uuidV4()
+
+export const createInterviewMutation = async (data: CreateInterviewPayload) => {
   const session = await actionOrgSessionGuard();
+
+  const token = crypto.randomUUID();
+  const password = crypto.getRandomValues(new Uint32Array(1))[0].toString(16);
+
   const organizationId = session.organizationId;
+
   const dataInterviewMutation = {
-    name:data.name,
-    description:data.description,
-    candidateId : data.candidate_id,
-    organizationId:organizationId,
-    password:password,
-    token:token,
-    expiresAt : data.expiresAt
-  }
-  const interviewData = await createInterview(dataInterviewMutation);
+    name: data.name,
+    description: data.description,
+    candidateId: data.candidateId,
+    organizationId: organizationId,
+    password,
+    token,
+    expiresAt: data.expiresAt,
+  };
+
+  zInterviewInsert.parse(dataInterviewMutation);
+
+  const [interviewData] = await createInterview(dataInterviewMutation);
+
   return interviewData;
 };

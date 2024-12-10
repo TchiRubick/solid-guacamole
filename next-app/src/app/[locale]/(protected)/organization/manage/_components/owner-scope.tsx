@@ -4,7 +4,7 @@ import { DangerZone } from './danger-zone';
 import { DetailsOrganizationForm } from './details-organization-form';
 
 export const OwnerScope = () => (
-  <div className='min-h-screen bg-background'>
+  <div className='min-h-screen border-2 bg-background'>
     <CardHeader>
       <CardTitle>Information general</CardTitle>
     </CardHeader>

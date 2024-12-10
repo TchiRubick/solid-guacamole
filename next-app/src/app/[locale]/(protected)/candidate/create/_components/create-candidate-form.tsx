@@ -15,7 +15,7 @@ import { toast } from '@/hooks/use-toast';
 import { useForm } from '@tanstack/react-form';
 import { useMutation } from '@tanstack/react-query';
 import { zodValidator } from '@tanstack/zod-form-adapter';
-import { Loader2, Mail, Phone, MapPin, User, Briefcase } from 'lucide-react';
+import { Briefcase, Loader2, Mail, MapPin, Phone, User } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 export const CreateCandidateForm = () => {
@@ -55,7 +55,7 @@ export const CreateCandidateForm = () => {
   });
 
   return (
-    <Card className='mx-auto w-full max-w-2xl'>
+    <Card className='mx-auto w-full'>
       <CardHeader>
         <CardTitle className='text-2xl'>Create New Candidate</CardTitle>
         <CardDescription>

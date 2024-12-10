@@ -1,5 +1,6 @@
 'use client';
 
+import { Badge } from '@/components/ui/badge';
 import {
   Sidebar,
   SidebarContent,
@@ -61,6 +62,7 @@ const data = {
           title: 'Templates',
           icon: FileText,
           url: '/interview/template',
+          soon: true,
         },
       ],
     },
@@ -113,9 +115,20 @@ export const AppSidebar = ({
                             isActive={isActive(subItem.url)}
                             className='group flex items-center gap-2 rounded-md px-3 py-2 text-sm text-muted-foreground hover:bg-accent/50 hover:text-accent-foreground data-[active=true]:bg-accent data-[active=true]:text-accent-foreground'
                           >
-                            <Link href={subItem.url} prefetch>
+                            <Link
+                              href={subItem.soon ? '#' : subItem.url}
+                              prefetch
+                            >
                               <subItem.icon className='h-4 w-4' />
                               <span>{subItem.title}</span>
+                              {subItem.soon && (
+                                <Badge
+                                  variant='outline'
+                                  className='ml-auto text-[8px]'
+                                >
+                                  Coming Soon
+                                </Badge>
+                              )}
                             </Link>
                           </SidebarMenuSubButton>
                         </SidebarMenuSubItem>

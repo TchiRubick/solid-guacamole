@@ -3,7 +3,7 @@
 import { getAll } from '@/models/candidate/$get-all';
 import { actionSessionGuard } from '@/server-functions/session';
 
-export const getAllCandidateQuery = async () => {
+export const getAllCandidateAction = async () => {
   const session = await actionSessionGuard();
 
   if (!session.organizationId) return [];
