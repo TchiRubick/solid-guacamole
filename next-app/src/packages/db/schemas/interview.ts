@@ -3,6 +3,26 @@ import { pgTable } from 'drizzle-orm/pg-core';
 import { InterviewStatusEnum } from './enums';
 import { OrganizationTable } from './organization';
 
+export const QuestionTable = pgTable('question', (t) => ({
+  id: t
+    .varchar('id')
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  value: t.varchar('value').notNull(),
+  organizationId: t
+    .varchar('organization_id')
+    .notNull()
+    .references(() => OrganizationTable.id),
+  interviewId: t
+    .serial('interview_id') // Ajout du champ pour la relation avec InterviewTable
+    .notNull()
+    .references(() => InterviewTable.id, { onDelete: 'cascade' }),
+  createdAt: t
+    .timestamp('created_at', { withTimezone: true })
+    .notNull()
+    .$defaultFn(() => new Date()),
+}));
+
 export const CandidateTable = pgTable('candidate', (t) => ({
   id: t.serial('id').primaryKey(),
   name: t.varchar('name').notNull(),
@@ -42,22 +62,6 @@ export const InterviewTable = pgTable('interview', (t) => ({
   status: InterviewStatusEnum('status').default('sent').notNull(),
 }));
 
-export const QuestionTable = pgTable('question', (t) => ({
-  id: t
-    .varchar('id')
-    .primaryKey()
-    .$defaultFn(() => crypto.randomUUID()),
-  value: t.varchar('value').notNull(),
-  organizationId: t
-    .varchar('organization_id')
-    .notNull()
-    .references(() => OrganizationTable.id),
-  createdAt: t
-    .timestamp('created_at', { withTimezone: true })
-    .notNull()
-    .$defaultFn(() => new Date()),
-}));
-
 export const AnswerTable = pgTable('answer', (t) => ({
   id: t
     .varchar('id')
@@ -78,8 +82,7 @@ export const AnswerTable = pgTable('answer', (t) => ({
     .$defaultFn(() => new Date()),
 }));
 
-// Relations
-export const InterviewRelations = relations(InterviewTable, ({ one }) => ({
+export const InterviewRelations = relations(InterviewTable, ({ one, many }) => ({
   organization: one(OrganizationTable, {
     fields: [InterviewTable.organizationId],
     references: [OrganizationTable.id],
@@ -88,23 +91,16 @@ export const InterviewRelations = relations(InterviewTable, ({ one }) => ({
     fields: [InterviewTable.candidateId],
     references: [CandidateTable.id],
   }),
+  questions: many(QuestionTable), // Ajout de la relation vers QuestionTable
 }));
 
-export const QuestionRelations = relations(QuestionTable, ({ one, many }) => ({
+export const QuestionRelations = relations(QuestionTable, ({ one }) => ({
   organization: one(OrganizationTable, {
     fields: [QuestionTable.organizationId],
     references: [OrganizationTable.id],
   }),
-  answers: many(AnswerTable),
-}));
-
-export const AnswerRelations = relations(AnswerTable, ({ one }) => ({
-  question: one(QuestionTable, {
-    fields: [AnswerTable.questionId],
-    references: [QuestionTable.id],
-  }),
-  interview: one(InterviewTable, {
-    fields: [AnswerTable.interviewId],
+  interview: one(InterviewTable, { // Ajout de la relation vers InterviewTable
+    fields: [QuestionTable.interviewId],
     references: [InterviewTable.id],
   }),
 }));
