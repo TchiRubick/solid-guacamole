@@ -77,7 +77,7 @@ export default function CreateInterview() {
         title: 'Interview sent successfully',
       });
 
-      router.push('/interview');
+      router.push('/interview/list');
     },
     onError: (error) => {
       toast({

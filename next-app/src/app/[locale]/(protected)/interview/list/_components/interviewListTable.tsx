@@ -50,7 +50,7 @@ const columns: ColumnDef<SelectInterview>[] = [
     accessorKey: 'id',
     header: 'Action',
     cell: ({ row }) => (
-      <Link href={`/interview/${row.original.id}`}>
+      <Link href={`/interview/list/details/${row.original.id}`}>
         <Button variant='ghost' size='icon' className='h-8 w-8'>
           <Eye className='h-4 w-4' />
         </Button>
@@ -76,8 +76,6 @@ export const InterviewListTable = () => {
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
-
-  if (isFetching) return <Skeleton className='h-1/2 w-full' />;
 
   return (
     <div>
@@ -108,7 +106,11 @@ export const InterviewListTable = () => {
               >
                 {row.getVisibleCells().map((cell) => (
                   <TableCell key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    {isFetching ? (
+                      <Skeleton className='h-8 w-full' />
+                    ) : (
+                      flexRender(cell.column.columnDef.cell, cell.getContext())
+                    )}
                   </TableCell>
                 ))}
               </TableRow>
@@ -122,7 +124,7 @@ export const InterviewListTable = () => {
           )}
         </TableBody>
       </Table>
-      {totalPages > 1 && (
+      {totalPages < 5 && (
         <PaginationBar
           currentPage={page}
           totalPages={totalPages}
