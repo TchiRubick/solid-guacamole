@@ -1,6 +1,6 @@
 'use client';
 
-import { uploadResume } from '@/actions/candidate/upload-resume';
+import { uploadResumeMutation } from '@/actions/candidate/upload-resume';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -13,7 +13,7 @@ export const CandidateResumeUpload = ({ id }: { id: number }) => {
   const client = useQueryClient();
 
   const { mutate } = useMutation({
-    mutationFn: uploadResume,
+    mutationFn: uploadResumeMutation,
     onSuccess: () => {
       toast({
         title: 'Resume uploaded successfully',

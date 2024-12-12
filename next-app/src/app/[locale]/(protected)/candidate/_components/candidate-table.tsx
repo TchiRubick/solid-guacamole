@@ -1,6 +1,6 @@
 'use client';
 
-import { getAllCandidateAction } from '@/actions/candidate/get-all-candidate';
+import { allCandidateQuery } from '@/actions/candidate/get-all-candidate';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import {
@@ -52,7 +52,7 @@ const columns: ColumnDef<Candidate>[] = [
 export const CandidateTable = () => {
   const { data, isFetching } = useQuery({
     queryKey: ['candidates'],
-    queryFn: () => getAllCandidateAction(),
+    queryFn: () => allCandidateQuery(),
   });
 
   const table = useReactTable({

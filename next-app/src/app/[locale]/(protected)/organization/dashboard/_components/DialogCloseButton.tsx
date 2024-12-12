@@ -1,6 +1,6 @@
 'use client';
 
-import { inviteUserAction } from '@/actions/user/invite-user';
+import { inviteUserMutation } from '@/actions/user/invite-user';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -20,7 +20,7 @@ import { z } from 'zod';
 // TODO: rename this component
 export const DialogCloseButton = () => {
   const { mutate } = useMutation({
-    mutationFn: inviteUserAction,
+    mutationFn: inviteUserMutation,
   });
 
   const { handleSubmit, Field } = useForm({

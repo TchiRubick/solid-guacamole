@@ -1,5 +1,5 @@
 'use client';
-import { getFullInformations } from '@/actions/organization/get-full-informations';
+import { FullInformationsQuery } from '@/actions/organization/get-full-informations';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useQuery } from '@tanstack/react-query';
@@ -10,7 +10,7 @@ import { MemberTable } from './member-table';
 export function Dashboard() {
   const { data: organization } = useQuery({
     queryKey: ['organization'],
-    queryFn: () => getFullInformations(),
+    queryFn: () => FullInformationsQuery(),
   });
 
   return (

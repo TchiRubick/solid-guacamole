@@ -1,7 +1,7 @@
 'use client';
 
-import { switchSessionOrganization } from '@/actions/auth/switch-session-organization';
-import { getOrganizations } from '@/actions/organization/get-organizations';
+import { switchSessionOrganizationMutation } from '@/actions/auth/switch-session-organization';
+import { OrganizationsQuery } from '@/actions/organization/get-organizations';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -31,7 +31,7 @@ export const OrganizationSwitcher = () => {
     queryKey: ['organizations'],
     queryFn: async () => {
       if (!session?.user?.id) return [];
-      const orgs = await getOrganizations(session?.user?.id);
+      const orgs = await OrganizationsQuery(session?.user?.id);
       return orgs;
     },
     enabled: !!session?.user?.id,
@@ -40,7 +40,7 @@ export const OrganizationSwitcher = () => {
   const { toast } = useToast();
 
   const { mutateAsync, isPending } = useMutation({
-    mutationFn: switchSessionOrganization,
+    mutationFn: switchSessionOrganizationMutation,
     onSuccess: () => {
       window.location.reload();
     },

@@ -1,6 +1,6 @@
 'use client';
 
-import { signup } from '@/actions/auth/signup';
+import { signupMutation } from '@/actions/auth/signup';
 import { InputPassword } from '@/components/input-password';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -19,7 +19,7 @@ export const SignUpForm = () => {
   const router = useRouter();
 
   const { mutate } = useMutation({
-    mutationFn: signup,
+    mutationFn: signupMutation,
     onSuccess: () => {
       toast({
         title: 'Success',

@@ -6,7 +6,7 @@ import {
 } from '@/lib/session-cookies';
 import { invalidateSession } from '@/models/session';
 
-export const signout = async () => {
+export const signoutMutation = async () => {
   const token = await getSessionTokenCookie();
 
   if (token === null) {

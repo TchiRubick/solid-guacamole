@@ -1,6 +1,6 @@
 'use client';
 
-import { getAllCandidateAction } from '@/actions/candidate/get-all-candidate';
+import { allCandidateQuery } from '@/actions/candidate/get-all-candidate';
 import type { CreateInterviewPayload } from '@/actions/interview/create-interview';
 import { createInterviewMutation } from '@/actions/interview/create-interview';
 import { Button } from '@/components/ui/button';
@@ -66,7 +66,7 @@ export default function CreateInterview() {
 
   const { data: candidates } = useQuery({
     queryKey: ['candidate'],
-    queryFn: getAllCandidateAction,
+    queryFn: allCandidateQuery,
   });
 
   const { mutate: createInterview, isPending } = useMutation({

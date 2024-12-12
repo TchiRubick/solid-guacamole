@@ -9,7 +9,7 @@ import {
   uploadToS3,
 } from '@/packages/minio';
 
-export const uploadImage = async (files: File[]) => {
+export const uploadImageMutation = async (files: File[]) => {
   const validatedFiles = filesImageValidator.parse(files);
   const names: string[] = [];
 

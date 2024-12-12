@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 
-import { signin } from '@/actions/auth/signin';
+import { signinMutation } from '@/actions/auth/signin';
 import { InputPassword } from '@/components/input-password';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -20,7 +20,7 @@ export const SignInForm = () => {
   const router = useRouter();
 
   const { mutate } = useMutation({
-    mutationFn: signin,
+    mutationFn: signinMutation,
     onSuccess: () => {
       toast({
         title: 'success',

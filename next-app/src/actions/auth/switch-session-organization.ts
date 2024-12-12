@@ -7,7 +7,7 @@ import {
 } from '@/lib/session-cookies';
 import { createSession, invalidateSession } from '@/models/session';
 
-export const switchSessionOrganization = async ({
+export const switchSessionOrganizationMutation = async ({
   userId,
   organizationId,
 }: {

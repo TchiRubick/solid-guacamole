@@ -11,7 +11,7 @@ import type { z } from 'zod';
 
 type SigninInput = z.infer<ReturnType<typeof signinValidator>>;
 
-export const signin = async (input: SigninInput) => {
+export const signinMutation = async (input: SigninInput) => {
   const tError = await getScopedI18n('server-error');
   const tSignin = await getScopedI18n('signin-form');
 

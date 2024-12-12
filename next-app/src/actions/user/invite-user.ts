@@ -7,7 +7,7 @@ import { updateExpirationDateInvitation } from '@/models/user-organization-invit
 import { checkExisting } from '@/models/user/$check-existing';
 import { actionOrgSessionGuard } from '@/server-functions/session';
 
-export const inviteUserAction = async ({ email }: { email: string }) => {
+export const inviteUserMutation = async ({ email }: { email: string }) => {
   const session = await actionOrgSessionGuard();
 
   const existingUser = await checkExisting(email, email);

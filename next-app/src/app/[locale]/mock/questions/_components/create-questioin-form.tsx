@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
 import { useMutation } from '@tanstack/react-query';
-import { createQuestionAction } from '@/actions/question/create-question';
+import { createQuestionMutation } from '@/actions/question/create-question';
 import { useForm } from '@tanstack/react-form';
 import { zodValidator } from '@tanstack/zod-form-adapter';
 
@@ -13,7 +13,7 @@ export const CreateQuestionForm = () => {
   const { toast } = useToast();
 
   const { mutate } = useMutation({
-    mutationFn: createQuestionAction,
+    mutationFn: createQuestionMutation,
     onSuccess: () => {
       toast({
         title: 'Success',

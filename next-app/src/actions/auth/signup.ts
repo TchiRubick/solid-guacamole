@@ -13,7 +13,7 @@ import type { z } from 'zod';
 
 type SigninInput = z.infer<ReturnType<typeof signupSchema>>;
 
-export const signup = async (input: SigninInput) => {
+export const signupMutation = async (input: SigninInput) => {
   const tError = await getScopedI18n('server-error');
   const tSignup = await getScopedI18n('signup-form');
   const validatedInput = signupSchema(tError).parse(input);

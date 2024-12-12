@@ -1,4 +1,4 @@
-import { getCandidate } from '@/actions/candidate/get-candidate';
+import { oneCandidateQuery } from '@/actions/candidate/get-candidate';
 import getQueryClient from '@/packages/react-query';
 import { CandidateDetails } from './_components/candidate-details';
 
@@ -15,7 +15,7 @@ const CandidateDetailsPage = async ({
 
   client.prefetchQuery({
     queryKey: ['candidate', 'details', id],
-    queryFn: () => getCandidate(candidateId),
+    queryFn: () => oneCandidateQuery(candidateId),
   });
 
   return (

@@ -1,6 +1,6 @@
 'use client';
 
-import { uploadVideo as uploadVideoToS3 } from '@/actions/video/upload-video';
+import { uploadVideoMuation as uploadVideoToS3 } from '@/actions/video/upload-video';
 import { Button } from '@/components/ui/button'; // Assuming you're using shadcn/ui buttons
 import { useToast } from '@/hooks/use-toast';
 import { useMutation } from '@tanstack/react-query';

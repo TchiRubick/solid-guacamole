@@ -32,7 +32,7 @@ const filePDFValidator = z
   .refine(validateFileType, { message: 'Only PDF files are accepted' })
   .refine(validateFileName, { message: 'Invalid file name' });
 
-export const uploadResume = async ({
+export const uploadResumeMutation = async ({
   candidateId,
   file,
 }: {

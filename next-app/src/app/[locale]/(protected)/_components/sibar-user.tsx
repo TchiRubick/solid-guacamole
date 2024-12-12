@@ -4,7 +4,7 @@ import { Bell } from 'lucide-react';
 
 import { LogOut } from 'lucide-react';
 
-import { signout } from '@/actions/auth/signout';
+import { signoutMutation } from '@/actions/auth/signout';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   DropdownMenu,
@@ -29,7 +29,7 @@ export const SidebarUser = () => {
   const router = useRouter();
 
   const { mutate } = useMutation({
-    mutationFn: signout,
+    mutationFn: signoutMutation,
     onSuccess: () => {
       router.push('/');
     },
