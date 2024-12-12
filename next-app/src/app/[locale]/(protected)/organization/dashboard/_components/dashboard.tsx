@@ -16,7 +16,6 @@ export function Dashboard() {
   return (
     <div className='min-h-screen bg-background'>
       <div className='mx-auto max-w-7xl p-6'>
-        {/* Header Section */}
         <div className='mb-12 rounded-xl bg-card p-6 shadow-sm dark:bg-gray-800/50'>
           <div className='flex flex-col justify-between gap-4 md:flex-row md:items-center'>
             <div>

@@ -11,16 +11,33 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { useForm } from '@tanstack/react-form';
 import { useMutation } from '@tanstack/react-query';
 import { zodValidator } from '@tanstack/zod-form-adapter';
+import { Loader2, LoaderPinwheelIcon } from 'lucide-react';
 import { z } from 'zod';
+import { useToast } from '@/hooks/use-toast';
+import { useScopedI18n } from '@/packages/locales/client';
 
-// TODO: rename this component
 export const DialogCloseButton = () => {
-  const { mutate } = useMutation({
+  const { toast } = useToast();
+  const t = useScopedI18n('invite-user-dialog');
+  const { mutate, isPending } = useMutation({
     mutationFn: inviteUserMutation,
+    onSuccess: () => {
+      toast({
+        title: `${t('toast-success-title')}`,
+        description: `${t('toast-success-description')}`,
+      });
+      window.location.reload();
+    },
+    onError: (error) => {
+      toast({
+        title: `${t('toast-error-title')}`,
+        description: error.message,
+        variant: 'destructive',
+      });
+    },
   });
 
   const { handleSubmit, Field } = useForm({
@@ -39,14 +56,12 @@ export const DialogCloseButton = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant='outline'>Invite</Button>
+        <Button variant='outline'>{t('invite-button')}</Button>
       </DialogTrigger>
       <DialogContent className='sm:max-w-md'>
         <DialogHeader>
-          <DialogTitle>Invitation</DialogTitle>
-          <DialogDescription>
-            Enter the mail adress of the new member{' '}
-          </DialogDescription>
+          <DialogTitle>{t('title')}</DialogTitle>
+          <DialogDescription>{t('description')}</DialogDescription>
         </DialogHeader>
         <form
           onSubmit={(e) => {
@@ -57,9 +72,6 @@ export const DialogCloseButton = () => {
         >
           <div className='flex items-center space-x-2'>
             <div className='grid flex-1 gap-2'>
-              <Label htmlFor='link' className='sr-only'>
-                Link
-              </Label>
               <Field name='email'>
                 {(field) => (
                   <Input
@@ -69,13 +81,17 @@ export const DialogCloseButton = () => {
                     onBlur={field.handleBlur}
                     type='email'
                     onChange={(e) => field.handleChange(e.target.value)}
-                    placeholder='john@mail.com'
+                    placeholder={t('email-placeholder')}
                   />
                 )}
               </Field>
             </div>
             <Button type='submit' className='px-3'>
-              Invite
+              {isPending ? (
+                <Loader2 className='animate-spin' />
+              ) : (
+                t('invite-button')
+              )}
             </Button>
           </div>
         </form>

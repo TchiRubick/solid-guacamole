@@ -118,6 +118,16 @@ export default {
     'leave-organization-dialog-confirm-button': 'Confirm',
     'password-placeholder': 'Confirm Password',
   },
+  'invite-user-dialog': {
+    title: 'Invite User',
+    description: 'Enter the email address of the user you want to invite',
+    'email-placeholder': 'Email',
+    'invite-button': 'Invite',
+    'toast-success-title': 'Invitation sent',
+    'toast-success-description': 'The invitation has been sent',
+    'toast-error-title': 'Error',
+  },
+
   'server-error': {
     'min-email-length': 'Email must be at least 3 characters',
     'max-email-length': 'Email must be less than 255 characters',
