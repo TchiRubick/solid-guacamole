@@ -18,6 +18,9 @@ export default {
     'no-account': "Don't have an account?",
     'email-not-found': 'Email not found',
     'invalid-credentials': 'Invalid credentials',
+    'toast-error-title': 'Error',
+    'toast-success-title': 'Success',
+    'toast-success': 'User signed in successfully',
   },
   'signup-form': {
     title: 'Sign Up',
@@ -43,6 +46,9 @@ export default {
     'already-have-account': 'Already have an account?',
     'user-already-exists': 'User already exists',
     'failed-to-create-user': 'Failed to create user',
+    'toast-error-title': 'Error',
+    'toast-success-title': 'Success',
+    'toast-success': 'User signed in successfully',
   },
   'create-organization-form': {
     title: 'Create Organization',

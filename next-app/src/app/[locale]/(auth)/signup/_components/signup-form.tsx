@@ -10,6 +10,7 @@ import { useScopedI18n } from '@/packages/locales/client';
 import { useForm } from '@tanstack/react-form';
 import { useMutation } from '@tanstack/react-query';
 import { zodValidator } from '@tanstack/zod-form-adapter';
+import { Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
@@ -18,19 +19,19 @@ export const SignUpForm = () => {
   const tSignUpForm = useScopedI18n('signup-form');
   const router = useRouter();
 
-  const { mutate } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: signupMutation,
     onSuccess: () => {
       toast({
-        title: 'Success',
-        description: 'User signed up successfully',
+        title: `${tSignUpForm('toast-success-title')}`,
+        description: `${tSignUpForm('toast-success')}`,
       });
 
       router.push('/');
     },
     onError: (error: Error) => {
       toast({
-        title: 'Error',
+        title: `${tSignUpForm('toast-error-title')}`,
         description: error.message,
         variant: 'destructive',
       });
@@ -201,7 +202,11 @@ export const SignUpForm = () => {
         </div>
       </div>
       <Button type='submit' variant='default'>
-        {tSignUpForm('sign-up-button')}
+        {isPending ? (
+          <Loader2 className='animate-spin' />
+        ) : (
+          tSignUpForm('sign-up-button')
+        )}
       </Button>
       <div className='mt-4 text-center text-sm'>
         {tSignUpForm('already-have-account')}{' '}

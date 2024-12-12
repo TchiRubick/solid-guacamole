@@ -13,25 +13,26 @@ import { useForm } from '@tanstack/react-form';
 import { useMutation } from '@tanstack/react-query';
 import { zodValidator } from '@tanstack/zod-form-adapter';
 import { useRouter } from 'next/navigation';
+import { Loader2 } from 'lucide-react';
 
 export const SignInForm = () => {
   const tSignInForm = useScopedI18n('signin-form');
   const { toast } = useToast();
   const router = useRouter();
 
-  const { mutate } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: signinMutation,
     onSuccess: () => {
       toast({
-        title: 'success',
-        description: 'User signed in successfully',
+        title: `${tSignInForm('toast-success-title')}`,
+        description: `${tSignInForm('toast-success')}`,
       });
 
       router.push('/');
     },
     onError: (error: Error) => {
       toast({
-        title: 'error',
+        title: `${tSignInForm('toast-error-title')}`,
         description: error.message,
         variant: 'destructive',
       });
@@ -109,7 +110,11 @@ export const SignInForm = () => {
           </Field>
         </div>
         <Button type='submit' className='w-full'>
-          {tSignInForm('login-button')}
+          {isPending ? (
+            <Loader2 className='animate-spin' />
+          ) : (
+            tSignInForm('login-button')
+          )}
         </Button>
       </div>
       <div className='mt-4 text-center text-sm'>

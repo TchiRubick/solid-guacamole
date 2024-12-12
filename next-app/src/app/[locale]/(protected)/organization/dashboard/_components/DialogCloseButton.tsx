@@ -14,7 +14,7 @@ import { Input } from '@/components/ui/input';
 import { useForm } from '@tanstack/react-form';
 import { useMutation } from '@tanstack/react-query';
 import { zodValidator } from '@tanstack/zod-form-adapter';
-import { Loader2, LoaderPinwheelIcon } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { z } from 'zod';
 import { useToast } from '@/hooks/use-toast';
 import { useScopedI18n } from '@/packages/locales/client';

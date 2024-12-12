@@ -98,9 +98,8 @@ export default function CreateInterview() {
         description: valeur.value.description,
         candidateId: Number(valeur.value.candidateId),
         expiresAt: valeur.value.expiresAt,
-        questions
+        questions,
       };
-      console.log(questions)
       createInterview(data);
     },
     validatorAdapter: zodValidator(),
