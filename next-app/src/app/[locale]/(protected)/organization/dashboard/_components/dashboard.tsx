@@ -8,6 +8,7 @@ import { Building2, Users } from 'lucide-react';
 import { DialogCloseButton } from './DialogCloseButton';
 import { MemberTable } from './member-table';
 import { useSession } from '@/hooks/use-session';
+import { useScopedI18n } from '@/packages/locales/client';
 
 export function Dashboard() {
   const { data: organization } = useQuery({
@@ -15,6 +16,7 @@ export function Dashboard() {
     queryFn: () => FullInformationsQuery(),
   });
 
+  const t = useScopedI18n('dashboard');
   const { data: session } = useSession();
 
   return (
@@ -27,24 +29,26 @@ export function Dashboard() {
                 {organization?.name}
               </h1>
               <p className='mt-1 text-sm text-muted-foreground'>
-                Manage your organization settings and members
+                {t('description')}
               </p>
             </div>
             <Badge variant='secondary' className='h-9 px-4 py-2'>
-              Credits remaining: 30
+              {t('creadits-remaining')}30
             </Badge>
           </div>
           <div className='mt-6 grid gap-1'>
             <div className='flex items-center gap-2'>
               <Users className='h-4 w-4 text-muted-foreground' />
               <span className='text-sm'>
-                Owner: {organization?.owner.username}
+                {t('onwer-name')}
+                {organization?.owner.username}
               </span>
             </div>
             <div className='flex items-center gap-2'>
               <Building2 className='h-4 w-4 text-muted-foreground' />
               <span className='text-sm'>
-                Organization description: {organization?.description}
+                {t('organization-description')}
+                {organization?.description}
               </span>
             </div>
           </div>
@@ -53,7 +57,7 @@ export function Dashboard() {
           <Card className='relative overflow-hidden'>
             <CardHeader className='pb-2'>
               <CardTitle className='text-sm font-medium'>
-                Interview passed
+                {t('interview-passed')}
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -65,7 +69,9 @@ export function Dashboard() {
           </Card>
           <Card className='relative overflow-hidden'>
             <CardHeader className='pb-2'>
-              <CardTitle className='text-sm font-medium'>Candidates</CardTitle>
+              <CardTitle className='text-sm font-medium'>
+                {t('candidates')}
+              </CardTitle>
             </CardHeader>
             <CardContent>
               <div className='text-2xl font-bold'>40</div>
@@ -77,7 +83,7 @@ export function Dashboard() {
           <Card className='relative overflow-hidden'>
             <CardHeader className='pb-2'>
               <CardTitle className='text-sm font-medium'>
-                Top interviewer
+                {t('top-interviewer')}
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -90,7 +96,9 @@ export function Dashboard() {
         </div>
         <div className='rounded-xl bg-card p-6 shadow-sm dark:bg-gray-800/50'>
           <div className='mb-6 flex items-center justify-between'>
-            <h2 className='text-xl font-semibold'>Organization Members</h2>
+            <h2 className='text-xl font-semibold'>
+              {t('organization-members')}
+            </h2>
             {organization?.ownerId === session?.user?.id && (
               <DialogCloseButton />
             )}

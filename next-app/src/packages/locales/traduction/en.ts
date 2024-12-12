@@ -141,6 +141,16 @@ export default {
     'no-results': 'No results',
     'table-title': 'Members list',
   },
+  dashboard: {
+    description: 'Manage your organization settings and members',
+    'creadits-remaining': 'Credits remaining: ',
+    'onwer-name': 'Owner: ',
+    'organization-description': 'Organization description: ',
+    'interview-passed': 'Interview passed',
+    candidates: 'Candidates',
+    'top-interviewer': 'Top interviewer',
+    'organization-members': 'Organization Members',
+  },
 
   'server-error': {
     'min-email-length': 'Email must be at least 3 characters',
