@@ -133,6 +133,14 @@ export default {
     'toast-success-description': 'The invitation has been sent',
     'toast-error-title': 'Error',
   },
+  'member-table': {
+    'name-column': 'Name',
+    'email-column': 'Email',
+    'phone-column': 'Phone',
+    'action-column': 'Action',
+    'no-results': 'No results',
+    'table-title': 'Members list',
+  },
 
   'server-error': {
     'min-email-length': 'Email must be at least 3 characters',

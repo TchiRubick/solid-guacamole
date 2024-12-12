@@ -1,4 +1,5 @@
 'use client';
+
 import { FullInformationsQuery } from '@/actions/organization/get-full-informations';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -6,12 +7,15 @@ import { useQuery } from '@tanstack/react-query';
 import { Building2, Users } from 'lucide-react';
 import { DialogCloseButton } from './DialogCloseButton';
 import { MemberTable } from './member-table';
+import { useSession } from '@/hooks/use-session';
 
 export function Dashboard() {
   const { data: organization } = useQuery({
     queryKey: ['organization'],
     queryFn: () => FullInformationsQuery(),
   });
+
+  const { data: session } = useSession();
 
   return (
     <div className='min-h-screen bg-background'>
@@ -87,7 +91,9 @@ export function Dashboard() {
         <div className='rounded-xl bg-card p-6 shadow-sm dark:bg-gray-800/50'>
           <div className='mb-6 flex items-center justify-between'>
             <h2 className='text-xl font-semibold'>Organization Members</h2>
-            <DialogCloseButton />
+            {organization?.ownerId === session?.user?.id && (
+              <DialogCloseButton />
+            )}
           </div>
           <div className='relative overflow-hidden'>
             <MemberTable />

@@ -21,36 +21,39 @@ import {
 } from '@tanstack/react-table';
 import { Eye } from 'lucide-react';
 import Link from 'next/link';
+import { useScopedI18n } from '@/packages/locales/client';
 
 type Row = Awaited<ReturnType<typeof membersQuery>>[number];
 
-const columns: ColumnDef<Row>[] = [
-  {
-    accessorKey: 'user.username',
-    header: 'Name',
-  },
-  {
-    accessorKey: 'user.email',
-    header: 'Email',
-  },
-  {
-    accessorKey: 'user.phone',
-    header: 'Phone',
-  },
-  {
-    accessorKey: 'id',
-    header: 'Action',
-    cell: ({ row }) => (
-      <Link href={`/user/${row.original.userId}`}>
-        <Button variant='ghost' size='icon' className='h-8 w-8'>
-          <Eye className='h-4 w-4' />
-        </Button>
-      </Link>
-    ),
-  },
-];
-
 export const MemberTable = () => {
+  const t = useScopedI18n('member-table');
+
+  const columns: ColumnDef<Row>[] = [
+    {
+      accessorKey: 'user.username',
+      header: t('name-column'),
+    },
+    {
+      accessorKey: 'user.email',
+      header: t('email-column'),
+    },
+    {
+      accessorKey: 'user.phone',
+      header: t('phone-column'),
+    },
+    {
+      accessorKey: 'id',
+      header: t('action-column'),
+      cell: ({ row }) => (
+        <Link href={`/user/${row.original.userId}`}>
+          <Button variant='ghost' size='icon' className='h-8 w-8'>
+            <Eye className='h-4 w-4' />
+          </Button>
+        </Link>
+      ),
+    },
+  ];
+
   const { data, isFetching } = useQuery({
     queryKey: ['members'],
     queryFn: () => membersQuery(),
@@ -62,11 +65,9 @@ export const MemberTable = () => {
     getCoreRowModel: getCoreRowModel(),
   });
 
-  if (isFetching) return <Skeleton className='h-1/2 w-full' />;
-
   return (
     <Table className='bg-card'>
-      <TableCaption>Members list</TableCaption>
+      <TableCaption>{t('table-title')}</TableCaption>
       <TableHeader>
         {table.getHeaderGroups().map((headerGroup) => (
           <TableRow key={headerGroup.id}>
@@ -92,7 +93,11 @@ export const MemberTable = () => {
             >
               {row.getVisibleCells().map((cell) => (
                 <TableCell key={cell.id}>
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  {isFetching ? (
+                    <Skeleton className='h-8 w-full' />
+                  ) : (
+                    flexRender(cell.column.columnDef.cell, cell.getContext())
+                  )}
                 </TableCell>
               ))}
             </TableRow>
@@ -100,7 +105,7 @@ export const MemberTable = () => {
         ) : (
           <TableRow>
             <TableCell colSpan={columns.length} className='h-24 text-center'>
-              No results.
+              {t('no-results')}
             </TableCell>
           </TableRow>
         )}
