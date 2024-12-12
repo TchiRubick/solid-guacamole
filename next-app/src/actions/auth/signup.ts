@@ -10,6 +10,7 @@ import { removeInvitationByIds } from '@/models/user-organization-invite/$remove
 import { getScopedI18n } from '@/packages/locales/server';
 import { signupSchema } from '@/validator/signup.validator';
 import type { z } from 'zod';
+import { getOneOrganizationByUserId } from '@/models/organization';
 
 type SigninInput = z.infer<ReturnType<typeof signupSchema>>;
 
@@ -52,8 +53,12 @@ export const signupMutation = async (input: SigninInput) => {
       existsInvitations.map((invitation) => invitation.id)
     );
   }
+  const organization = await getOneOrganizationByUserId(user.id);
 
-  const session = await createSession(user.id, null);
+  const session = await createSession(
+    user.id,
+    organization?.organizationId ?? null
+  );
 
   await setSessionTokenCookie(session.id, session.expiresAt);
 };

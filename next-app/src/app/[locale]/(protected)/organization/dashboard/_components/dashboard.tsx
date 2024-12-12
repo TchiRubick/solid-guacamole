@@ -45,8 +45,6 @@ export function Dashboard() {
             </div>
           </div>
         </div>
-
-        {/* Metrics Cards */}
         <div className='mb-12 grid gap-6 md:grid-cols-3'>
           <Card className='relative overflow-hidden'>
             <CardHeader className='pb-2'>
@@ -86,8 +84,6 @@ export function Dashboard() {
             </CardContent>
           </Card>
         </div>
-
-        {/* Table Section */}
         <div className='rounded-xl bg-card p-6 shadow-sm dark:bg-gray-800/50'>
           <div className='mb-6 flex items-center justify-between'>
             <h2 className='text-xl font-semibold'>Organization Members</h2>
