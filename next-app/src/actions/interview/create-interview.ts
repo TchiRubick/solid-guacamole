@@ -1,8 +1,12 @@
 'use server';
+import { getCandidateById } from '@/models/candidate/$get-candidate-by-id';
 import { createInterview } from '@/models/interview';
 import { zInterviewInsert } from '@/models/interview/type';
 import { createQuestion } from '@/models/question';
-import { actionOrgSessionGuard } from '@/server-functions/session';
+import { db } from '@/packages/db';
+import { sendEmail } from '@/packages/mail';
+import { candidateInvitationTemplate } from '@/packages/mail/templates/candidate-invitation';
+import { getSession } from '@/server-functions/session';
 
 export interface CreateInterviewPayload {
   name: string;
@@ -12,16 +16,26 @@ export interface CreateInterviewPayload {
   questions: {
     id: string;
     text: string;
-  }[]
+  }[];
 }
 
 export const createInterviewMutation = async (data: CreateInterviewPayload) => {
-  const session = await actionOrgSessionGuard();
+  const { organization: sessionOrg } = await getSession();
+
+  if (!sessionOrg) {
+    throw new Error('Not authenticated');
+  }
+
+  const organizationId = sessionOrg.id;
+
+  const candidate = await getCandidateById(data.candidateId, organizationId);
+
+  if (!candidate) {
+    throw new Error('Candidate not found');
+  }
 
   const token = crypto.randomUUID();
   const password = crypto.getRandomValues(new Uint32Array(1))[0].toString(16);
-
-  const organizationId = session.organizationId;
 
   const dataInterviewMutation = {
     name: data.name,
@@ -35,17 +49,33 @@ export const createInterviewMutation = async (data: CreateInterviewPayload) => {
 
   zInterviewInsert.parse(dataInterviewMutation);
 
-  const [interviewData] = await createInterview(dataInterviewMutation);
- 
-  const formattedQuestions = await data.questions?.map((question) => ({
-    value: question.text,
-    organizationId: organizationId,
-    interviewId : interviewData.id
-  }));
+  const result = await db.transaction(async () => {
+    const [interviewData] = await createInterview(dataInterviewMutation);
 
-  await createQuestion(formattedQuestions);
+    const formattedQuestions = data.questions?.map((question) => ({
+      value: question.text,
+      organizationId: organizationId,
+      interviewId: interviewData.id,
+    }));
 
+    await createQuestion(formattedQuestions);
 
+    return interviewData;
+  });
 
-  return interviewData;
+  const template = candidateInvitationTemplate({
+    token: result.token,
+    candidateName: candidate.name,
+    password: result.password,
+    organizationName: sessionOrg.name,
+    expiresAt: result.expiresAt,
+  });
+
+  const resultSend = await sendEmail(
+    candidate.email,
+    'Interview Invitation',
+    template
+  );
+
+  return resultSend;
 };

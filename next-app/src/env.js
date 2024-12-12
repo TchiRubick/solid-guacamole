@@ -18,6 +18,7 @@ export const env = createEnv({
     MINIO_EXTERNAL_DOMAIN: z.string().default('localhost'),
     MINIO_SSL: z.literal('true').nullable().optional(),
     MINIO_PORT: z.coerce.number().optional(),
+    RESEND_API_KEY: z.string(),
   },
 
   /**
@@ -27,6 +28,7 @@ export const env = createEnv({
    */
   client: {
     // NEXT_PUBLIC_CLIENTVAR: z.string(),
+    NEXT_PUBLIC_URL: z.string().url(),
   },
 
   /**
@@ -45,6 +47,8 @@ export const env = createEnv({
     MINIO_SSL: process.env.MINIO_SSL,
     MINIO_PORT: process.env.MINIO_PORT,
     MINIO_EXTERNAL_DOMAIN: process.env.MINIO_EXTERNAL_DOMAIN,
+    RESEND_API_KEY: process.env.RESEND_API_KEY,
+    NEXT_PUBLIC_URL: process.env.NEXT_PUBLIC_URL,
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
   },
   /**
