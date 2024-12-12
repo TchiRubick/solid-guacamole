@@ -1,6 +1,18 @@
 'server only';
 
 import { db } from '@/packages/db';
-import { InterviewTable } from '@/packages/db/schemas';
 
-export const getList = async () => db.select().from(InterviewTable);
+export const getList = async (
+  organizationId: string,
+  limit: number,
+  offset: number
+) =>
+  db.query.InterviewTable.findMany({
+    where: (q, { eq }) => eq(q.organizationId, organizationId),
+    with: {
+      candidate: true,
+      organization: true,
+    },
+    limit: limit,
+    offset: offset,
+  });

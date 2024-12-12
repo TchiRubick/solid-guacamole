@@ -82,24 +82,28 @@ export const AnswerTable = pgTable('answer', (t) => ({
     .$defaultFn(() => new Date()),
 }));
 
-export const InterviewRelations = relations(InterviewTable, ({ one, many }) => ({
-  organization: one(OrganizationTable, {
-    fields: [InterviewTable.organizationId],
-    references: [OrganizationTable.id],
-  }),
-  candidate: one(CandidateTable, {
-    fields: [InterviewTable.candidateId],
-    references: [CandidateTable.id],
-  }),
-  questions: many(QuestionTable), // Ajout de la relation vers QuestionTable
-}));
+export const InterviewRelations = relations(
+  InterviewTable,
+  ({ one, many }) => ({
+    organization: one(OrganizationTable, {
+      fields: [InterviewTable.organizationId],
+      references: [OrganizationTable.id],
+    }),
+    candidate: one(CandidateTable, {
+      fields: [InterviewTable.candidateId],
+      references: [CandidateTable.id],
+    }),
+    questions: many(QuestionTable), // Ajout de la relation vers QuestionTable
+  })
+);
 
 export const QuestionRelations = relations(QuestionTable, ({ one }) => ({
   organization: one(OrganizationTable, {
     fields: [QuestionTable.organizationId],
     references: [OrganizationTable.id],
   }),
-  interview: one(InterviewTable, { // Ajout de la relation vers InterviewTable
+  interview: one(InterviewTable, {
+    // Ajout de la relation vers InterviewTable
     fields: [QuestionTable.interviewId],
     references: [InterviewTable.id],
   }),

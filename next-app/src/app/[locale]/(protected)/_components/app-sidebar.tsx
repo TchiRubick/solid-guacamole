@@ -18,11 +18,12 @@ import { useSession } from '@/hooks/use-session';
 import {
   Building2,
   ChevronDown,
-  FileText,
   LayoutDashboard,
-  List,
   Settings,
   Users,
+  Video,
+  ListVideo,
+  LayoutTemplate,
 } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -50,17 +51,17 @@ const data = {
     },
     {
       title: 'Interviews',
-      icon: FileText,
-      url: '/interview',
+      icon: Video,
+      url: '#',
       items: [
         {
           title: 'List',
-          icon: List,
-          url: '/interview',
+          icon: ListVideo,
+          url: '/interview/list',
         },
         {
           title: 'Templates',
-          icon: FileText,
+          icon: LayoutTemplate,
           url: '/interview/template',
           soon: true,
         },
