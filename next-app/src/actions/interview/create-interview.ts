@@ -1,6 +1,7 @@
 'use server';
 import { createInterview } from '@/models/interview';
 import { zInterviewInsert } from '@/models/interview/type';
+import { createQuestion } from '@/models/question';
 import { actionOrgSessionGuard } from '@/server-functions/session';
 
 export interface CreateInterviewPayload {
@@ -8,6 +9,10 @@ export interface CreateInterviewPayload {
   description: string;
   candidateId: number;
   expiresAt: Date;
+  questions: {
+    id: string;
+    text: string;
+  }[]
 }
 
 export const createInterviewMutation = async (data: CreateInterviewPayload) => {
@@ -31,6 +36,16 @@ export const createInterviewMutation = async (data: CreateInterviewPayload) => {
   zInterviewInsert.parse(dataInterviewMutation);
 
   const [interviewData] = await createInterview(dataInterviewMutation);
+ 
+  const formattedQuestions = await data.questions?.map((question) => ({
+    value: question.text,
+    organizationId: organizationId,
+    interviewId : interviewData.id
+  }));
+
+  await createQuestion(formattedQuestions);
+
+
 
   return interviewData;
 };
