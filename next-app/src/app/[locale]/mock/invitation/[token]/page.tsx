@@ -1,18 +1,9 @@
-import { verifTokenStatus } from '@/actions/interview/verif-token-status';
-import { useMutation } from '@tanstack/react-query';
-import React, { useEffect } from 'react';
+import { verifTokenStatusQuery } from '@/actions/interview/verif-token-status';
 
-export default function page({
-  params,
-}: {
-  params: Promise<{ token: string }>;
-}) {
-  const { mutateAsync: verificationStatusAndExpiration } = useMutation({
-    mutationKey: ['verif'],
-    mutationFn: verifTokenStatus,
-  });
-  useEffect(() => {
-    verificationStatusAndExpiration();
-  }, []);
-  return <div></div>;
-}
+const Page = async ({ params }: { params: Promise<{ token: string }> }) => {
+  const interview = await verifTokenStatusQuery((await params).token);
+
+  return <div>{interview ? 'ok' : 'ko'}</div>;
+};
+
+export default Page;

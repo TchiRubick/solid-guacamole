@@ -1,6 +1,6 @@
 'use client';
-import { REGEXP_ONLY_DIGITS_AND_CHARS } from 'input-otp';
 
+import { REGEXP_ONLY_DIGITS_AND_CHARS } from 'input-otp';
 import {
   InputOTP,
   InputOTPGroup,
@@ -11,9 +11,8 @@ import { verifPassword } from '@/actions/interview/verifPassword';
 import { useForm } from '@tanstack/react-form';
 import { redirect } from 'next/navigation';
 import { useToast } from '@/hooks/use-toast';
-import Image from 'next/image';
 
-const LogByOpt = () => {
+export const InputOTPForm = () => {
   const { toast } = useToast();
   const { mutateAsync: sendVerificationPassword } = useMutation({
     mutationKey: ['verifPaswword'],
@@ -42,12 +41,6 @@ const LogByOpt = () => {
       <section className='bg-white'>
         <div className='lg:grid lg:min-h-screen lg:grid-cols-12'>
           <section className='relative flex h-32 items-end bg-gray-900 lg:col-span-5 lg:h-full xl:col-span-6'>
-            <Image
-              alt=''
-              src='https://images.unsplash.com/photo-1617195737496-bc30194e3a19?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80'
-              className='absolute inset-0 h-full w-full object-cover opacity-80'
-            />
-
             <div className='hidden lg:relative lg:block lg:p-12'>
               <a className='block text-white' href='#'>
                 <span className='sr-only'>Home</span>
@@ -112,7 +105,6 @@ const LogByOpt = () => {
                   e.stopPropagation();
                   handleSubmit();
                 }}
-                className=''
               >
                 <h1 className='my-8 flex items-center justify-center text-xl font-bold'>
                   Connectez vous
@@ -150,5 +142,3 @@ const LogByOpt = () => {
     </div>
   );
 };
-
-export default LogByOpt;
