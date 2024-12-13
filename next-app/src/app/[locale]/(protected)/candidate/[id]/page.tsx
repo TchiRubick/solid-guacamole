@@ -20,7 +20,6 @@ const CandidateDetailsPage = async ({
 
   return (
     <main className='min-h-screen bg-background'>
-      <h1 className='text-4xl font-bold'>Candidate Details</h1>
       <CandidateDetails id={candidateId} />
     </main>
   );

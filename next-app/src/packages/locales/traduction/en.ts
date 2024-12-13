@@ -141,6 +141,30 @@ export default {
     'no-results': 'No results',
     'table-title': 'Members list',
   },
+  'candidate-details': {
+    'candidate-details': 'Candidate details',
+    'preview-resume': 'Preview resume',
+    'replace-resume': 'Replace resume',
+    'upload-resume': 'Upload resume',
+    'candidate-resume-placeholder':
+      'Add any relevant observations about the candidate...',
+    'candidate-email': 'Candidate email',
+    'candidate-phone': 'Candidate phone',
+    'candidate-name': 'Candidate name',
+    'candidate-observations': 'Candidate observations',
+    'candidate-interview-list': 'Candidate interview list',
+  },
+  'candidate-resume-upload': {
+    title: 'Upload resume',
+    description: 'upload a resume for the candidate',
+    submit: 'Upload resume',
+    toast: 'Resume uploaded successfully',
+    'toast-error-title': 'Error',
+  },
+  'candidate-pdf-viewer': {
+    trigger: 'Preview resume',
+    title: 'Resume preview',
+  },
   dashboard: {
     description: 'Manage your organization settings and members',
     'creadits-remaining': 'Credits remaining: ',
