@@ -1,5 +1,10 @@
 'use server';
-
+import {
+  deleteSessionTokenCookie,
+  getSessionTokenCookie,
+  setSessionTokenCookie,
+} from '@/lib/session-cookies';
+import { createSession, invalidateSession } from '@/models/session';
 import { createOrganization } from '@/models/organization';
 import { createOrganizationUser } from '@/models/organization-user';
 import type { InsertOrganization } from '@/models/organization/type';
@@ -11,9 +16,21 @@ export const createOrganizationMutation = async (data: InsertOrganization) => {
   if (!user) {
     return [];
   }
-  const organization = await createOrganization(data);
+  const [organization] = await createOrganization(data);
 
-  await createOrganizationUser(user.id, organization.map((o) => o.id)[0]);
+  await createOrganizationUser(user.id, organization.id);
+
+  const token = await getSessionTokenCookie();
+  if (token === null) {
+    return null;
+  }
+  await invalidateSession(token);
+
+  await deleteSessionTokenCookie();
+
+  const session = await createSession(user.id, organization.id);
+
+  await setSessionTokenCookie(session.id, session.expiresAt);
 
   return organization;
 };
