@@ -76,6 +76,7 @@ export default {
     'create-button': 'Create organization +',
   },
   'details-organization-form': {
+    title: 'Information general',
     'label-name': 'Name',
     'name-placeholder': 'Organization name',
     'label-description': 'Description',
@@ -164,6 +165,9 @@ export default {
   'candidate-pdf-viewer': {
     trigger: 'Preview resume',
     title: 'Resume preview',
+  },
+  'danger-zone': {
+    title: 'Danger zone',
   },
   dashboard: {
     description: 'Manage your organization settings and members',

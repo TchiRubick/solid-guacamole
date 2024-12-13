@@ -45,14 +45,14 @@ export const TranferOwnerForm = () => {
     mutationFn: transferOwnerMutation,
     onSuccess: () => {
       toast({
-        title: `${t('toast-success-title')}`,
-        description: `${t('toast-success')}`,
+        title: t('toast-success-title'),
+        description: t('toast-success'),
       });
       window.location.reload();
     },
     onError: (error: Error) => {
       toast({
-        title: `${t('toast-error-title')}`,
+        title: t('toast-error-title'),
         description: error.message,
         variant: 'destructive',
       });

@@ -1,4 +1,5 @@
 'use client';
+
 import { deleteOrganizationMutation } from '@/actions/organization/delete';
 import { InputPassword } from '@/components/input-password';
 import { Button } from '@/components/ui/button';
@@ -14,7 +15,6 @@ import { useScopedI18n } from '@/packages/locales/client';
 import { useForm } from '@tanstack/react-form';
 import { useMutation } from '@tanstack/react-query';
 import { zodValidator } from '@tanstack/zod-form-adapter';
-
 import { useSession } from '@/hooks/use-session';
 import { useToast } from '@/hooks/use-toast';
 import { Loader } from 'lucide-react';
@@ -27,14 +27,14 @@ export const DeleteOrganizationModal = () => {
     mutationFn: deleteOrganizationMutation,
     onSuccess: () => {
       toast({
-        title: `${t('toast-success-title')}`,
-        description: `${t('toast-success')}`,
+        title: t('toast-success-title'),
+        description: t('toast-success'),
       });
       window.location.reload();
     },
     onError: (error: Error) => {
       toast({
-        title: `${t('toast-error-title')}`,
+        title: t('toast-error-title'),
         description: error.message,
         variant: 'destructive',
       });
@@ -63,14 +63,14 @@ export const DeleteOrganizationModal = () => {
           <DialogDescription>{t('description')}</DialogDescription>
         </DialogHeader>
         <form
-          className='flex items-center space-x-2'
+          className='flex items-center space-x-4'
           onSubmit={(e) => {
             e.preventDefault();
             e.stopPropagation();
             handleSubmit();
           }}
         >
-          <div className='grid flex-1 gap-2'>
+          <div className='grid flex-1'>
             <Field name='confirmPassword'>
               {(field) => (
                 <InputPassword
@@ -84,12 +84,7 @@ export const DeleteOrganizationModal = () => {
               )}
             </Field>
           </div>
-          <Button
-            type='submit'
-            size='sm'
-            className='px-3'
-            variant='destructive'
-          >
+          <Button type='submit' variant='destructive'>
             {isPending ? (
               <Loader className='animate-spin' />
             ) : (
