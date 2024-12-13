@@ -35,8 +35,9 @@ export const createInterviewMutation = async (data: CreateInterviewPayload) => {
   }
 
   const token = crypto.randomUUID();
-  const password = crypto.getRandomValues(new Uint32Array(1))[0].toString(16);
-
+  const password = crypto
+    .getRandomValues(new Uint8Array(3))
+    .reduce((acc, value) => acc + value.toString(16).padStart(2, '0'), '');
   const dataInterviewMutation = {
     name: data.name,
     description: data.description,
