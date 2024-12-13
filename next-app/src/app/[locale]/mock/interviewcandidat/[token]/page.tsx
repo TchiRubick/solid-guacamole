@@ -2,11 +2,8 @@
 
 import LogByOpt from '../_components/LogByOpt';
 
-export default function page({
-  params,
-}: {
-  params: Promise<{ token: string }>;
-}) {
+export default function page()
+{
   return (
     <div>
       <LogByOpt />
