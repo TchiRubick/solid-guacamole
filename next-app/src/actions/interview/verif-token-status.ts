@@ -1,8 +1,13 @@
-import { interviewByTokenQuery } from '@/models/interviewcandidat/$verif-status-token';
+import { getInterviewByToken } from '@/models/interviewcandidat/$verif-status-token';
 
 export const verifTokenStatusQuery = async (token: string) => {
-  const t = await interviewByTokenQuery(token);
-  if (t?.status === 'canceled' || t?.status === 'done') {
+  const t = await getInterviewByToken(token);
+
+  if (!t) {
+    return false;
+  }
+
+  if (t?.status !== 'sent' && t?.expiresAt < new Date()) {
     return false;
   } else {
     return true;
