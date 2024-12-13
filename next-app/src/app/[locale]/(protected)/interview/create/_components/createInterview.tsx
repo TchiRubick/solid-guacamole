@@ -41,6 +41,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { z } from 'zod';
+import { useScopedI18n } from '@/packages/locales/client';
 
 interface Question {
   id: string;
@@ -48,6 +49,7 @@ interface Question {
 }
 
 export default function CreateInterview() {
+  const t = useScopedI18n('create-interview');
   const router = useRouter();
   const [questions, setQuestions] = useState<Question[]>([
     { id: '1', text: '' },
@@ -77,7 +79,8 @@ export default function CreateInterview() {
     mutationFn: createInterviewMutation,
     onSuccess: () => {
       toast({
-        title: 'Interview sent successfully',
+        title: t('toast-success-title'),
+        description: t('toast-success'),
       });
 
       client.invalidateQueries({ queryKey: ['interviews'] });
@@ -86,8 +89,9 @@ export default function CreateInterview() {
     },
     onError: (error) => {
       toast({
-        title: 'Error sending interview',
+        title: t('toast-error-title'),
         description: error.message,
+        variant: 'destructive',
       });
     },
   });
@@ -129,17 +133,15 @@ export default function CreateInterview() {
     >
       <Card className='shadow-lg'>
         <CardHeader>
-          <CardTitle className='text-2xl'>Create New Interview</CardTitle>
-          <CardDescription>
-            Set up an interview and send invitations to candidates
-          </CardDescription>
+          <CardTitle className='text-2xl'>{t('title')}</CardTitle>
+          <CardDescription>{t('description')}</CardDescription>
         </CardHeader>
 
         <CardContent className='space-y-6'>
           {/* Basic Information */}
           <div className='space-y-4'>
             <div className='space-y-2'>
-              <Label htmlFor='name'>Interview Name</Label>
+              <Label htmlFor='name'>{t('interview-name')}</Label>
               <Field name='name'>
                 {(field) => (
                   <Input
@@ -155,7 +157,7 @@ export default function CreateInterview() {
             </div>
 
             <div className='space-y-2'>
-              <Label htmlFor='description'>Interview Description</Label>
+              <Label htmlFor='description'>{t('interview-description')}</Label>
               <Field name='description'>
                 {(field) => (
                   <Textarea
@@ -175,7 +177,7 @@ export default function CreateInterview() {
 
           {/* Candidate Selection */}
           <div className='space-y-4'>
-            <Label>Select Candidate</Label>
+            <Label>{t('candidate-selection')}</Label>
             <div className='flex items-center gap-4'>
               <Field name='candidateId'>
                 {(field) => (
@@ -199,7 +201,7 @@ export default function CreateInterview() {
               <Button variant='outline' asChild>
                 <Link href='/candidate/create'>
                   <User className='mr-2 h-4 w-4' />
-                  New Candidate
+                  {t('new-candidate')}
                 </Link>
               </Button>
             </div>
@@ -209,7 +211,7 @@ export default function CreateInterview() {
 
           {/* Date Selection */}
           <div className='space-y-4'>
-            <Label>Invitation Expiration Date</Label>
+            <Label>{t('invitation-expiration-date')}</Label>
             <Field name='expiresAt'>
               {(field) => (
                 <Popover>
@@ -246,7 +248,7 @@ export default function CreateInterview() {
           {/* Questions */}
           <div className='space-y-4'>
             <div className='flex items-center justify-between'>
-              <Label>Interview Questions</Label>
+              <Label>{t('interview-questions')}</Label>
               <Button
                 type='button'
                 variant='outline'
@@ -254,7 +256,7 @@ export default function CreateInterview() {
                 onClick={addQuestion}
               >
                 <Plus className='mr-2 h-4 w-4' />
-                Add Question
+                {t('add-question')}
               </Button>
             </div>
 
@@ -263,7 +265,7 @@ export default function CreateInterview() {
                 <div key={question.id} className='flex gap-2'>
                   <div className='flex-1 space-y-2'>
                     <Label htmlFor={question.id} className='sr-only'>
-                      Question {index + 1}
+                      {t('question-number', { number: index + 1 })}
                     </Label>
                     <Input
                       id={question.id}
@@ -303,12 +305,12 @@ export default function CreateInterview() {
                 {isPending ? (
                   <>
                     <Loader2 className='mr-2 h-4 w-4 animate-spin' />
-                    Sending...
+                    {t('send-invitation-loading')}
                   </>
                 ) : (
                   <>
                     <Send className='mr-2 h-4 w-4' />
-                    Send Invitation
+                    {t('send-invitation')}
                   </>
                 )}
               </Button>

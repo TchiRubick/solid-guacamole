@@ -9,6 +9,7 @@ import { updateOrganizationOwner } from '@/models/organization/$update-owner';
 import { invalidateSession } from '@/models/session';
 import { userByEmailOrByUsername } from '@/models/user';
 import { getSession } from '@/server-functions/session';
+import { getScopedI18n } from '@/packages/locales/server';
 
 export const transferOwnerMutation = async ({
   newOwner,
@@ -17,16 +18,17 @@ export const transferOwnerMutation = async ({
   newOwner: string;
   confirmPassword: string;
 }) => {
+  const t = await getScopedI18n('server-error');
   const { session, user, organization } = await getSession();
 
   if (!session) {
-    throw new Error('Not authenticated');
+    throw t('not-authenticated');
   }
 
   const userConnected = await userByEmailOrByUsername(user?.email);
 
   if (!userConnected) {
-    throw new Error('Invalid email');
+    throw t('invalid-email');
   }
 
   const isValidPassword = await verifyPassword(
@@ -35,7 +37,7 @@ export const transferOwnerMutation = async ({
   );
 
   if (!isValidPassword) {
-    throw new Error('Invalid password');
+    throw t('invalid-password');
   }
 
   const token = await getSessionTokenCookie();
@@ -45,7 +47,7 @@ export const transferOwnerMutation = async ({
   }
 
   if (!organization) {
-    throw new Error('No organization found');
+    throw t('organization-not-found');
   }
 
   await invalidateSession(token);

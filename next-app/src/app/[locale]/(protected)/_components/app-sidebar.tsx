@@ -29,56 +29,57 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { OrganizationSwitcher } from './organization-switcher';
 import { SidebarUser } from './sibar-user';
-
-const data = {
-  navMain: [
-    {
-      title: 'Organization',
-      icon: Building2,
-      url: '#',
-      items: [
-        {
-          title: 'Dashboard',
-          icon: LayoutDashboard,
-          url: '/organization/dashboard',
-        },
-        {
-          title: 'Manage',
-          icon: Settings,
-          url: '/organization/manage',
-        },
-      ],
-    },
-    {
-      title: 'Interviews',
-      icon: Video,
-      url: '#',
-      items: [
-        {
-          title: 'List',
-          icon: ListVideo,
-          url: '/interview/list',
-        },
-        {
-          title: 'Templates',
-          icon: LayoutTemplate,
-          url: '/interview/template',
-          soon: true,
-        },
-      ],
-    },
-    {
-      title: 'Candidate',
-      icon: Users,
-      url: '/candidate',
-      items: [],
-    },
-  ],
-};
+import { useScopedI18n } from '@/packages/locales/client';
 
 export const AppSidebar = ({
   ...props
 }: React.ComponentProps<typeof Sidebar>) => {
+  const t = useScopedI18n('nav-main');
+  const data = {
+    navMain: [
+      {
+        title: t('organization'),
+        icon: Building2,
+        url: '#',
+        items: [
+          {
+            title: t('dashboard'),
+            icon: LayoutDashboard,
+            url: '/organization/dashboard',
+          },
+          {
+            title: t('manage'),
+            icon: Settings,
+            url: '/organization/manage',
+          },
+        ],
+      },
+      {
+        title: t('interviews'),
+        icon: Video,
+        url: '#',
+        items: [
+          {
+            title: t('list'),
+            icon: ListVideo,
+            url: '/interview/list',
+          },
+          {
+            title: t('templates'),
+            icon: LayoutTemplate,
+            url: '/interview/template',
+            soon: true,
+          },
+        ],
+      },
+      {
+        title: t('candidate'),
+        icon: Users,
+        url: '/candidate',
+        items: [],
+      },
+    ],
+  };
   const pathname = usePathname();
   const isActive = (url: string) => pathname === url;
 
@@ -127,7 +128,7 @@ export const AppSidebar = ({
                                   variant='outline'
                                   className='ml-auto text-[8px]'
                                 >
-                                  Coming Soon
+                                  {t('coming-soon')}
                                 </Badge>
                               )}
                             </Link>

@@ -11,18 +11,20 @@ import { userLeaveOrganization } from '@/models/organization-user/user-leave';
 import { createSession, invalidateSession } from '@/models/session';
 import { userByEmailOrByUsername } from '@/models/user';
 import { getSession } from '@/server-functions/session';
+import { getScopedI18n } from '@/packages/locales/server';
 
 export const memberLeaveOrzationMutation = async (confirmPassword: string) => {
   const { user, organization } = await getSession();
+  const tError = await getScopedI18n('server-error');
 
   if (!user) {
-    throw new Error('Not authenticated');
+    throw tError('not-authenticated');
   }
 
   const userConnected = await userByEmailOrByUsername(user?.email);
 
   if (!userConnected) {
-    throw new Error('Invalid email');
+    throw tError('invalid-email');
   }
 
   const isValidPassword = await verifyPassword(
@@ -31,7 +33,7 @@ export const memberLeaveOrzationMutation = async (confirmPassword: string) => {
   );
 
   if (!isValidPassword) {
-    throw new Error('Invalid password');
+    throw tError('invalid-password');
   }
 
   const token = await getSessionTokenCookie();

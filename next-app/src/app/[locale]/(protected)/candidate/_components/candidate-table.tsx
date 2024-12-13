@@ -22,34 +22,37 @@ import {
 } from '@tanstack/react-table';
 import { Eye } from 'lucide-react';
 import Link from 'next/link';
-
-const columns: ColumnDef<Candidate>[] = [
-  {
-    accessorKey: 'name',
-    header: 'Name',
-  },
-  {
-    accessorKey: 'email',
-    header: 'Email',
-  },
-  {
-    accessorKey: 'phone',
-    header: 'Phone',
-  },
-  {
-    accessorKey: 'id',
-    header: 'Action',
-    cell: ({ row }) => (
-      <Link href={`/candidate/${row.original.id}`}>
-        <Button variant='ghost' size='icon' className='h-8 w-8'>
-          <Eye className='h-4 w-4' />
-        </Button>
-      </Link>
-    ),
-  },
-];
+import { useScopedI18n } from '@/packages/locales/client';
 
 export const CandidateTable = () => {
+  const t = useScopedI18n('candidate-table');
+
+  const columns: ColumnDef<Candidate>[] = [
+    {
+      accessorKey: 'name',
+      header: t('name'),
+    },
+    {
+      accessorKey: 'email',
+      header: t('email'),
+    },
+    {
+      accessorKey: 'phone',
+      header: t('phone'),
+    },
+    {
+      accessorKey: 'id',
+      header: t('action'),
+      cell: ({ row }) => (
+        <Link href={`/candidate/${row.original.id}`}>
+          <Button variant='ghost' size='icon' className='h-8 w-8'>
+            <Eye className='h-4 w-4' />
+          </Button>
+        </Link>
+      ),
+    },
+  ];
+
   const { data, isFetching } = useQuery({
     queryKey: ['candidates'],
     queryFn: () => allCandidateQuery(),
@@ -65,7 +68,7 @@ export const CandidateTable = () => {
 
   return (
     <Table className='bg-card'>
-      <TableCaption>A list of your candidates.</TableCaption>
+      <TableCaption>{t('list')}</TableCaption>
       <TableHeader>
         {table.getHeaderGroups().map((headerGroup) => (
           <TableRow key={headerGroup.id}>
@@ -99,7 +102,7 @@ export const CandidateTable = () => {
         ) : (
           <TableRow>
             <TableCell colSpan={columns.length} className='h-24 text-center'>
-              No results.
+              {t('no-result')}
             </TableCell>
           </TableRow>
         )}

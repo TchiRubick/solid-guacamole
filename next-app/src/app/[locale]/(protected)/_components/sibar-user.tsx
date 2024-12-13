@@ -20,9 +20,11 @@ import { useSession } from '@/hooks/use-session';
 import { useMutation } from '@tanstack/react-query';
 import { ChevronsUpDown, Sparkles } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { useScopedI18n } from '@/packages/locales/client';
 
 export const SidebarUser = () => {
   const { data: session } = useSession();
+  const t = useScopedI18n('side-bar-user');
 
   const { isMobile } = useSidebar();
 
@@ -91,14 +93,14 @@ export const SidebarUser = () => {
         <DropdownMenuGroup>
           <DropdownMenuItem className='cursor-pointer'>
             <Sparkles />
-            Buy credits
+            {t('buy-credits')}
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem className='cursor-pointer'>
             <Bell />
-            Notifications
+            {t('notification')}
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
@@ -107,7 +109,7 @@ export const SidebarUser = () => {
           onClick={() => mutate()}
         >
           <LogOut />
-          Log out
+          {t('logout')}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

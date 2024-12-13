@@ -46,7 +46,7 @@ export const OrganizationSwitcher = () => {
     },
     onError: (error: Error) => {
       toast({
-        title: `${tOrganizationSwitcher('toast-error-title')}`,
+        title: tOrganizationSwitcher('toast-error-title'),
         description: error.message,
         variant: 'destructive',
       });

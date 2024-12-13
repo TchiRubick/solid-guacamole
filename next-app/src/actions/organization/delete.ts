@@ -12,6 +12,7 @@ import {
   setSessionTokenCookie,
 } from '@/lib/session-cookies';
 import { cookies } from 'next/headers';
+import { getScopedI18n } from '@/packages/locales/server';
 
 export const deleteOrganizationMutation = async ({
   organizationId,
@@ -22,16 +23,17 @@ export const deleteOrganizationMutation = async ({
   ownerEmail: string;
   confirmPassword: string;
 }) => {
+  const tError = await getScopedI18n('server-error');
   const user = await userByEmailOrByUsername(ownerEmail);
 
   if (!user) {
-    throw new Error('Invalid email');
+    throw tError('invalid-email');
   }
 
   const isValidPassword = await verifyPassword(user.password, confirmPassword);
 
   if (!isValidPassword) {
-    throw new Error('Invalid password');
+    throw tError('invalid-password');
   }
 
   const cookieStore = await cookies();

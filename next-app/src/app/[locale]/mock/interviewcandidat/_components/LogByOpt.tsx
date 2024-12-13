@@ -6,7 +6,7 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from '@/components/ui/input-otp';
-import { useMutation} from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { verifPassword } from '@/actions/interview/verifPassword';
 import { useForm } from '@tanstack/react-form';
 import { redirect } from 'next/navigation';

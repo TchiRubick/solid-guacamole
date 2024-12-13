@@ -24,15 +24,15 @@ export const SignInForm = () => {
     mutationFn: signinMutation,
     onSuccess: () => {
       toast({
-        title: `${tSignInForm('toast-success-title')}`,
-        description: `${tSignInForm('toast-success')}`,
+        title: tSignInForm('toast-success-title'),
+        description: tSignInForm('toast-success'),
       });
 
       router.push('/');
     },
     onError: (error: Error) => {
       toast({
-        title: `${tSignInForm('toast-error-title')}`,
+        title: tSignInForm('toast-error-title'),
         description: error.message,
         variant: 'destructive',
       });

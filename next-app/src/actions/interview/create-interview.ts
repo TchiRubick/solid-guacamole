@@ -4,6 +4,7 @@ import { createInterview } from '@/models/interview';
 import { zInterviewInsert } from '@/models/interview/type';
 import { createQuestion } from '@/models/question';
 import { db } from '@/packages/db';
+import { getScopedI18n } from '@/packages/locales/server';
 import { sendEmail } from '@/packages/mail';
 import { candidateInvitationTemplate } from '@/packages/mail/templates/candidate-invitation';
 import { getSession } from '@/server-functions/session';
@@ -20,10 +21,11 @@ export interface CreateInterviewPayload {
 }
 
 export const createInterviewMutation = async (data: CreateInterviewPayload) => {
+  const tError = await getScopedI18n('server-error');
   const { organization: sessionOrg } = await getSession();
 
   if (!sessionOrg) {
-    throw new Error('Not authenticated');
+    throw tError('not-authenticated');
   }
 
   const organizationId = sessionOrg.id;
@@ -31,7 +33,7 @@ export const createInterviewMutation = async (data: CreateInterviewPayload) => {
   const candidate = await getCandidateById(data.candidateId, organizationId);
 
   if (!candidate) {
-    throw new Error('Candidate not found');
+    throw tError('candidate-not-found');
   }
 
   const token = crypto.randomUUID();

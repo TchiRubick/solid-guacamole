@@ -5,7 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useQuery } from '@tanstack/react-query';
 import { Building2, Users } from 'lucide-react';
-import { DialogCloseButton } from './DialogCloseButton';
+import { InputInviteUserModal } from './input-invite-user-modal';
 import { MemberTable } from './member-table';
 import { useSession } from '@/hooks/use-session';
 import { useScopedI18n } from '@/packages/locales/client';
@@ -100,7 +100,7 @@ export function Dashboard() {
               {t('organization-members')}
             </h2>
             {organization?.ownerId === session?.user?.id && (
-              <DialogCloseButton />
+              <InputInviteUserModal />
             )}
           </div>
           <div className='relative overflow-hidden'>

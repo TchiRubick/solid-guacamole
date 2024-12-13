@@ -23,15 +23,15 @@ export const SignUpForm = () => {
     mutationFn: signupMutation,
     onSuccess: () => {
       toast({
-        title: `${tSignUpForm('toast-success-title')}`,
-        description: `${tSignUpForm('toast-success')}`,
+        title: tSignUpForm('toast-success-title'),
+        description: tSignUpForm('toast-success'),
       });
 
       router.push('/');
     },
     onError: (error: Error) => {
       toast({
-        title: `${tSignUpForm('toast-error-title')}`,
+        title: tSignUpForm('toast-error-title'),
         description: error.message,
         variant: 'destructive',
       });

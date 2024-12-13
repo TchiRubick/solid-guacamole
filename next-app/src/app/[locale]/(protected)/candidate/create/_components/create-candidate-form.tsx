@@ -17,23 +17,25 @@ import { useMutation } from '@tanstack/react-query';
 import { zodValidator } from '@tanstack/zod-form-adapter';
 import { Briefcase, Loader2, Mail, MapPin, Phone, User } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { useScopedI18n } from '@/packages/locales/client';
 
 export const CreateCandidateForm = () => {
   const router = useRouter();
+  const t = useScopedI18n('create-candidate-form');
 
   const { mutate, isPending } = useMutation({
     mutationFn: createCandidateMutation,
     onSuccess: (response) => {
       toast({
-        title: 'Success!',
-        description: 'Candidate profile has been created successfully.',
+        title: t('toast-success-title'),
+        description: t('toast-success'),
       });
 
       router.push(`/candidate/${response.id}`);
     },
     onError: (error: Error) => {
       toast({
-        title: 'Something went wrong',
+        title: t('toast-error-title'),
         description: error.message,
         variant: 'destructive',
       });
@@ -57,10 +59,8 @@ export const CreateCandidateForm = () => {
   return (
     <Card className='mx-auto w-full'>
       <CardHeader>
-        <CardTitle className='text-2xl'>Create New Candidate</CardTitle>
-        <CardDescription>
-          Enter the candidate &apos;s information to create their profile.
-        </CardDescription>
+        <CardTitle className='text-2xl'>{t('title')}</CardTitle>
+        <CardDescription>{t('description')}</CardDescription>
       </CardHeader>
       <CardContent>
         <form
@@ -74,7 +74,7 @@ export const CreateCandidateForm = () => {
           <div className='grid gap-6 md:grid-cols-2'>
             <div className='space-y-2'>
               <Label htmlFor='name' className='text-sm font-medium'>
-                Full Name
+                {t('full-name')}
               </Label>
               <Field name='name'>
                 {(field) => (
@@ -83,7 +83,7 @@ export const CreateCandidateForm = () => {
                     <Input
                       id={field.name}
                       name={field.name}
-                      placeholder='John Doe'
+                      placeholder={t('full-name-placeholder')}
                       value={field.state.value}
                       onBlur={field.handleBlur}
                       onChange={(e) => field.handleChange(e.target.value)}
@@ -95,7 +95,7 @@ export const CreateCandidateForm = () => {
             </div>
             <div className='space-y-2'>
               <Label htmlFor='email' className='text-sm font-medium'>
-                Email Address
+                {t('email-label')}
               </Label>
               <Field name='email'>
                 {(field) => (
@@ -117,7 +117,7 @@ export const CreateCandidateForm = () => {
             </div>
             <div className='space-y-2'>
               <Label htmlFor='phone' className='text-sm font-medium'>
-                Phone Number
+                {t('phone-label')}
               </Label>
               <Field name='phone'>
                 {(field) => (
@@ -139,7 +139,7 @@ export const CreateCandidateForm = () => {
             </div>
             <div className='space-y-2'>
               <Label htmlFor='address' className='text-sm font-medium'>
-                Address
+                {t('address')}
               </Label>
               <Field name='address'>
                 {(field) => (
@@ -160,7 +160,7 @@ export const CreateCandidateForm = () => {
             </div>
             <div className='space-y-2 md:col-span-2'>
               <Label htmlFor='title' className='text-sm font-medium'>
-                Job Title
+                {t('job-title')}
               </Label>
               <Field name='title'>
                 {(field) => (
@@ -190,10 +190,10 @@ export const CreateCandidateForm = () => {
               {isPending ? (
                 <>
                   <Loader2 className='mr-2 h-4 w-4 animate-spin' />
-                  Creating...
+                  {t('submit-loading')}
                 </>
               ) : (
-                'Create Candidate'
+                `${t('submit')}`
               )}
             </Button>
           </div>

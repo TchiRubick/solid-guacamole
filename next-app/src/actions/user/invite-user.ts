@@ -6,16 +6,17 @@ import { inviteUser } from '@/models/user-organization-invite/$invite-user';
 import { updateExpirationDateInvitation } from '@/models/user-organization-invite/$update-expiration-date-invitation';
 import { checkExisting } from '@/models/user/$check-existing';
 import { actionOrgSessionGuard } from '@/server-functions/session';
+import { getScopedI18n } from '@/packages/locales/server';
 
 export const inviteUserMutation = async ({ email }: { email: string }) => {
   const session = await actionOrgSessionGuard();
-
+  const t = await getScopedI18n('invite-user');
   const existingUser = await checkExisting(email, email);
 
   if (existingUser) {
     await createOrganizationUser(existingUser.id, session.organizationId);
 
-    return { message: 'User added to organization' };
+    return { message: t('user-added-to-organization') };
   }
 
   const existingInvitation = await existInvitation(
@@ -31,12 +32,12 @@ export const inviteUserMutation = async ({ email }: { email: string }) => {
 
     // TODO: send email with invitation id
 
-    return { message: 'Invitation resent' };
+    return { message: t('invitation-resent') };
   }
 
   await inviteUser(email, session.organizationId);
 
   // TODO: send email with invitation id
 
-  return { message: 'Invitation sent' };
+  return { message: t('invitation-sent') };
 };

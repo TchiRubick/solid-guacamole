@@ -19,21 +19,21 @@ import { z } from 'zod';
 import { useToast } from '@/hooks/use-toast';
 import { useScopedI18n } from '@/packages/locales/client';
 
-export const DialogCloseButton = () => {
+export const InputInviteUserModal = () => {
   const { toast } = useToast();
   const t = useScopedI18n('invite-user-dialog');
   const { mutate, isPending } = useMutation({
     mutationFn: inviteUserMutation,
     onSuccess: () => {
       toast({
-        title: `${t('toast-success-title')}`,
-        description: `${t('toast-success-description')}`,
+        title: t('toast-success-title'),
+        description: t('toast-success-description'),
       });
       window.location.reload();
     },
     onError: (error) => {
       toast({
-        title: `${t('toast-error-title')}`,
+        title: t('toast-error-title'),
         description: error.message,
         variant: 'destructive',
       });

@@ -30,15 +30,15 @@ export const CreateOrganizationForm = () => {
     mutationFn: createOrganizationMutation,
     onSuccess: () => {
       toast({
-        title: `${tCreateOrganizationForm('toast-success-title')}`,
-        description: `${tCreateOrganizationForm('toast-success')}`,
+        title: tCreateOrganizationForm('toast-success-title'),
+        description: tCreateOrganizationForm('toast-success'),
       });
 
       window.location.href = '/organization/dashboard';
     },
     onError: (error: Error) => {
       toast({
-        title: `${tCreateOrganizationForm('toast-error-title')}`,
+        title: tCreateOrganizationForm('toast-error-title'),
         description: error.message,
         variant: 'destructive',
       });
