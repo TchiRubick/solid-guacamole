@@ -1,6 +1,5 @@
 import { NotAuthorized } from '@/components/not-authorized';
 import { actionSessionGuard } from '@/server-functions/session';
-import { redirect } from 'next/navigation';
 import { CardNoOrganization } from '../_components/card-no-organization';
 import { Dashboard } from './_components/dashboard';
 
@@ -11,13 +10,15 @@ export const DashboardPage = async () => {
     return <NotAuthorized />;
   }
 
-  if (session.organizationId === null) {
-    redirect('/organization/create');
-  }
-
   return (
     <main>
-      {session.organizationId === null ? <CardNoOrganization /> : <Dashboard />}
+      {session.organizationId === null ? (
+        <div className='flex items-center justify-center'>
+          <CardNoOrganization />
+        </div>
+      ) : (
+        <Dashboard />
+      )}
     </main>
   );
 };
