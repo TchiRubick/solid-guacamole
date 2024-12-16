@@ -86,47 +86,42 @@ export const CandidateDetails = ({ id }: { id: number }) => {
               e.stopPropagation();
               handleSubmit();
             }}
+            className='space-y-4'
           >
-            <div className='space-y-4'>
-              <div className='space-y-2'>
-                <Label htmlFor='name'>{t('candidate-name')}</Label>
-                <div className='relative'>
-                  <Input
-                    id='name'
-                    className='pl-8'
-                    value={data?.name}
-                    readOnly
-                  />
-                  <User className='absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground' />
-                </div>
-              </div>
-              <div className='space-y-2'>
-                <Label htmlFor='email'>{t('candidate-email')}</Label>
-                <div className='relative'>
-                  <Input
-                    id='email'
-                    type='email'
-                    className='pl-8'
-                    value={data?.email}
-                    readOnly
-                  />
-                  <Mail className='absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground' />
-                </div>
-              </div>
-              <div className='space-y-2'>
-                <Label htmlFor='phone'>{t('candidate-phone')}</Label>
-                <div className='relative'>
-                  <Input
-                    id='phone'
-                    type='tel'
-                    className='pl-8'
-                    value={data?.phone}
-                    readOnly
-                  />
-                  <Phone className='absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground' />
-                </div>
+            <div className='space-y-2'>
+              <Label htmlFor='name'>{t('candidate-name')}</Label>
+              <div className='relative'>
+                <Input id='name' className='pl-8' value={data?.name} readOnly />
+                <User className='absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground' />
               </div>
             </div>
+            <div className='space-y-2'>
+              <Label htmlFor='email'>{t('candidate-email')}</Label>
+              <div className='relative'>
+                <Input
+                  id='email'
+                  type='email'
+                  className='pl-8'
+                  value={data?.email}
+                  readOnly
+                />
+                <Mail className='absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground' />
+              </div>
+            </div>
+            <div className='space-y-2'>
+              <Label htmlFor='phone'>{t('candidate-phone')}</Label>
+              <div className='relative'>
+                <Input
+                  id='phone'
+                  type='tel'
+                  className='pl-8'
+                  value={data?.phone}
+                  readOnly
+                />
+                <Phone className='absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground' />
+              </div>
+            </div>
+
             <div className='space-y-2'>
               <Label htmlFor='observations'>
                 {t('candidate-observations')}

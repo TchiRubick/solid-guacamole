@@ -9,7 +9,7 @@ const InterviewPage = async ({
   const interview = await oneInterviewQuery((await params).id);
   return (
     <div>
-      <AutoRecorder/>
+      <AutoRecorder />
     </div>
   );
 };

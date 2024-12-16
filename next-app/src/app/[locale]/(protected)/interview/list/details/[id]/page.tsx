@@ -23,12 +23,7 @@ const DetailsInterviewPage = async ({
             {t('interview')} {interview?.name}
           </CardTitle>
           <div className='space-x-2'>
-            <Button
-              variant='outline'
-              className='border-neutral-800 bg-neutral-900 text-neutral-200 hover:bg-neutral-800'
-            >
-              Process
-            </Button>
+            <Button variant='outline'>Process</Button>
             <Button
               variant='outline'
               className='border-neutral-800 bg-neutral-900 text-neutral-200 hover:bg-neutral-800'
@@ -62,7 +57,7 @@ const DetailsInterviewPage = async ({
           </Label>
           <Textarea
             id='observations'
-            className='min-h-[100px] border-neutral-800 bg-neutral-900 text-neutral-200'
+            className='min-h-[100px]'
             placeholder='Enter your observations'
           />
         </div>
@@ -74,15 +69,8 @@ const DetailsInterviewPage = async ({
                 {questionNumber}. Question {questionNumber}
               </Label>
               <div className='flex gap-2'>
-                <Input
-                  placeholder='https://response-video-link'
-                  className='border-neutral-800 bg-neutral-900 text-neutral-200'
-                />
-                <Button
-                  variant='outline'
-                  size='icon'
-                  className='border-neutral-800 bg-neutral-900 text-neutral-200 hover:bg-neutral-800'
-                >
+                <Input placeholder='https://response-video-link' />
+                <Button variant='outline' size='icon'>
                   <Eye className='h-4 w-4' />
                   <span className='sr-only'>View</span>
                 </Button>
