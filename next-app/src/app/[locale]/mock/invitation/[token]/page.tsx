@@ -29,17 +29,7 @@ const Page = async ({ params }: { params: Promise<{ token: string }> }) => {
                 Let's ensure your device is ready for the interview.
               </p>
               <div className='rounded-xl bg-gray-50 p-6 shadow-inner'>
-                <Recorder />
-              </div>
-              <div className='flex justify-center space-x-12'>
-                <DeviceStatus icon={Video} label='Camera' />
-                <DeviceStatus icon={Mic} label='Microphone' />
-              </div>
-              <div className='flex items-center justify-center space-x-2 text-green-600'>
-                <CheckCircle size={24} />
-                <span className='text-lg font-semibold'>
-                  Your device is ready!
-                </span>
+                <Recorder interviewId={interview.id} />
               </div>
             </div>
           ) : (
@@ -51,36 +41,9 @@ const Page = async ({ params }: { params: Promise<{ token: string }> }) => {
             </div>
           )}
         </CardContent>
-        {interview && (
-          <CardFooter className='flex justify-center bg-gray-50 p-6'>
-            <Link href={`/mock/interview/${interview.id}`}>
-              <Button
-                size='lg'
-                className='bg-gradient-to-r from-blue-600 to-indigo-600 px-8 py-3 text-lg font-semibold transition-colors duration-300 hover:from-blue-700 hover:to-indigo-700'
-              >
-                Start Interview
-              </Button>
-            </Link>
-          </CardFooter>
-        )}
       </Card>
     </div>
   );
 };
-
-const DeviceStatus = ({
-  icon: Icon,
-  label,
-}: {
-  icon: React.ElementType;
-  label: string;
-}) => (
-  <div className='flex flex-col items-center space-y-2'>
-    <div className='flex h-14 w-14 items-center justify-center rounded-full bg-blue-100'>
-      <Icon className='h-7 w-7 text-blue-600' />
-    </div>
-    <span className='text-sm font-medium text-gray-700'>{label}</span>
-  </div>
-);
 
 export default Page;

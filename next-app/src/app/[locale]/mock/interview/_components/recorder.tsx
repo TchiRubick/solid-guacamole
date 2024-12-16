@@ -1,40 +1,21 @@
 'use client';
 
-import { uploadVideoMuation as uploadVideoToS3 } from '@/actions/video/upload-video';
-import { Button } from '@/components/ui/button'; // Assuming you're using shadcn/ui buttons
+import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
-import { useMutation } from '@tanstack/react-query';
+import { CheckCircle, Mic, Video } from 'lucide-react';
+import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
+import { DeviceStatus } from './divice-status';
 
-export const Recorder = () => {
+export const Recorder = ({ interviewId }: { interviewId: number }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const [mediaStream, setMediaStream] = useState<MediaStream | null>(null);
   const [isRecording, setIsRecording] = useState(false);
   const [recordedVideoUrl, setRecordedVideoUrl] = useState<string | null>(null);
-  const [recordedVideoBlob, setRecordedVideoBlob] = useState<Blob | null>(null);
   const { toast } = useToast();
 
   const chunksRef = useRef<Blob[]>([]);
-
-  const { mutate } = useMutation({
-    mutationFn: uploadVideoToS3,
-    onSuccess: () => {
-      toast({
-        title: 'Video uploaded successfully',
-        variant: 'default',
-      });
-
-      setRecordedVideoUrl(null);
-      setRecordedVideoBlob(null);
-    },
-    onError: (error: Error) => {
-      toast({
-        title: error.message,
-        variant: 'destructive',
-      });
-    },
-  });
 
   useEffect(() => {
     const enableVideoStream = async () => {
@@ -94,7 +75,6 @@ export const Recorder = () => {
         // Create a URL for the recorded video
         const videoURL = URL.createObjectURL(blob);
         setRecordedVideoUrl(videoURL);
-        setRecordedVideoBlob(blob);
       };
 
       // Start recording
@@ -107,12 +87,6 @@ export const Recorder = () => {
     if (mediaRecorderRef.current) {
       mediaRecorderRef.current.stop();
       setIsRecording(false);
-    }
-  };
-
-  const uploadVideo = async () => {
-    if (recordedVideoBlob) {
-      mutate(recordedVideoBlob);
     }
   };
 
@@ -137,11 +111,11 @@ export const Recorder = () => {
       <div className='flex space-x-4'>
         {!isRecording ? (
           <Button onClick={startRecording} variant='default'>
-            Start Recording
+            Start Test
           </Button>
         ) : (
           <Button onClick={stopRecording} variant='destructive'>
-            Stop Recording
+            Stop Test
           </Button>
         )}
 
@@ -150,21 +124,34 @@ export const Recorder = () => {
             <Button onClick={downloadRecording} variant='outline'>
               Download Recording
             </Button>
-            <Button onClick={uploadVideo} variant='default'>
-              Upload to S3
-            </Button>
+            <Link href={`/mock/interview/${interviewId}`}>
+              <Button
+                size='lg'
+                className='bg-gradient-to-r from-blue-600 to-indigo-600 px-8 py-3 text-lg font-semibold transition-colors duration-300 hover:from-blue-700 hover:to-indigo-700'
+              >
+                Start Interview
+              </Button>
+            </Link>
           </>
         )}
       </div>
 
       {recordedVideoUrl && (
-        <div className='mt-4'>
+        <div className='mt-4 space-y-4'>
           <h3 className='mb-2 text-lg font-semibold'>Recorded Video</h3>
           <video
             src={recordedVideoUrl}
             controls
             className='w-full max-w-md rounded-lg shadow-md'
           />
+          <div className='flex justify-center space-x-12'>
+            <DeviceStatus icon={Video} label='Camera' />
+            <DeviceStatus icon={Mic} label='Microphone' />
+          </div>
+          <div className='flex items-center justify-center space-x-2 text-green-600'>
+            <CheckCircle size={24} />
+            <span className='text-lg font-semibold'>Your device is ready!</span>
+          </div>
         </div>
       )}
     </div>
