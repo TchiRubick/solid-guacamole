@@ -1,4 +1,4 @@
-import { InputOTPForm } from '../_components/input-otp-form';
+import { InputOTPForm } from './_components/input-otp-form';
 
 const Page = () => {
   return (

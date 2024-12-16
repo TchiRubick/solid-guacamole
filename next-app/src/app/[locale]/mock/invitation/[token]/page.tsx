@@ -21,7 +21,7 @@ const Page = async ({ params }: { params: Promise<{ token: string }> }) => {
                 Let's ensure your device is ready for the interview.
               </p>
               <div className="bg-gray-50 p-6 rounded-xl shadow-inner">
-                <Recorder />
+                <Recorder/>
               </div>
               <div className="flex justify-center space-x-12">
                 <DeviceStatus icon={Video} label="Camera" />
