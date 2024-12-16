@@ -8,7 +8,7 @@ export const verifTokenStatusQuery = async (token: string) => {
   }
 
   if (t?.status !== 'sent' && t?.expiresAt < new Date()) {
-    return;
+    return false;
   } else {
     return t;
   }

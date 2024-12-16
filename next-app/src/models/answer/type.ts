@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import type { z } from 'zod';
 import { AnswerTable } from '@/packages/db/schemas';
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
 
