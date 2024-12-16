@@ -1,15 +1,7 @@
 import { verifTokenStatusQuery } from '@/actions/interview/verif-token-status';
 import { Recorder } from '../../interview/_components/recorder';
-import { Button } from '@/components/ui/button';
-import Link from 'next/link';
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
-import { AlertCircle, CheckCircle, Video, Mic } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { AlertCircle } from 'lucide-react';
 
 const Page = async ({ params }: { params: Promise<{ token: string }> }) => {
   const interview = await verifTokenStatusQuery((await params).token);

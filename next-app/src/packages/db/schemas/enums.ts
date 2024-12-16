@@ -9,3 +9,8 @@ export const InterviewStatusEnum = pgEnum('interview_status', [
   'viewed',
   'canceled',
 ]);
+
+export const QuestionStatusEnum = pgEnum('question_status', [
+  'pending',
+  'done',
+]);

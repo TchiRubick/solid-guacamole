@@ -1,6 +1,7 @@
 import { relations } from 'drizzle-orm';
 import { pgTable } from 'drizzle-orm/pg-core';
 import { InterviewStatusEnum } from './enums';
+import { QuestionStatusEnum } from './enums';
 import { OrganizationTable } from './organization';
 
 export const QuestionTable = pgTable('question', (t) => ({
@@ -17,6 +18,8 @@ export const QuestionTable = pgTable('question', (t) => ({
     .serial('interview_id') // Ajout du champ pour la relation avec InterviewTable
     .notNull()
     .references(() => InterviewTable.id, { onDelete: 'cascade' }),
+  status: QuestionStatusEnum('status').default('pending').notNull(),
+  order: t.integer('order').default(1).notNull(),
   createdAt: t
     .timestamp('created_at', { withTimezone: true })
     .notNull()
