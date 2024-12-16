@@ -70,24 +70,29 @@ export const SidebarUser = () => {
         sideOffset={4}
       >
         <DropdownMenuLabel className='p-0 font-normal'>
-          <div className='flex items-center gap-2 px-1 py-1.5 text-left text-sm'>
-            <Avatar className='h-8 w-8 rounded-lg'>
-              <AvatarImage
-                src={session?.user?.image ?? undefined}
-                alt={session?.user?.username}
-              />
-              <AvatarFallback className='rounded-lg uppercase'>
-                {session?.user?.username.charAt(0)}
-                {session?.user?.username.charAt(1)}
-              </AvatarFallback>
-            </Avatar>
-            <div className='grid flex-1 text-left text-sm leading-tight'>
-              <span className='truncate font-semibold'>
-                {session?.user?.username}
-              </span>
-              <span className='truncate text-xs'>{session?.user?.email}</span>
+          <DropdownMenuItem
+            className='cursor-pointer'
+            onClick={() => router.push(`/profile/${session?.user?.username}`)}
+          >
+            <div className='flex items-center gap-2 px-1 py-1.5 text-left text-sm'>
+              <Avatar className='h-8 w-8 rounded-lg'>
+                <AvatarImage
+                  src={session?.user?.image ?? undefined}
+                  alt={session?.user?.username}
+                />
+                <AvatarFallback className='rounded-lg uppercase'>
+                  {session?.user?.username.charAt(0)}
+                  {session?.user?.username.charAt(1)}
+                </AvatarFallback>
+              </Avatar>
+              <div className='grid flex-1 text-left text-sm leading-tight'>
+                <span className='truncate font-semibold'>
+                  {session?.user?.username}
+                </span>
+                <span className='truncate text-xs'>{session?.user?.email}</span>
+              </div>
             </div>
-          </div>
+          </DropdownMenuItem>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
