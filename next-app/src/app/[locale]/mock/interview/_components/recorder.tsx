@@ -6,6 +6,8 @@ import { CheckCircle, Mic, Video } from 'lucide-react';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import { DeviceStatus } from './divice-status';
+import ShinyButton from '@/components/ui/shiny-button';
+import PulsatingButton from '@/components/ui/pulsating-button';
 
 export const Recorder = ({ interviewId }: { interviewId: number }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -125,12 +127,9 @@ export const Recorder = ({ interviewId }: { interviewId: number }) => {
               Download Recording
             </Button>
             <Link href={`/mock/interview/${interviewId}`}>
-              <Button
-                size='lg'
-                className='bg-gradient-to-r from-blue-600 to-indigo-600 px-8 py-3 text-lg font-semibold transition-colors duration-300 hover:from-blue-700 hover:to-indigo-700'
-              >
+              <PulsatingButton className='bg-gradient-to-r from-blue-600 to-indigo-600 px-8 py-3 text-lg font-semibold transition-colors duration-300 hover:from-blue-700 hover:to-indigo-700'>
                 Start Interview
-              </Button>
+              </PulsatingButton>
             </Link>
           </>
         )}
