@@ -6,7 +6,6 @@ import { CheckCircle, Mic, Video } from 'lucide-react';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import { DeviceStatus } from './divice-status';
-import ShinyButton from '@/components/ui/shiny-button';
 import PulsatingButton from '@/components/ui/pulsating-button';
 
 export const Recorder = ({ interviewId }: { interviewId: number }) => {

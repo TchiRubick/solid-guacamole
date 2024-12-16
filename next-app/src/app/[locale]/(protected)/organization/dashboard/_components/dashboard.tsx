@@ -4,11 +4,12 @@ import { FullInformationsQuery } from '@/actions/organization/get-full-informati
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useQuery } from '@tanstack/react-query';
-import { Building2, Users } from 'lucide-react';
+import { Building2, User, Users, Video } from 'lucide-react';
 import { InputInviteUserModal } from './input-invite-user-modal';
 import { MemberTable } from './member-table';
 import { useSession } from '@/hooks/use-session';
 import { useScopedI18n } from '@/packages/locales/client';
+import NumberTicker from '@/components/ui/number-ticker';
 
 export function Dashboard() {
   const { data: organization } = useQuery({
@@ -61,9 +62,12 @@ export function Dashboard() {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className='text-2xl font-bold'>40</div>
+              <div className='text-2xl font-bold'>
+                {' '}
+                <NumberTicker value={40} className='text-slate-300' />
+              </div>
               <div className='absolute right-4 top-4 text-muted-foreground/20'>
-                <Users className='h-12 w-12' />
+                <Video className='h-12 w-12' />
               </div>
             </CardContent>
           </Card>
@@ -74,7 +78,9 @@ export function Dashboard() {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className='text-2xl font-bold'>40</div>
+              <div className='text-2xl font-bold'>
+                <NumberTicker value={40} className='text-slate-300' />
+              </div>
               <div className='absolute right-4 top-4 text-muted-foreground/20'>
                 <Users className='h-12 w-12' />
               </div>
@@ -89,7 +95,7 @@ export function Dashboard() {
             <CardContent>
               <div className='text-2xl font-bold'>John</div>
               <div className='absolute right-4 top-4 text-muted-foreground/20'>
-                <Users className='h-12 w-12' />
+                <User className='h-12 w-12' />
               </div>
             </CardContent>
           </Card>

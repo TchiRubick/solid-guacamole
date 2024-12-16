@@ -1,7 +1,7 @@
 'use client';
 
 import { uploadVideoMuation as uploadVideoToS3 } from '@/actions/video/upload-video';
-import { Button } from '@/components/ui/button'; // Assuming you're using shadcn/ui buttons
+import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { useMutation } from '@tanstack/react-query';
 import { useEffect, useRef, useState } from 'react';
@@ -11,8 +11,6 @@ export const AutoRecorder = () => {
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const [mediaStream, setMediaStream] = useState<MediaStream | null>(null);
   const [isRecording, setIsRecording] = useState(false);
-  const [recordedVideoUrl, setRecordedVideoUrl] = useState<string | null>(null);
-  const [recordedVideoBlob, setRecordedVideoBlob] = useState<Blob | null>(null);
   const { toast } = useToast();
 
   const chunksRef = useRef<Blob[]>([]);
@@ -24,9 +22,6 @@ export const AutoRecorder = () => {
         title: 'Video uploaded successfully',
         variant: 'default',
       });
-
-      setRecordedVideoUrl(null);
-      setRecordedVideoBlob(null);
     },
     onError: (error: Error) => {
       toast({
@@ -49,7 +44,7 @@ export const AutoRecorder = () => {
           videoRef.current.srcObject = stream;
         }
 
-        // Démarre l'enregistrement automatiquement après avoir activé la caméra
+        // Automatically start recording after enabling the video stream
         startRecording(stream);
       } catch (error) {
         toast({
@@ -95,10 +90,11 @@ export const AutoRecorder = () => {
         // Create a blob from the recorded chunks
         const blob = new Blob(chunksRef.current, { type: 'video/webm' });
 
-        // Create a URL for the recorded video
-        const videoURL = URL.createObjectURL(blob);
-        setRecordedVideoUrl(videoURL);
-        setRecordedVideoBlob(blob);
+        // Automatically upload the video to S3
+        mutate(blob);
+
+        // Optionally, clear state or perform other actions
+        setIsRecording(false);
       };
 
       // Start recording
@@ -111,21 +107,6 @@ export const AutoRecorder = () => {
     if (mediaRecorderRef.current) {
       mediaRecorderRef.current.stop();
       setIsRecording(false);
-    }
-  };
-
-  const uploadVideo = async () => {
-    if (recordedVideoBlob) {
-      mutate(recordedVideoBlob);
-    }
-  };
-
-  const downloadRecording = () => {
-    if (recordedVideoUrl) {
-      const a = document.createElement('a');
-      a.href = recordedVideoUrl;
-      a.download = `recording_${new Date().toISOString()}.webm`;
-      a.click();
     }
   };
 
@@ -148,29 +129,7 @@ export const AutoRecorder = () => {
             Start Recording
           </Button>
         )}
-
-        {recordedVideoUrl && (
-          <>
-            <Button onClick={downloadRecording} variant='outline'>
-              Download Recording
-            </Button>
-            <Button onClick={uploadVideo} variant='default'>
-              Upload to S3
-            </Button>
-          </>
-        )}
       </div>
-
-      {recordedVideoUrl && (
-        <div className='mt-4'>
-          <h3 className='mb-2 text-lg font-semibold'>Recorded Video</h3>
-          <video
-            src={recordedVideoUrl}
-            controls
-            className='w-full max-w-md rounded-lg shadow-md'
-          />
-        </div>
-      )}
     </div>
   );
 };
