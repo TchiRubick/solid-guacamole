@@ -8,9 +8,7 @@ export const verifTokenStatusQuery = async (token: string) => {
     return null;
   }
 
-  if (t?.status !== 'done' && t?.expiresAt > new Date() && t?.token === token) {
-    updateInterviewStatusToPending(t.id);
+  await updateInterviewStatusToPending(t.id);
 
-    return t;
-  }
+  return t;
 };

@@ -6,7 +6,7 @@ import { AutoRecorder } from '../../interview/_components/auto_recorder';
 
 const Page = async ({ params }: { params: Promise<{ token: string }> }) => {
   const interview = await verifTokenStatusQuery((await params).token);
-  
+
   return (
     <div className='flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4'>
       <Card className='w-full max-w-2xl overflow-hidden rounded-2xl bg-white shadow-lg'>

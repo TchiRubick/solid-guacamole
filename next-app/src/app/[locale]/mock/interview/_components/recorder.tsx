@@ -144,11 +144,13 @@ export const Recorder = ({ interviewId }: { interviewId: number }) => {
             <Button onClick={downloadRecording} variant='outline'>
               Download Recording
             </Button>
-            <Link href={`/mock/interview/${interviewId}`}>
-              <PulsatingButton className='bg-gradient-to-r from-blue-600 to-indigo-600 px-8 py-3 text-lg font-semibold transition-colors duration-300 hover:from-blue-700 hover:to-indigo-700'>
-                Start Interview
-              </PulsatingButton>
-            </Link>
+
+            <PulsatingButton
+              onClick={() => window.location.reload()}
+              className='bg-gradient-to-r from-blue-600 to-indigo-600 px-8 py-3 text-lg font-semibold transition-colors duration-300 hover:from-blue-700 hover:to-indigo-700'
+            >
+              Start Interview
+            </PulsatingButton>
           </>
         )}
       </div>
