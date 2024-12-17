@@ -1,5 +1,4 @@
 'use client';
-
 import { uploadVideoMuation as uploadVideoToS3 } from '@/actions/video/upload-video';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
@@ -11,7 +10,6 @@ import { useQuery } from '@tanstack/react-query';
 import { questionsByInterviewIdQuery } from '@/actions/question/get-questions-interview';
 import { useQueryClient } from '@tanstack/react-query';
 import GradualSpacing from '@/components/ui/gradual-spacing';
-
 export const AutoRecorder = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
@@ -20,7 +18,6 @@ export const AutoRecorder = () => {
   const { toast } = useToast();
   const token = useParams().token?.toString();
   const queryClient = useQueryClient();
-
   if (!token) {
     return 'No token';
   }
@@ -28,7 +25,6 @@ export const AutoRecorder = () => {
     queryKey: ['question'],
     queryFn: () => questionsByInterviewIdQuery(token),
   });
-
   const { mutate: updateStatus } = useMutation({
     mutationFn: updateStatusQuestionMutation,
     onSuccess: () => {
@@ -44,9 +40,7 @@ export const AutoRecorder = () => {
       });
     },
   });
-
   const chunksRef = useRef<Blob[]>([]);
-
   const { mutate } = useMutation({
     mutationFn: uploadVideoToS3,
     onSuccess: () => {
@@ -55,7 +49,7 @@ export const AutoRecorder = () => {
         variant: 'default',
       });
       queryClient.invalidateQueries({ queryKey: ['question'] });
-      window.location.reload();
+      // window.location.reload();
     },
     onError: (error: Error) => {
       toast({
@@ -64,7 +58,6 @@ export const AutoRecorder = () => {
       });
     },
   });
-
   useEffect(() => {
     const enableVideoStream = async () => {
       try {
@@ -73,13 +66,16 @@ export const AutoRecorder = () => {
           audio: true,
         });
         setMediaStream(stream);
-
         if (videoRef.current) {
           videoRef.current.srcObject = stream;
         }
-
         // Automatically start recording after enabling the video stream
         startRecording(stream);
+        if (!question) {
+          return;
+        }
+        updateStatus(question.interview_question.id);
+
       } catch (error) {
         toast({
           title: 'Error accessing webcam',
@@ -88,9 +84,7 @@ export const AutoRecorder = () => {
         });
       }
     };
-
     enableVideoStream();
-
     // Cleanup function
     return () => {
       if (mediaStream) {
@@ -100,56 +94,41 @@ export const AutoRecorder = () => {
       }
     };
   }, []);
-
   const startRecording = (stream?: MediaStream) => {
     const currentStream = stream || mediaStream;
     if (currentStream) {
       // Reset previous recording
       chunksRef.current = [];
-
       // Create MediaRecorder
       mediaRecorderRef.current = new MediaRecorder(currentStream, {
         mimeType: 'video/webm',
       });
-
       // Event listeners for data collection
       mediaRecorderRef.current.ondataavailable = (event) => {
         if (event.data.size > 0) {
           chunksRef.current.push(event.data);
         }
       };
-      if (!question) {
-        return;
-      }
-      updateStatus(question.interview_question.id);
       // Event listener for when recording stops
       mediaRecorderRef.current.onstop = () => {
         // Create a blob from the recorded chunks
         const blob = new Blob(chunksRef.current, { type: 'video/webm' });
-
-        // Update the status of the question
-
-
         // Automatically upload the video to S3
         mutate(blob);
-
         // Optionally, clear state or perform other actions
         setIsRecording(false);
       };
-
       // Start recording
       mediaRecorderRef.current.start();
       setIsRecording(true);
     }
   };
-
   const stopRecording = () => {
     if (mediaRecorderRef.current) {
       mediaRecorderRef.current.stop();
       setIsRecording(false);
     }
   };
-
   return (
     <div className='flex flex-col items-center space-y-4'>
       <video
@@ -158,7 +137,6 @@ export const AutoRecorder = () => {
         muted
         className='w-full max-w-md rounded-lg shadow-md'
       />
-
       {mediaStream ? (
         <>
           <div className='flex space-x-4'>
@@ -182,5 +160,4 @@ export const AutoRecorder = () => {
     </div>
   );
 };
-
 export default AutoRecorder;
