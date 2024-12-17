@@ -5,9 +5,8 @@ export const UserRoleEnum = pgEnum('user_role', ['customer', 'admin']);
 export const InterviewStatusEnum = pgEnum('interview_status', [
   'sent',
   'pending',
+  'ongoing',
   'done',
-  'viewed',
-  'canceled',
 ]);
 
 export const QuestionStatusEnum = pgEnum('question_status', [

@@ -2,7 +2,7 @@
 import { getCandidateById } from '@/models/candidate/$get-candidate-by-id';
 import { createInterview } from '@/models/interview';
 import { zInterviewInsert } from '@/models/interview/type';
-import { createQuestion } from '@/models/question';
+import { QuestionModel } from '@/models/question';
 import { db } from '@/packages/db';
 import { getScopedI18n } from '@/packages/locales/server';
 import { sendEmail } from '@/packages/mail';
@@ -52,16 +52,26 @@ export const createInterviewMutation = async (data: CreateInterviewPayload) => {
 
   zInterviewInsert.parse(dataInterviewMutation);
 
-  const result = await db.transaction(async () => {
+  const result = await db.transaction(async (ctx) => {
+    const questionModel = new QuestionModel(ctx);
+
     const [interviewData] = await createInterview(dataInterviewMutation);
 
-    const formattedQuestions = data.questions?.map((question) => ({
+    const formattedQuestions = data.questions?.map((question, index) => ({
       value: question.text,
       organizationId: organizationId,
       interviewId: interviewData.id,
+      order: index + 1,
     }));
 
-    await createQuestion(formattedQuestions);
+    const questions = await questionModel.create(formattedQuestions);
+
+    const formattedQuestionRelations = questions.map((q) => ({
+      questionId: q.id,
+      interviewId: interviewData.id,
+    }));
+
+    await questionModel.createInterviewRelation(formattedQuestionRelations);
 
     return interviewData;
   });
