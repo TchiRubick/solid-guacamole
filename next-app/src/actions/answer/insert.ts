@@ -1,9 +1,21 @@
 'use server';
 
-import { insertAnser } from '@/models/answer/$insert';
-import type { Answer } from '@/models/answer/type';
+import { AnswerModel } from '@/models/answer';
+import type { AnswerInput } from '@/models/answer/type';
+import { db } from '@/packages/db';
 
-export const insertAnswerMutation = async (data: Answer) => {
-  const result = await insertAnser(data);
-  return result;
+export const insertAnswerMuation = async ({
+  questionId,
+  answerData,
+}: {
+  questionId: string;
+  answerData: AnswerInput;
+}) => {
+  const t = await db.transaction(async (ctx) => {
+    const answerModel = new AnswerModel(ctx);
+
+    return answerModel.createAnswerAndUpdateQuestion(questionId, answerData);
+  });
+
+  return t;
 };

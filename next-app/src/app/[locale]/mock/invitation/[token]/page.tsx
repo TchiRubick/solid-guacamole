@@ -1,11 +1,17 @@
-import { verifTokenStatusQuery } from '@/actions/interview/verif-token-status';
+import { checkExistingInterview } from '@/actions/interview/check-existing-interview';
 import { Recorder } from '../../interview/_components/recorder';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { AlertCircle } from 'lucide-react';
 import { AutoRecorder } from '../../interview/_components/auto_recorder';
 
-const Page = async ({ params }: { params: Promise<{ token: string }> }) => {
-  const interview = await verifTokenStatusQuery((await params).token);
+const InterviewPage = async ({
+  params,
+}: {
+  params: Promise<{ token: string }>;
+}) => {
+  const interview = await checkExistingInterview((await params).token);
+
+  console.log('interview', interview?.status);
 
   return (
     <div className='flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4'>
@@ -45,4 +51,4 @@ const Page = async ({ params }: { params: Promise<{ token: string }> }) => {
   );
 };
 
-export default Page;
+export default InterviewPage;

@@ -6,4 +6,7 @@ export const zAnswerSelect = createSelectSchema(AnswerTable);
 export const zAnswerCreate = createInsertSchema(AnswerTable);
 
 export type Answer = z.infer<typeof zAnswerSelect>;
-export type AnswerInput = z.infer<typeof zAnswerCreate>;
+export type AnswerInput = Omit<
+  z.infer<typeof zAnswerCreate>,
+  'id' | 'createdAt'
+>;

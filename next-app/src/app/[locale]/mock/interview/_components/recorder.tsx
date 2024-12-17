@@ -69,6 +69,7 @@ export const Recorder = ({ interviewId }: { interviewId: number }) => {
   }, []);
 
   const startRecording = () => {
+    mutate(interviewId);
     if (mediaStream) {
       // Reset previous recording
       chunksRef.current = [];
@@ -97,7 +98,7 @@ export const Recorder = ({ interviewId }: { interviewId: number }) => {
 
       // Start recording
       mediaRecorderRef.current.start();
-      mutate(interviewId);
+      // mutate(interviewId);
       setIsRecording(true);
     }
   };

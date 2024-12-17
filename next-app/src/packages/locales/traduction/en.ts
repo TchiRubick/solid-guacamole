@@ -297,5 +297,6 @@ export default {
     'candidate-not-found': 'Candidate not found',
     'invalid-password': 'Invalid password',
     'organization-not-found': 'Organization not found',
+    'interview-not-found': 'Interview not found',
   },
 } as const;

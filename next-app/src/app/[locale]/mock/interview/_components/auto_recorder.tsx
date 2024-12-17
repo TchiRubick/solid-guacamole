@@ -5,11 +5,12 @@ import { useToast } from '@/hooks/use-toast';
 import { useMutation } from '@tanstack/react-query';
 import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'next/navigation';
-import { updateStatusQuestionMutation } from '@/actions/question/update-status';
 import { useQuery } from '@tanstack/react-query';
 import { questionsByInterviewIdQuery } from '@/actions/question/get-questions-interview';
 import { useQueryClient } from '@tanstack/react-query';
 import GradualSpacing from '@/components/ui/gradual-spacing';
+import { insertAnswerMuation } from '@/actions/answer/insert';
+
 export const AutoRecorder = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
@@ -24,11 +25,11 @@ export const AutoRecorder = () => {
     queryFn: () => (token ? questionsByInterviewIdQuery(token) : null),
   });
 
-  const { mutate: updateStatus } = useMutation({
-    mutationFn: token ? updateStatusQuestionMutation : undefined,
+  const { mutate: insertAnswer } = useMutation({
+    mutationFn: insertAnswerMuation,
     onSuccess: () => {
       toast({
-        title: 'Question updated successfully',
+        title: 'Answer updated successfully',
         variant: 'default',
       });
     },
@@ -39,7 +40,9 @@ export const AutoRecorder = () => {
       });
     },
   });
+
   const chunksRef = useRef<Blob[]>([]);
+
   const { mutate } = useMutation({
     mutationFn: token ? uploadVideoToS3 : undefined,
     onSuccess: () => {
@@ -48,7 +51,7 @@ export const AutoRecorder = () => {
         variant: 'default',
       });
       queryClient.invalidateQueries({ queryKey: ['question'] });
-      // window.location.reload();
+      window.location.reload();
     },
     onError: (error: Error) => {
       toast({
@@ -64,16 +67,18 @@ export const AutoRecorder = () => {
           video: true,
           audio: true,
         });
+
         setMediaStream(stream);
+
         if (videoRef.current) {
           videoRef.current.srcObject = stream;
         }
-        // Automatically start recording after enabling the video stream
+
         startRecording(stream);
+
         if (!question) {
           return;
         }
-        updateStatus(question.interview_question.id);
       } catch (error) {
         toast({
           title: 'Error accessing webcam',
@@ -91,36 +96,58 @@ export const AutoRecorder = () => {
         });
       }
     };
-  }, [mediaRecorderRef, mediaStream]);
+  }, []);
+
   const startRecording = (stream?: MediaStream) => {
+    if (question?.question) {
+      insertAnswer({
+        questionId: question.question.id,
+        answerData: {
+          value: 'Recording...',
+        },
+      });
+    }
+
     const currentStream = stream || mediaStream;
+
     if (currentStream) {
-      // Reset previous recording
       chunksRef.current = [];
-      // Create MediaRecorder
+
       mediaRecorderRef.current = new MediaRecorder(currentStream, {
         mimeType: 'video/webm',
       });
-      // Event listeners for data collection
+
       mediaRecorderRef.current.ondataavailable = (event) => {
         if (event.data.size > 0) {
           chunksRef.current.push(event.data);
         }
       };
-      // Event listener for when recording stops
+
       mediaRecorderRef.current.onstop = () => {
-        // Create a blob from the recorded chunks
         const blob = new Blob(chunksRef.current, { type: 'video/webm' });
-        // Automatically upload the video to S3
-        mutate(blob);
-        // Optionally, clear state or perform other actions
+
+        mutate(blob, {
+          onSuccess: (response) => {
+            if (question?.question) {
+              insertAnswer({
+                questionId: question.question.id,
+                answerData: {
+                  value: response,
+                },
+              });
+            }
+          },
+        });
+
         setIsRecording(false);
       };
+
       // Start recording
       mediaRecorderRef.current.start();
       setIsRecording(true);
     }
   };
+
   const stopRecording = () => {
     if (mediaRecorderRef.current) {
       mediaRecorderRef.current.stop();
