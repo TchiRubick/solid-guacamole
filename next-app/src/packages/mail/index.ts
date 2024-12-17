@@ -10,7 +10,7 @@ export const sendEmail = async (
   message: ReactNode
 ) => {
   const result = await resend.emails.send({
-    from: 'Acme <onboarding@resend.dev>',
+    from: 'Async Interview <mail@tchi.xyz>',
     to: email,
     subject,
     react: message,
