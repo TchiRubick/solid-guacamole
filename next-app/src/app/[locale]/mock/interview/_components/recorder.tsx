@@ -7,6 +7,8 @@ import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import { DeviceStatus } from './divice-status';
 import PulsatingButton from '@/components/ui/pulsating-button';
+import { useMutation } from '@tanstack/react-query';
+import { updateStatusToOngoingMutation } from '@/actions/interview/update-status-to-ongoing';
 
 export const Recorder = ({ interviewId }: { interviewId: number }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -17,6 +19,22 @@ export const Recorder = ({ interviewId }: { interviewId: number }) => {
   const { toast } = useToast();
 
   const chunksRef = useRef<Blob[]>([]);
+
+  const { mutate } = useMutation({
+    mutationFn: updateStatusToOngoingMutation,
+    onSuccess: () => {
+      toast({
+        title: 'Interview updated successfully',
+        variant: 'default',
+      });
+    },
+    onError: (error: Error) => {
+      toast({
+        title: error.message,
+        variant: 'destructive',
+      });
+    },
+  });
 
   useEffect(() => {
     const enableVideoStream = async () => {
@@ -80,6 +98,7 @@ export const Recorder = ({ interviewId }: { interviewId: number }) => {
 
       // Start recording
       mediaRecorderRef.current.start();
+      mutate(interviewId);
       setIsRecording(true);
     }
   };
