@@ -252,8 +252,9 @@ export default {
     'toast-error-title': 'Error',
   },
   'interview-list': {
-    description: 'A list of your interviews.',
+    'description-caption': 'A list of your interviews.',
     name: 'Name',
+    description: 'Description',
     candidate: 'Candidate',
     organization: 'Organization',
     status: 'Status',

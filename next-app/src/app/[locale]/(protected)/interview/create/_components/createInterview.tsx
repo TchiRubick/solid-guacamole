@@ -31,7 +31,7 @@ import { Separator } from '@/components/ui/separator';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
-import getQueryClient from '@/packages/react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { useForm } from '@tanstack/react-form';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { zodValidator } from '@tanstack/zod-form-adapter';
@@ -55,7 +55,7 @@ export default function CreateInterview() {
     { id: '1', text: '' },
   ]);
 
-  const client = getQueryClient();
+  const client = useQueryClient();
 
   const addQuestion = () => {
     setQuestions([...questions, { id: crypto.randomUUID(), text: '' }]);

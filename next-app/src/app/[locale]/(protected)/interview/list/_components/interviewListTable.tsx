@@ -82,7 +82,7 @@ export const InterviewListTable = () => {
   return (
     <div>
       <Table className='bg-card'>
-        <TableCaption>{t('description')}</TableCaption>
+        <TableCaption>{t('description-caption')}</TableCaption>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>

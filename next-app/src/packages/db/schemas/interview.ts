@@ -56,7 +56,7 @@ export const InterviewTable = pgTable('interview', (t) => ({
   expiresAt: t
     .timestamp('expires_at', { withTimezone: true, mode: 'date' })
     .notNull(),
-  status: InterviewStatusEnum('status').default('sent'),
+  status: InterviewStatusEnum('interview_status').default('sent'),
 }));
 
 export const AnswerTable = pgTable('answer', (t) => ({
