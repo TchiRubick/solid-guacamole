@@ -1,7 +1,9 @@
+'server only';
+
 import { db } from '@/packages/db';
 
 export const getInterviewByToken = async (token: string) => {
-  return await db.query.InterviewTable.findFirst({
+  const result = await db.query.InterviewTable.findFirst({
     where: (q, { eq, and, gt, ne }) =>
       and(
         eq(q.token, token),
@@ -9,4 +11,5 @@ export const getInterviewByToken = async (token: string) => {
         gt(q.expiresAt, new Date())
       ),
   });
+  return result;
 };

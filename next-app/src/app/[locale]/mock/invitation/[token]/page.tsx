@@ -12,20 +12,23 @@ const Page = async ({ params }: { params: Promise<{ token: string }> }) => {
       <Card className='w-full max-w-2xl overflow-hidden rounded-2xl bg-white shadow-lg'>
         <CardHeader className='bg-gradient-to-r from-blue-600 to-indigo-600 p-6 text-white'>
           <CardTitle className='text-center text-3xl font-bold'>
-            Interview Setup
+            Welcome to {interview?.name} 🦑
           </CardTitle>
         </CardHeader>
         <CardContent className='p-6'>
           {interview ? (
             <div className='space-y-8'>
-              <p className='text-center text-lg text-gray-700'>
-                Let's ensure your device is ready for the interview.
-              </p>
+              {interview?.status === 'pending' && (
+                <p className='text-center text-lg text-gray-700'>
+                  Let&apos;s ensure your device is ready for the interview.
+                </p>
+              )}
               <div className='rounded-xl bg-gray-50 p-6 shadow-inner'>
-                {interview.status === 'pending' && (
-                  <Recorder interviewId={interview.id} />
+                {interview?.status === 'pending' ? (
+                  <Recorder interviewId={interview?.id} />
+                ) : (
+                  <AutoRecorder />
                 )}
-                {interview.status === 'ongoing' && <AutoRecorder />}
               </div>
             </div>
           ) : (

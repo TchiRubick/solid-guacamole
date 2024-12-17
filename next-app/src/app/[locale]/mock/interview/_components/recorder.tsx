@@ -3,7 +3,6 @@
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { CheckCircle, Mic, Video } from 'lucide-react';
-import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import { DeviceStatus } from './divice-status';
 import PulsatingButton from '@/components/ui/pulsating-button';

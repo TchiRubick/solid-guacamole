@@ -10,5 +10,11 @@ export const verifTokenStatusQuery = async (token: string) => {
 
   await updateInterviewStatusToPending(t.id);
 
-  return t;
+  const newInterview = await getInterviewByToken(token);
+
+  if (!newInterview) {
+    return null;
+  }
+
+  return newInterview;
 };

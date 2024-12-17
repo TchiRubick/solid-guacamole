@@ -18,15 +18,14 @@ export const AutoRecorder = () => {
   const { toast } = useToast();
   const token = useParams().token?.toString();
   const queryClient = useQueryClient();
-  if (!token) {
-    return 'No token';
-  }
+
   const { data: question } = useQuery({
     queryKey: ['question'],
-    queryFn: () => questionsByInterviewIdQuery(token),
+    queryFn: () => (token ? questionsByInterviewIdQuery(token) : null),
   });
+
   const { mutate: updateStatus } = useMutation({
-    mutationFn: updateStatusQuestionMutation,
+    mutationFn: token ? updateStatusQuestionMutation : undefined,
     onSuccess: () => {
       toast({
         title: 'Question updated successfully',
@@ -42,7 +41,7 @@ export const AutoRecorder = () => {
   });
   const chunksRef = useRef<Blob[]>([]);
   const { mutate } = useMutation({
-    mutationFn: uploadVideoToS3,
+    mutationFn: token ? uploadVideoToS3 : undefined,
     onSuccess: () => {
       toast({
         title: 'Video uploaded successfully',
@@ -75,7 +74,6 @@ export const AutoRecorder = () => {
           return;
         }
         updateStatus(question.interview_question.id);
-
       } catch (error) {
         toast({
           title: 'Error accessing webcam',
@@ -87,13 +85,13 @@ export const AutoRecorder = () => {
     enableVideoStream();
     // Cleanup function
     return () => {
-      if (mediaStream) {
+      if (mediaStream && mediaRecorderRef.current) {
         mediaStream.getTracks().forEach((track) => {
           track.stop();
         });
       }
     };
-  }, []);
+  }, [mediaRecorderRef, mediaStream]);
   const startRecording = (stream?: MediaStream) => {
     const currentStream = stream || mediaStream;
     if (currentStream) {
