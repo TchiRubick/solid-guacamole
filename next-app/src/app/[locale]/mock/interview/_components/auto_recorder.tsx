@@ -118,17 +118,17 @@ export const AutoRecorder = () => {
           chunksRef.current.push(event.data);
         }
       };
-
+      if (!question) {
+        return;
+      }
+      updateStatus(question.interview_question.id);
       // Event listener for when recording stops
       mediaRecorderRef.current.onstop = () => {
         // Create a blob from the recorded chunks
         const blob = new Blob(chunksRef.current, { type: 'video/webm' });
 
         // Update the status of the question
-        if (!question) {
-          return;
-        }
-        updateStatus(question.interview_question.id);
+
 
         // Automatically upload the video to S3
         mutate(blob);
