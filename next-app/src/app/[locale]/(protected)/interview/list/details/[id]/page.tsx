@@ -4,8 +4,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Eye } from 'lucide-react';
 import { getScopedI18n } from '@/packages/locales/server';
+import { ViewResponseVideo } from '../../_components/viewResponseVideo';
 
 const DetailsInterviewPage = async ({
   params,
@@ -70,10 +70,7 @@ const DetailsInterviewPage = async ({
               </Label>
               <div className='flex gap-2'>
                 <Input placeholder='https://response-video-link' />
-                <Button variant='outline' size='icon'>
-                  <Eye className='h-4 w-4' />
-                  <span className='sr-only'>View</span>
-                </Button>
+                <ViewResponseVideo />
               </div>
             </div>
           ))}
