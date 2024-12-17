@@ -1,11 +1,9 @@
 'use server';
 
-import { getQuestionsByInterviewId } from '@/models/question';
+import { getLowestPendingQuestion } from '@/models/question';
 
-export const questionsByInterviewIdQuery = async (interviewId: number) => {
-  const questions = await getQuestionsByInterviewId(interviewId);
+export const questionsByInterviewIdQuery = async (token: string) => {
+  const questions = await getLowestPendingQuestion(token);
 
-  if (questions?.status === 'pending' && questions.order > 0) {
-    return questions;
-  }
+  return questions;
 };

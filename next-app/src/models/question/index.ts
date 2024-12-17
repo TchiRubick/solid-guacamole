@@ -3,6 +3,9 @@ import type { DBType } from '../Core';
 import { Core } from '../Core';
 import type { InsertInterviewQuestion, InsertQuestion } from './type';
 
+export * from './$get-lowest-pending';
+export * from './$update-status';
+
 export class QuestionModel extends Core {
   constructor(ctx?: DBType) {
     super(ctx);

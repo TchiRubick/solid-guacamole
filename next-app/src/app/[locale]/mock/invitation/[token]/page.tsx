@@ -2,6 +2,7 @@ import { verifTokenStatusQuery } from '@/actions/interview/verif-token-status';
 import { Recorder } from '../../interview/_components/recorder';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { AlertCircle } from 'lucide-react';
+import { AutoRecorder } from '../../interview/_components/auto_recorder';
 
 const Page = async ({ params }: { params: Promise<{ token: string }> }) => {
   const interview = await verifTokenStatusQuery((await params).token);
@@ -21,7 +22,10 @@ const Page = async ({ params }: { params: Promise<{ token: string }> }) => {
                 Let's ensure your device is ready for the interview.
               </p>
               <div className='rounded-xl bg-gray-50 p-6 shadow-inner'>
-                <Recorder interviewId={interview.id} />
+                {interview.status === 'pending' && (
+                  <Recorder interviewId={interview.id} />
+                )}
+                {interview.status === 'ongoing' && <AutoRecorder />}
               </div>
             </div>
           ) : (

@@ -18,16 +18,15 @@ export const AutoRecorder = () => {
   const [mediaStream, setMediaStream] = useState<MediaStream | null>(null);
   const [isRecording, setIsRecording] = useState(false);
   const { toast } = useToast();
-  const { id } = useParams();
+  const token = useParams().token?.toString();
   const queryClient = useQueryClient();
 
-  if (!id) {
-    return 'No id';
+  if (!token) {
+    return 'No token';
   }
-
   const { data: question } = useQuery({
     queryKey: ['question'],
-    queryFn: () => questionsByInterviewIdQuery(Number(id)),
+    queryFn: () => questionsByInterviewIdQuery(token),
   });
 
   const { mutate: updateStatus } = useMutation({
@@ -129,7 +128,7 @@ export const AutoRecorder = () => {
         if (!question) {
           return;
         }
-        updateStatus(question.id);
+        updateStatus(question.interview_question.id);
 
         // Automatically upload the video to S3
         mutate(blob);
@@ -171,7 +170,9 @@ export const AutoRecorder = () => {
               <Button onClick={() => startRecording()}>Next Question</Button>
             )}
           </div>
-          <GradualSpacing text={question?.value ?? ''} />
+          <GradualSpacing
+            text={question && question.question ? question.question.value : ''}
+          />
         </>
       ) : (
         <p className='text-red-500'>
