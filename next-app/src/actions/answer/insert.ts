@@ -7,20 +7,22 @@ import { db } from '@/packages/db';
 export const insertAnswerMuation = async ({
   questionId,
   answerData,
+  interviewId,
 }: {
   questionId: string;
   answerData: AnswerInput;
+  interviewId: number;
 }) => {
   const t = await db.transaction(async (ctx) => {
     const answerModel = new AnswerModel(ctx);
 
     const [answer] = await answerModel.create(answerData);
 
-    if (!answer?.id) {
-      throw new Error('Failed to create the answer');
-    }
-
-    const updatedQuestion = await answerModel.update(questionId, answer?.id);
+    const updatedQuestion = await answerModel.update(
+      questionId,
+      answer?.id,
+      interviewId
+    );
 
     return {
       answer,

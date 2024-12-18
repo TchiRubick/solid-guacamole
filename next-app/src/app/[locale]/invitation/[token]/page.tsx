@@ -1,8 +1,8 @@
 import { checkExistingInterview } from '@/actions/interview/check-existing-interview';
-import { Recorder } from '../../interview/_components/recorder';
+import { Recorder } from '../_components/recorder';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { AlertCircle } from 'lucide-react';
-import { AutoRecorder } from '../../interview/_components/auto_recorder';
+import { AutoRecorder } from '../_components/auto_recorder';
 
 const InterviewPage = async ({
   params,
@@ -10,8 +10,6 @@ const InterviewPage = async ({
   params: Promise<{ token: string }>;
 }) => {
   const interview = await checkExistingInterview((await params).token);
-
-  console.log('interview', interview?.status);
 
   return (
     <div className='flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4'>
@@ -30,7 +28,7 @@ const InterviewPage = async ({
                 </p>
               )}
               <div className='rounded-xl bg-gray-50 p-6 shadow-inner'>
-                {interview?.status === 'pending' ? (
+                {interview?.status !== 'ongoing' ? (
                   <Recorder interviewId={interview?.id} />
                 ) : (
                   <AutoRecorder />
