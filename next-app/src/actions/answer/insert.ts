@@ -14,7 +14,18 @@ export const insertAnswerMuation = async ({
   const t = await db.transaction(async (ctx) => {
     const answerModel = new AnswerModel(ctx);
 
-    return answerModel.createAnswerAndUpdateQuestion(questionId, answerData);
+    const [answer] = await answerModel.create(answerData);
+
+    if (!answer?.id) {
+      throw new Error('Failed to create the answer');
+    }
+
+    const updatedQuestion = await answerModel.update(questionId, answer?.id);
+
+    return {
+      answer,
+      updatedQuestion,
+    };
   });
 
   return t;

@@ -51,7 +51,7 @@ export const AutoRecorder = () => {
         variant: 'default',
       });
       queryClient.invalidateQueries({ queryKey: ['question'] });
-      window.location.reload();
+      // window.location.reload();
     },
     onError: (error: Error) => {
       toast({
@@ -60,6 +60,7 @@ export const AutoRecorder = () => {
       });
     },
   });
+
   useEffect(() => {
     const enableVideoStream = async () => {
       try {
