@@ -1,6 +1,8 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
+import { useMutation } from '@tanstack/react-query';
+import { uploadVideoMuation } from '@/actions/video/upload-video';
 
 export const useRecording = () => {
   const [mediaStream, setMediaStream] = useState<MediaStream | null>(null);
@@ -8,6 +10,8 @@ export const useRecording = () => {
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const chunksRef = useRef<Blob[]>([]);
   const { toast } = useToast();
+
+  const [response, setresponse] = useState<string>('');
 
   useEffect(() => {
     const enableVideoStream = async () => {
@@ -35,6 +39,11 @@ export const useRecording = () => {
     };
   }, []);
 
+     const {mutateAsync:UploadVideo} =  useMutation({
+     mutationKey:['upload-video'],
+     mutationFn:uploadVideoMuation 
+     })
+
   const startRecording = () => {
     if (mediaStream && !mediaRecorderRef.current) {
       mediaRecorderRef.current = new MediaRecorder(mediaStream, {
@@ -49,10 +58,18 @@ export const useRecording = () => {
           }
         }
       };
-
+      console.log('MediaStream',mediaStream)
+      console.log('MediaRecorder',mediaRecorderRef)
       mediaRecorderRef.current.onstop = () => {
         if (chunksRef.current) {
-          new Blob(chunksRef.current, { type: 'video/webm' });
+          const video = new Blob(chunksRef.current, { type: 'video/webm' });
+          UploadVideo(video,{
+            onSuccess:(response)=>{
+                setresponse(response)
+                
+            }
+          })
+          
         }
       };
 
@@ -60,7 +77,7 @@ export const useRecording = () => {
       setIsRecording(true);
     }
   };
-
+  console.log(response)
   const stopRecording = () => {
     if (mediaRecorderRef.current) {
       mediaRecorderRef.current.stop();
@@ -68,5 +85,5 @@ export const useRecording = () => {
     }
   };
 
-  return { mediaStream, isRecording, startRecording, stopRecording };
+  return { mediaStream,response, isRecording, startRecording, stopRecording };
 };
