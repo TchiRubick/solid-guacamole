@@ -9,9 +9,5 @@ export const interviewByToken = async (token: string) => {
 
   const interview = await getInterviewByToken(token);
 
-  if (!interview) {
-    throw tError('interview-not-found');
-  }
-
   return interview;
 };

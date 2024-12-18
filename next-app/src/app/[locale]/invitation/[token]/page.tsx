@@ -16,7 +16,7 @@ const InterviewPage = async ({
       <Card className='w-full max-w-2xl overflow-hidden rounded-2xl bg-white shadow-lg'>
         <CardHeader className='bg-gradient-to-r from-blue-600 to-indigo-600 p-6 text-white'>
           <CardTitle className='text-center text-3xl font-bold'>
-            Welcome to {interview?.name} 🦑
+            Async Interview 🦑
           </CardTitle>
         </CardHeader>
         <CardContent className='p-6'>

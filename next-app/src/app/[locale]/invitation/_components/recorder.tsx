@@ -98,7 +98,6 @@ export const Recorder = ({ interviewId }: { interviewId: number }) => {
 
       // Start recording
       mediaRecorderRef.current.start();
-      // mutate(interviewId);
       setIsRecording(true);
     }
   };

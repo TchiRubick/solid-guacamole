@@ -53,7 +53,7 @@ export class QuestionModel extends Core {
       .limit(1);
 
     if (!result) {
-      throw new Error('No pending question found');
+      throw 'You are finished the interview';
     }
 
     return result;

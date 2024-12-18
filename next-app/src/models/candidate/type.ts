@@ -8,9 +8,8 @@ export const zCandidateCreate = createInsertSchema(CandidateTable);
 
 export type Candidate = z.infer<typeof zCandidateSelect>;
 export type CandidateInput = z.infer<typeof zCandidateCreate>;
-const NoOrganizationId = zCandidateSelect.omit({
-  organizationId: true,
-  resume: true,
-});
 
-export type CandidateUpdate = z.infer<typeof NoOrganizationId>;
+export type CandidateUpdate = Omit<
+  z.infer<typeof zCandidateSelect>,
+  'organizationId' | 'resume'
+>;

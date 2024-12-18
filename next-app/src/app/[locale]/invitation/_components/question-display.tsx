@@ -1,4 +1,5 @@
 'use client';
+
 import GradualSpacing from '@/components/ui/gradual-spacing';
 import { Skeleton } from '@/components/ui/skeleton';
 
@@ -21,5 +22,3 @@ export const QuestionDisplay = ({
     />
   );
 };
-
-export default QuestionDisplay;

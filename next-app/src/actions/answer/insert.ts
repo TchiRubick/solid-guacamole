@@ -34,7 +34,3 @@ export const insertAnswerMuation = async ({
 
   return t;
 };
-
-export const updateToDone = async (questionId:string)=>{
-   return await db.update(InterviewQuestionTable).set({status:'done'}).where(eq(InterviewQuestionTable.questionId,questionId)).returning()
-}

@@ -1,14 +1,15 @@
 'use server';
 
 import { getStorageUrlByName } from '@/lib/files';
-import { uploadToS3 } from '@/packages/minio';
+import { generateSafeName, uploadToS3 } from '@/packages/minio';
 
 export const uploadVideoMuation = async (file: Blob) => {
-  const filename = `recording_${new Date().toISOString()}.webm`;
   const arrayBuffer = await file.arrayBuffer();
   const buffer = Buffer.from(arrayBuffer);
 
-  await uploadToS3(filename, buffer);
+  const safename = generateSafeName('.webm');
 
-  return getStorageUrlByName(filename);
+  await uploadToS3(safename, buffer);
+
+  return getStorageUrlByName(safename);
 };

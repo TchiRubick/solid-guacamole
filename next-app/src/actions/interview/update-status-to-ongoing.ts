@@ -1,8 +1,10 @@
 'use server';
 
-import { updateInterviewStatusToOngoing } from '@/models/interview';
+import { db } from '@/packages/db';
+import { InterviewModel } from '@/models/interview';
 
 export const updateStatusToOngoingMutation = async (interviewId: number) => {
-  const interview = await updateInterviewStatusToOngoing(interviewId);
-  return interview;
+  const interviewModel = new InterviewModel(db);
+  const t = await interviewModel.updateStatusToOngoing(interviewId);
+  return t;
 };

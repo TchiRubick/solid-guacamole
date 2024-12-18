@@ -1,6 +1,5 @@
 'use server';
 import { getCandidateById } from '@/models/candidate/$get-candidate-by-id';
-import { createInterview } from '@/models/interview';
 import { zInterviewInsert } from '@/models/interview/type';
 import { QuestionModel } from '@/models/question';
 import { db } from '@/packages/db';
@@ -8,6 +7,7 @@ import { getScopedI18n } from '@/packages/locales/server';
 import { sendEmail } from '@/packages/mail';
 import { candidateInvitationTemplate } from '@/packages/mail/templates/candidate-invitation';
 import { getSession } from '@/server-functions/session';
+import { InterviewModel } from '@/models/interview';
 
 export interface CreateInterviewPayload {
   name: string;
@@ -54,8 +54,11 @@ export const createInterviewMutation = async (data: CreateInterviewPayload) => {
 
   const result = await db.transaction(async (ctx) => {
     const questionModel = new QuestionModel(ctx);
+    const interviewModel = new InterviewModel(ctx);
 
-    const [interviewData] = await createInterview(dataInterviewMutation);
+    const [interviewData] = await interviewModel.createInterview(
+      dataInterviewMutation
+    );
 
     const formattedQuestions = data.questions?.map((question, index) => ({
       value: question.text,

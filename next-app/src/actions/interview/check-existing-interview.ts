@@ -1,9 +1,15 @@
 'use server';
 
-import { updateInterviewStatusToPending } from '@/models/interview/$update-status-to-pending';
 import { interviewByToken } from '@/server-functions/interview-by-token';
+import { db } from '@/packages/db';
+import { InterviewModel } from '@/models/interview';
+import { QuestionModel } from '@/models/question';
+import { redirect } from 'next/navigation';
 
 export const checkExistingInterview = async (token: string) => {
+  const interviewModel = new InterviewModel(db);
+  const questionModel = new QuestionModel(db);
+
   const t = await interviewByToken(token);
 
   if (!t) {
@@ -11,7 +17,15 @@ export const checkExistingInterview = async (token: string) => {
   }
 
   if (t.status !== 'ongoing') {
-    await updateInterviewStatusToPending(t.id);
+    await interviewModel.updateStatusToPending(t.id);
+  }
+
+  if (t.status === 'ongoing') {
+    const questions = await questionModel.getLowestPendingQuestion(token);
+
+    if (!questions) {
+      await interviewModel.updateStatusToDone(t.id);
+    }
   }
 
   return t;
