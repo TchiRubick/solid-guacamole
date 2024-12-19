@@ -1,4 +1,8 @@
-import { AnswerTable, InterviewQuestionTable } from '@/packages/db/schemas';
+import {
+  AnswerTable,
+  InterviewQuestionTable,
+  QuestionTable,
+} from '@/packages/db/schemas';
 import { Core, type DBType } from '../Core';
 import type { AnswerInput } from './type';
 import { eq, and } from 'drizzle-orm';
@@ -27,5 +31,23 @@ export class AnswerModel extends Core {
       .returning();
 
     return updatedRecord;
+  };
+
+  getAnswers = async (interviewId: number) => {
+    const results = await this.db
+      .select()
+      .from(InterviewQuestionTable)
+      .leftJoin(
+        QuestionTable,
+        eq(InterviewQuestionTable.questionId, QuestionTable.id)
+      )
+      .leftJoin(
+        AnswerTable,
+        eq(InterviewQuestionTable.answerId, AnswerTable.id)
+      )
+      .where(eq(InterviewQuestionTable.interviewId, interviewId))
+      .orderBy(QuestionTable.order);
+
+    return results;
   };
 }

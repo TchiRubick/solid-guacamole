@@ -6,6 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { getScopedI18n } from '@/packages/locales/server';
 import { ViewResponseVideo } from '../../_components/viewResponseVideo';
+import { getAnswersQuery } from '@/actions/answer/get-answers';
 
 const DetailsInterviewPage = async ({
   params,
@@ -13,6 +14,7 @@ const DetailsInterviewPage = async ({
   params: Promise<{ id: number }>;
 }) => {
   const interview = await oneInterviewQuery((await params).id);
+  const answers = await getAnswersQuery((await params).id);
   const t = await getScopedI18n('inrtview-details');
 
   return (
@@ -63,14 +65,18 @@ const DetailsInterviewPage = async ({
         </div>
         <div className='space-y-4'>
           <Label className='text-neutral-400'>{t('response')}</Label>
-          {[1, 2, 3].map((questionNumber) => (
-            <div key={questionNumber} className='space-y-2'>
-              <Label className='text-sm text-neutral-500'>
-                {questionNumber}. Question {questionNumber}
+          {answers.map((answer, index) => (
+            <div key={index} className='space-y-2'>
+              <Label className='text-sm'>
+                {answer.question?.order}. {answer.question?.value}
               </Label>
               <div className='flex gap-2'>
-                <Input placeholder='https://response-video-link' />
-                <ViewResponseVideo />
+                <Input
+                  defaultValue={answer.answer?.value ?? ''}
+                  placeholder='https://response-video-link'
+                  disabled
+                />
+                <ViewResponseVideo videoUrl={answer.answer?.value ?? ''} />
               </div>
             </div>
           ))}

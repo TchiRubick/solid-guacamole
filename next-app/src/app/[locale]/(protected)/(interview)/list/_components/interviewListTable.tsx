@@ -56,7 +56,7 @@ export const InterviewListTable = () => {
       accessorKey: 'id',
       header: t('action'),
       cell: ({ row }) => (
-        <Link href={`/interview/list/details/${row.original.id}`}>
+        <Link href={`/list/details/${row.original.id}`}>
           <Button variant='ghost' size='icon' className='h-8 w-8'>
             <Eye className='h-4 w-4' />
           </Button>
