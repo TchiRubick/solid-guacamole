@@ -3,8 +3,6 @@
 import { AnswerModel } from '@/models/answer';
 import type { AnswerInput } from '@/models/answer/type';
 import { db } from '@/packages/db';
-import { InterviewQuestionTable } from '@/packages/db/schemas';
-import { eq } from 'drizzle-orm';
 
 export const insertAnswerMuation = async ({
   questionId,

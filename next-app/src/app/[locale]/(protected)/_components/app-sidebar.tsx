@@ -62,12 +62,12 @@ export const AppSidebar = ({
           {
             title: t('list'),
             icon: ListVideo,
-            url: '/interview/list',
+            url: '/list',
           },
           {
             title: t('templates'),
             icon: LayoutTemplate,
-            url: '/interview/template',
+            url: '/template',
             soon: true,
           },
         ],

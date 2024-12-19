@@ -18,9 +18,7 @@ export const getSession = async () => {
 export const actionSessionGuard = async () => {
   const { session } = await getSession();
 
-  if (!session) {
-    throw new Error('Not authenticated');
-  }
+  if (!session) throw new Error('Not authenticated');
 
   return session;
 };

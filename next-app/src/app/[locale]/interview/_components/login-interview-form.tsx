@@ -12,13 +12,12 @@ import { useForm } from '@tanstack/react-form';
 import { redirect } from 'next/navigation';
 import { useToast } from '@/hooks/use-toast';
 
-export const InputOTPForm = () => {
+export const LoginInterviewForm = () => {
   const { toast } = useToast();
   const { mutateAsync: sendVerificationPassword } = useMutation({
-    mutationKey: ['verifPaswword'],
     mutationFn: verifPassword,
     onSuccess: (response) => {
-      redirect(`/mock/invitation/${response}`);
+      redirect(`/invitation/${response}`);
     },
     onError: (error) => {
       toast({

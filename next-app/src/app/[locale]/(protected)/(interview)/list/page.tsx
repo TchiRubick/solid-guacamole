@@ -2,8 +2,10 @@ import Link from 'next/link';
 import { InterviewListTable } from './_components/interviewListTable';
 import { Button } from '@/components/ui/button';
 import { getScopedI18n } from '@/packages/locales/server';
+import { actionSessionGuard } from '@/server-functions/session';
 
 const ListInterviewPage = async () => {
+  await actionSessionGuard();
   const t = await getScopedI18n('interview-list-page');
   return (
     <div className='flex flex-col gap-4'>

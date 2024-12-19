@@ -7,7 +7,7 @@ const SignUpPage = async () => {
   const { session } = await getSession();
 
   if (!!session) {
-    redirect('/dashboard');
+    redirect('/organization/dashboard');
   }
 
   return (
