@@ -1,5 +1,5 @@
 import { InterviewTable } from '@/packages/db/schemas';
-import { eq } from 'drizzle-orm';
+import { and, eq } from 'drizzle-orm';
 import { Core, type DBType } from '../Core';
 import type { InsertInterview } from './type';
 
@@ -45,5 +45,16 @@ export class InterviewModel extends Core {
       .where(eq(InterviewTable.id, id));
 
     return interview;
+  };
+
+  getInterviewPassed = async (organizationId: string) => {
+    const interviewPassed = await this.db.$count(
+      InterviewTable,
+      and(
+        eq(InterviewTable.organizationId, organizationId),
+        eq(InterviewTable.status, 'done')
+      )
+    );
+    return interviewPassed;
   };
 }

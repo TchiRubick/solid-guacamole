@@ -85,7 +85,7 @@ export default function CreateInterview() {
 
       client.invalidateQueries({ queryKey: ['interviews'] });
 
-      router.push('/interview/list');
+      router.push('/list');
     },
     onError: (error) => {
       toast({

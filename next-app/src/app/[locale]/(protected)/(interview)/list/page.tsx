@@ -11,7 +11,7 @@ const ListInterviewPage = async () => {
     <div className='flex flex-col gap-4'>
       <div className='flex items-center justify-between'>
         <h1 className='text-2xl font-bold'>{t('title')}</h1>
-        <Link href='/interview/create' prefetch>
+        <Link href='/create' prefetch>
           <Button variant='default'> {t('create-interview')}</Button>
         </Link>
       </div>

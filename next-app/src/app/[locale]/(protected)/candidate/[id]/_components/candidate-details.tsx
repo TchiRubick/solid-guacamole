@@ -108,6 +108,7 @@ export const CandidateDetails = ({ id }: { id: number }) => {
                       onBlur={field.handleBlur}
                       onChange={(e) => field.handleChange(e.target.value)}
                       className='pl-8'
+                      required
                     />
                   )}
                 </Field>
@@ -128,6 +129,7 @@ export const CandidateDetails = ({ id }: { id: number }) => {
                       onBlur={field.handleBlur}
                       onChange={(e) => field.handleChange(e.target.value)}
                       className='pl-8'
+                      required
                     />
                   )}
                 </Field>
@@ -149,6 +151,7 @@ export const CandidateDetails = ({ id }: { id: number }) => {
                       onBlur={field.handleBlur}
                       onChange={(e) => field.handleChange(e.target.value)}
                       className='pl-8'
+                      required
                     />
                   )}
                 </Field>
@@ -168,6 +171,7 @@ export const CandidateDetails = ({ id }: { id: number }) => {
                       onBlur={field.handleBlur}
                       onChange={(e) => field.handleChange(e.target.value)}
                       className='pl-8'
+                      required
                     />
                   )}
                 </Field>
@@ -187,6 +191,7 @@ export const CandidateDetails = ({ id }: { id: number }) => {
                       onBlur={field.handleBlur}
                       onChange={(e) => field.handleChange(e.target.value)}
                       className='pl-8'
+                      required
                     />
                   )}
                 </Field>
@@ -208,6 +213,7 @@ export const CandidateDetails = ({ id }: { id: number }) => {
                     onChange={(e) => field.handleChange(e.target.value)}
                     className='min-h-[100px]'
                     placeholder={t('candidate-resume-placeholder')}
+                    required
                   />
                 )}
               </Field>

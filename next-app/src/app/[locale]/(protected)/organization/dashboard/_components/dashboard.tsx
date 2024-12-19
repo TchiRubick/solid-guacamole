@@ -10,11 +10,17 @@ import { MemberTable } from './member-table';
 import { useSession } from '@/hooks/use-session';
 import { useScopedI18n } from '@/packages/locales/client';
 import NumberTicker from '@/components/ui/number-ticker';
+import { interviewPassedQuery } from '@/actions/interview/interview-passed';
 
 export function Dashboard() {
   const { data: organization } = useQuery({
     queryKey: ['organization'],
     queryFn: () => FullInformationsQuery(),
+  });
+
+  const { data: interwiewpassed } = useQuery({
+    queryKey: ['interwiewpassed'],
+    queryFn: () => interviewPassedQuery(),
   });
 
   const t = useScopedI18n('dashboard');
@@ -63,8 +69,14 @@ export function Dashboard() {
             </CardHeader>
             <CardContent>
               <div className='text-2xl font-bold'>
-                {' '}
-                <NumberTicker value={40} className='text-slate-300' />
+                {interwiewpassed === 0 ? (
+                  0
+                ) : (
+                  <NumberTicker
+                    value={interwiewpassed ?? 0}
+                    className='text-slate-300'
+                  />
+                )}{' '}
               </div>
               <div className='absolute right-4 top-4 text-muted-foreground/20'>
                 <Video className='h-12 w-12' />
