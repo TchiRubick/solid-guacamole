@@ -74,10 +74,11 @@ export const CreateOrganizationForm = () => {
               e.stopPropagation();
               handleSubmit();
             }}
+            className='space-y-4'
           >
             <Field name='name'>
               {(field) => (
-                <div>
+                <div className='space-y-2'>
                   <Label htmlFor={field.name}>
                     {tCreateOrganizationForm('name-label')}
                   </Label>
@@ -95,7 +96,7 @@ export const CreateOrganizationForm = () => {
             </Field>
             <Field name='description'>
               {(field) => (
-                <div>
+                <div className='space-y-2'>
                   <Label htmlFor={field.name}>
                     {tCreateOrganizationForm('description-label')}
                   </Label>

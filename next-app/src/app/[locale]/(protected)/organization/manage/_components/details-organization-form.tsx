@@ -63,8 +63,9 @@ export const DetailsOrganizationForm = () => {
             e.stopPropagation();
             handleSubmit();
           }}
+          className='space-y-4'
         >
-          <div>
+          <div className='space-y-2'>
             <Label htmlFor='name'>{t('label-name')}</Label>
             <Field name='name'>
               {(field) => (
@@ -80,7 +81,7 @@ export const DetailsOrganizationForm = () => {
               )}
             </Field>
           </div>
-          <div>
+          <div className='space-y-2'>
             <Label htmlFor='description'>{t('label-description')}</Label>
             <Field name='description'>
               {(field) => (
