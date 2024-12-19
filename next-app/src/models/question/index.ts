@@ -52,10 +52,6 @@ export class QuestionModel extends Core {
       .orderBy(QuestionTable.order)
       .limit(1);
 
-    if (!result) {
-      throw 'You are finished the interview';
-    }
-
-    return result;
+    return result || null;
   };
 }

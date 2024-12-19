@@ -24,6 +24,7 @@ export const checkExistingInterview = async (token: string) => {
 
     if (!questions) {
       await interviewModel.updateStatusToDone(t.id);
+      throw new Error('Tous les question sont fini ')
     }
   }
 

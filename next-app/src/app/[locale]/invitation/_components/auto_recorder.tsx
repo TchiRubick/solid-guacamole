@@ -42,15 +42,15 @@ export const AutoRecorder = () => {
 
     enableVideoStream();
 
-    // Cleanup function
     return () => {
       if (mediaStream) {
-        mediaStream.getTracks().forEach((track) => {
-          track.stop();
-        });
+        mediaStream.getTracks().forEach((track) => track.stop());
       }
     };
   }, []);
+
+
+
 
   const {
     data: question,
@@ -74,6 +74,16 @@ export const AutoRecorder = () => {
       });
     },
   });
+  useEffect(() => {
+    if (mediaStream && question?.question?.id && !isRecording) {
+      startRecording();
+      UpdateStatusQuestion({
+        questionId: question.question?.id,
+        answerData: { value: null },
+        interviewId: question.interview_question.interviewId,
+      });
+    }
+  }, [mediaStream, question?.question?.id]);
 
   const { mutateAsync: UpdateStatusQuestion, isPending } = useMutation({
     mutationFn: insertAnswerMuation,
@@ -111,21 +121,12 @@ export const AutoRecorder = () => {
       };
 
       mediaRecorderRef.current.start();
-      setIsRecording(true);
+      setIsRecording(true); // Mise à jour immédiate de l'état
     }
   };
 
-  useEffect(() => {
-    if (question?.question) {
-      UpdateStatusQuestion({
-        questionId: question.question?.id,
-        answerData: { value: null },
-        interviewId: question.interview_question.interviewId,
-      });
 
-      startRecording();
-    }
-  }, [question]);
+
 
   const stopRecording = () => {
     if (mediaRecorderRef.current) {
@@ -137,7 +138,7 @@ export const AutoRecorder = () => {
   if (isError) {
     return <p>{error.message}</p>;
   }
-
+  console.log(question?.question)
   return (
     <div className='flex flex-col items-center space-y-4'>
       <video
