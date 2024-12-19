@@ -136,6 +136,39 @@ export default function CreateInterview() {
           <CardTitle className='text-2xl'>{t('title')}</CardTitle>
           <CardDescription>{t('description')}</CardDescription>
         </CardHeader>
+        <CardContent>
+          {/* Candidate Selection */}
+          <div className='space-y-4'>
+            <Label>{t('candidate-selection')}</Label>
+            <div className='flex items-center gap-4'>
+              <Field name='candidateId'>
+                {(field) => (
+                  <Select onValueChange={(e) => field.handleChange(Number(e))}>
+                    <SelectTrigger className='w-full'>
+                      <SelectValue placeholder='Choose a candidate' />
+                    </SelectTrigger>
+
+                    <SelectContent>
+                      {candidates?.map((candidate, cle) => (
+                        <SelectItem key={cle} value={candidate.id.toString()}>
+                          {candidate.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                    {/*  */}
+                  </Select>
+                )}
+              </Field>
+              <span className='text-sm text-muted-foreground'>or</span>
+              <Button variant='outline' asChild>
+                <Link href='/candidate/create'>
+                  <User className='mr-2 h-4 w-4' />
+                  {t('new-candidate')}
+                </Link>
+              </Button>
+            </div>
+          </div>
+        </CardContent>
 
         <CardContent className='space-y-6'>
           {/* Basic Information */}
@@ -175,39 +208,8 @@ export default function CreateInterview() {
           </div>
           <Separator />
 
-          {/* Candidate Selection */}
-          <div className='space-y-4'>
-            <Label>{t('candidate-selection')}</Label>
-            <div className='flex items-center gap-4'>
-              <Field name='candidateId'>
-                {(field) => (
-                  <Select onValueChange={(e) => field.handleChange(Number(e))}>
-                    <SelectTrigger className='w-full'>
-                      <SelectValue placeholder='Choose a candidate' />
-                    </SelectTrigger>
 
-                    <SelectContent>
-                      {candidates?.map((candidate, cle) => (
-                        <SelectItem key={cle} value={candidate.id.toString()}>
-                          {candidate.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                    {/*  */}
-                  </Select>
-                )}
-              </Field>
-              <span className='text-sm text-muted-foreground'>or</span>
-              <Button variant='outline' asChild>
-                <Link href='/candidate/create'>
-                  <User className='mr-2 h-4 w-4' />
-                  {t('new-candidate')}
-                </Link>
-              </Button>
-            </div>
-          </div>
 
-          <Separator />
 
           {/* Date Selection */}
           <div className='space-y-4'>
