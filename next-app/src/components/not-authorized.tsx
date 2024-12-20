@@ -10,8 +10,8 @@ export const NotAuthorized = ({ error }: { error: string }) => {
   const router = useRouter();
   const { data: session } = useQuery({
     queryKey: ['session'],
-    queryFn: actionOrgSessionGuard
-  })
+    queryFn: actionOrgSessionGuard,
+  });
 
   return (
     <div className='flex min-h-screen flex-col items-center justify-center bg-background'>

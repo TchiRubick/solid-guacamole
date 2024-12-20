@@ -22,17 +22,16 @@ const InterviewPage = async ({
         <CardContent className='p-6'>
           {interview ? (
             <div className='space-y-8'>
-              {interview?.status === 'pending' && (
-                <p className='text-center text-lg text-gray-700'>
-                  Let&apos;s ensure your device is ready for the interview.
-                </p>
-              )}
               <div className='rounded-xl bg-gray-50 p-6 shadow-inner'>
-                {interview?.status !== 'ongoing' ? (
-                  <Recorder interviewId={interview?.id} />
-                ) : (
-                  <AutoRecorder />
+                {interview?.status !== 'ongoing' && (
+                  <div>
+                    <p className='text-center text-lg text-gray-700'>
+                      Let&apos;s ensure your device is ready for the interview.
+                    </p>
+                    <Recorder interviewId={interview?.id} />
+                  </div>
                 )}
+                {interview?.status === 'ongoing' && <AutoRecorder />}
               </div>
             </div>
           ) : (

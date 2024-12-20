@@ -208,9 +208,6 @@ export default function CreateInterview() {
           </div>
           <Separator />
 
-
-
-
           {/* Date Selection */}
           <div className='space-y-4'>
             <Label>{t('invitation-expiration-date')}</Label>

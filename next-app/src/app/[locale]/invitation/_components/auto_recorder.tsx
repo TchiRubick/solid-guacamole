@@ -49,9 +49,6 @@ export const AutoRecorder = () => {
     };
   }, []);
 
-
-
-
   const {
     data: question,
     isFetching,
@@ -121,12 +118,9 @@ export const AutoRecorder = () => {
       };
 
       mediaRecorderRef.current.start();
-      setIsRecording(true); // Mise à jour immédiate de l'état
+      setIsRecording(true);
     }
   };
-
-
-
 
   const stopRecording = () => {
     if (mediaRecorderRef.current) {
@@ -138,7 +132,7 @@ export const AutoRecorder = () => {
   if (isError) {
     return <p>{error.message}</p>;
   }
-  console.log(question?.question)
+
   return (
     <div className='flex flex-col items-center space-y-4'>
       <video
