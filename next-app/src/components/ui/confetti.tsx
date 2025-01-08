@@ -17,6 +17,7 @@ import confetti from 'canvas-confetti';
 
 import type { ButtonProps } from '@/components/ui/button';
 import { Button } from '@/components/ui/button';
+import { toast } from '@/hooks/use-toast';
 
 type Api = {
   fire: (options?: ConfettiOptions) => void;
@@ -67,7 +68,9 @@ const ConfettiComponent = forwardRef<ConfettiRef, Props>((props, ref) => {
       try {
         await instanceRef.current?.({ ...options, ...opts });
       } catch (error) {
-        console.error('Confetti error:', error);
+        toast({
+          title: `Confetti error:, ${error}`,
+        });
       }
     },
     [options]
@@ -88,7 +91,9 @@ const ConfettiComponent = forwardRef<ConfettiRef, Props>((props, ref) => {
         try {
           await fire();
         } catch (error) {
-          console.error('Confetti effect error:', error);
+          toast({
+            title: `Confetti error:, ${error}`,
+          });
         }
       })();
     }
@@ -132,7 +137,9 @@ const ConfettiButtonComponent = ({
         },
       });
     } catch (error) {
-      console.error('Confetti button error:', error);
+      toast({
+        title: `Confetti error:, ${error}`,
+      });
     }
   };
 

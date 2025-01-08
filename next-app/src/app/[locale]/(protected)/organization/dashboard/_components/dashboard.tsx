@@ -4,13 +4,15 @@ import { FullInformationsQuery } from '@/actions/organization/get-full-informati
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useQuery } from '@tanstack/react-query';
-import { Building2, User, Users, Video } from 'lucide-react';
+import { Building2, SquarePlay, Users, Video } from 'lucide-react';
 import { InputInviteUserModal } from './input-invite-user-modal';
 import { MemberTable } from './member-table';
 import { useSession } from '@/hooks/use-session';
 import { useScopedI18n } from '@/packages/locales/client';
 import NumberTicker from '@/components/ui/number-ticker';
 import { interviewPassedQuery } from '@/actions/interview/interview-passed';
+import { allCandidateQuery } from '@/actions/candidate/get-all-candidate';
+import { allinterviewQuery } from '@/actions/interview/all-interview';
 
 export function Dashboard() {
   const { data: organization } = useQuery({
@@ -21,6 +23,16 @@ export function Dashboard() {
   const { data: interwiewpassed } = useQuery({
     queryKey: ['interwiewpassed'],
     queryFn: () => interviewPassedQuery(),
+  });
+
+  const { data: candidates } = useQuery({
+    queryKey: ['candidates'],
+    queryFn: () => allCandidateQuery(),
+  });
+
+  const { data: allinterview } = useQuery({
+    queryKey: ['allinterview'],
+    queryFn: () => allinterviewQuery(),
   });
 
   const t = useScopedI18n('dashboard');
@@ -64,6 +76,28 @@ export function Dashboard() {
           <Card className='relative overflow-hidden'>
             <CardHeader className='pb-2'>
               <CardTitle className='text-sm font-medium'>
+                interview number
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className='text-2xl font-bold'>
+                {allinterview === 0 ? (
+                  0
+                ) : (
+                  <NumberTicker
+                    value={allinterview ?? 0}
+                    className='text-slate-300'
+                  />
+                )}{' '}
+              </div>
+              <div className='absolute right-4 top-4 text-muted-foreground/20'>
+                <SquarePlay className='h-12 w-12' />
+              </div>
+            </CardContent>
+          </Card>
+          <Card className='relative overflow-hidden'>
+            <CardHeader className='pb-2'>
+              <CardTitle className='text-sm font-medium'>
                 {t('interview-passed')}
               </CardTitle>
             </CardHeader>
@@ -91,23 +125,17 @@ export function Dashboard() {
             </CardHeader>
             <CardContent>
               <div className='text-2xl font-bold'>
-                <NumberTicker value={40} className='text-slate-300' />
+                {candidates?.length === 0 ? (
+                  0
+                ) : (
+                  <NumberTicker
+                    value={candidates?.length ?? 0}
+                    className='text-slate-300'
+                  />
+                )}{' '}
               </div>
               <div className='absolute right-4 top-4 text-muted-foreground/20'>
                 <Users className='h-12 w-12' />
-              </div>
-            </CardContent>
-          </Card>
-          <Card className='relative overflow-hidden'>
-            <CardHeader className='pb-2'>
-              <CardTitle className='text-sm font-medium'>
-                {t('top-interviewer')}
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className='text-2xl font-bold'>John</div>
-              <div className='absolute right-4 top-4 text-muted-foreground/20'>
-                <User className='h-12 w-12' />
               </div>
             </CardContent>
           </Card>

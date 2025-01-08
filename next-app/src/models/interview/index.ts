@@ -57,4 +57,12 @@ export class InterviewModel extends Core {
     );
     return interviewPassed;
   };
+
+  getallInterview = async (organizationId: string) => {
+    const allinterview = await this.db.$count(
+      InterviewTable,
+      eq(InterviewTable.organizationId, organizationId)
+    );
+    return allinterview;
+  };
 }
